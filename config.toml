@@ -1,4 +1,4 @@
-baseurl = "http://kubernetesbyexample.com/"
+baseURL = "https://mhausenblas.github.io/kbe"
 DefaultContentLanguage = "en"
 title = "Kubernetes By Example"
 theme = "beautifulhugo"
