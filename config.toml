@@ -1,0 +1,20 @@
+baseurl = "http://kubernetesbyexample.com"
+DefaultContentLanguage = "en"
+title = "Kubernetes By Example"
+theme = "beautifulhugo"
+metaDataFormat = "yaml"
+#googleAnalytics = "XXX"
+
+[Params]
+  subtitle = "A hands-on introduction to Kubernetes"
+  logo = "img/kbe-logo.png"
+  favicon = "img/kbe-logo.png"
+  dateFormat = "2006-01-02"
+  commit = false
+  rss = true
+
+
+[Author]
+  name = "Michael Hausenblas"
+  github = "mhausenblas"
+  twitter = "mhausenblas"
