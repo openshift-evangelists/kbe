@@ -1,6 +1,7 @@
 +++
 title = "Services"
-subtitle = "Kubernetes Services by example"
+subtitle = "Kubernetes services by example"
+date = "2017-04-24"
 +++
 
 Using this RC and this SVC.

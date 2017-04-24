@@ -1,4 +1,4 @@
-baseURL = "https://mhausenblas.github.io/kbe"
+baseURL = "http://kubernetesbyexample.com"
 DefaultContentLanguage = "en"
 title = "Kubernetes By Example"
 theme = "beautifulhugo"
@@ -11,8 +11,7 @@ metaDataFormat = "yaml"
   favicon = "img/kbe-logo.png"
   dateFormat = "2006-01-02"
   commit = false
-  rss = true
-
+  rss = false
 
 [Author]
   name = "Michael Hausenblas"
