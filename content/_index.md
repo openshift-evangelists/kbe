@@ -1,4 +1,6 @@
 Browse the examples:
 
-- [Pods](/page/pods)
-- [Services](/page/services)
+- [Pods](/pods/)
+- [Services](/services/)
+
+Want to try it out yourself? Follow the instructions [here](/diy/).
