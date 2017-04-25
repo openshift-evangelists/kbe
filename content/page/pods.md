@@ -39,8 +39,8 @@ Note that `kubectl run` creates a deployment, so in order to get rid of the pod
 you have to execute `kubectl delete deployment sise`.
 
 
-Alternatively, a pod can be created from a configuration file, in this case
-[pod.yaml](https://github.com/mhausenblas/kbe/blob/master/specs/pods/pod.yaml),
+Alternatively you can create a pod can from a configuration file. In our case
+the [pod](https://github.com/mhausenblas/kbe/blob/master/specs/pods/pod.yaml) is
 running the already known `simpleservice` image from above along with
 a generic `CentOS` container:
 
@@ -61,7 +61,7 @@ $ kubectl exec twocontainers -c shell -i -t -- bash
 {"host": "localhost:9876", "version": "0.5.0", "from": "127.0.0.1"}
 ```
 
-To sum up, launching one or more containers in Kubernetes is simple, however
-doing it directly as shown above comes with a serious limitation: you have to
-manually take care of keeping it running in case of a failure. A much better way
+To sum up, launching one or more containers (together) in Kubernetes is simple,
+however doing it directly as shown above comes with a serious limitation: you have to
+manually take care of keeping them running in case of a failure. A much better way
 to supervise pods is to use [replication controllers](/rcs/).
