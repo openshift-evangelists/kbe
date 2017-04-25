@@ -1,8 +1,8 @@
 Browse the examples:
 
-- [Pods](/pods/)
-- [Labels](/labels/)
-- [Replication controllers](/rcs/)
-- [Services](/services/)
+- [pods](/pods/)
+- [labels](/labels/)
+- [replication controllers](/rcs/)
+- [services](/services/)
 
 Want to try it out yourself? Follow the instructions [here](/diy/).

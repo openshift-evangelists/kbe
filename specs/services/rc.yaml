@@ -1,14 +1,14 @@
 apiVersion: v1
 kind: ReplicationController
 metadata:
-  name: sise
+  name: rcsise
 spec:
   replicas: 1
   selector:
     app: sise
   template:
     metadata:
-      name: sise
+      name: somename
       labels:
         app: sise
     spec:
