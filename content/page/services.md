@@ -74,6 +74,9 @@ Session Affinity:       None
 No events.
 ```
 
+The service keeps track of the pods it forwards traffic to through the label,
+in our case `app=sise`.
+
 From within the cluster we can now access `simpleservice` like so:
 
 ```bash
