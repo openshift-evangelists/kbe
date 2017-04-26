@@ -6,5 +6,6 @@ Browse the examples:
 - [services](/services/)
 - [health checks](/healthz/)
 - [environment variables](/envs/)
+- [namespaces](/ns/)
 
 Want to try it out yourself? Follow the instructions [here](/diy/).
