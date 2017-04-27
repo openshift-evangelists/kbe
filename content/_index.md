@@ -12,6 +12,7 @@ Browse the examples:
 - [secrets](/secrets/)
 - [logging](/logging/)
 - [jobs](/jobs/)
+- [nodes](/nodes/)
 
 
 Want to try it out yourself? Follow the instructions [here](/diy/).
