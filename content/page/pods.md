@@ -35,8 +35,8 @@ which we've learned from the `kubectl describe` command above:
 {"host": "172.17.0.3:9876", "version": "0.5.0", "from": "172.17.0.1"}
 ```
 
-Note that `kubectl run` creates a deployment, so in order to get rid of the pod
-you have to execute `kubectl delete deployment sise`.
+Note that `kubectl run` creates a [deployment](/deployments/), so in order to
+get rid of the pod you have to execute `kubectl delete deployment sise`.
 
 
 Alternatively you can create a pod can from a configuration file. In our case
@@ -63,5 +63,6 @@ $ kubectl exec twocontainers -c shell -i -t -- bash
 
 To sum up, launching one or more containers (together) in Kubernetes is simple,
 however doing it directly as shown above comes with a serious limitation: you have to
-manually take care of keeping them running in case of a failure. A much better way
-to supervise pods is to use [replication controllers](/rcs/).
+manually take care of keeping them running in case of a failure. A better way
+to supervise pods is to use [replication controllers](/rcs/), or even better
+[deployments](/deployments), giving you much more control.

@@ -3,6 +3,7 @@ Browse the examples:
 - [pods](/pods/)
 - [labels](/labels/)
 - [replication controllers](/rcs/)
+- [deployments](/deployments/)
 - [services](/services/)
 - [health checks](/healthz/)
 - [environment variables](/envs/)
@@ -11,5 +12,6 @@ Browse the examples:
 - [secrets](/secrets/)
 - [logging](/logging/)
 - [jobs](/jobs/)
+
 
 Want to try it out yourself? Follow the instructions [here](/diy/).
