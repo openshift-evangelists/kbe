@@ -10,5 +10,6 @@ Browse the examples:
 - [volumes](/volumes/)
 - [secrets](/secrets/)
 - [logging](/logging/)
+- [jobs](/jobs/)
 
 Want to try it out yourself? Follow the instructions [here](/diy/).
