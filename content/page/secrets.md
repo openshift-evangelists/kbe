@@ -1,7 +1,7 @@
 +++
 title = "Secrets"
 subtitle = "Kubernetes secrets by example"
-date = "2017-04-26"
+date = "2017-04-27"
 url = "/secrets/"
 +++
 

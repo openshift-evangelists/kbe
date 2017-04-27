@@ -1,7 +1,7 @@
 +++
 title = "Volumes"
 subtitle = "Kubernetes volumes by example"
-date = "2017-04-24"
+date = "2017-04-27"
 url = "/volumes/"
 +++
 

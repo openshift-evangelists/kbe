@@ -9,5 +9,6 @@ Browse the examples:
 - [namespaces](/ns/)
 - [volumes](/volumes/)
 - [secrets](/secrets/)
+- [logging](/logging/)
 
 Want to try it out yourself? Follow the instructions [here](/diy/).
