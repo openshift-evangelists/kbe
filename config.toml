@@ -3,7 +3,7 @@ DefaultContentLanguage = "en"
 title = "Kubernetes By Example"
 theme = "beautifulhugo"
 metaDataFormat = "yaml"
-#googleAnalytics = "XXX"
+googleAnalytics = "UA-34425776-2"
 
 [Params]
   subtitle = "A hands-on introduction to Kubernetes"
