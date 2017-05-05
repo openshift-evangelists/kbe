@@ -5,28 +5,34 @@ date = "2017-04-27"
 url = "/deployments/"
 +++
 
-A deployment is a supervisor for [pods](/pods/), giving you fine-grained control over how
+A deployment is a supervisor for [pods](/pods/) and [replica sets](/rcs/), giving you fine-grained control over how
 and when a new pod version is rolled out as well as rolled back to a previous state.
 
 Let's create a [deployment](https://github.com/mhausenblas/kbe/blob/master/specs/deployments/d09.yaml)
-called `sise-deploy` that supervises two replicas of a pod:
+called `sise-deploy` that supervises two replicas of a pod as well as a replica set:
 
 ```bash
 $ kubectl create -f https://raw.githubusercontent.com/mhausenblas/kbe/master/specs/deployments/d09.yaml
 ```
 
-You can see the deployment and the pod it looks after like so:
+You can see the deployment, the replica set and the pods it looks after like so:
 
 ```bash
 $ kubectl get deploy
 NAME          DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
 sise-deploy   2         2         2            2           10s
 
+$ kubectl get rs
+NAME                     DESIRED   CURRENT   READY     AGE
+sise-deploy-3513442901   2         2         2         19s
+
 $ kubectl get pods
 NAME                           READY     STATUS    RESTARTS   AGE
-sise-deploy-3513442901-cndsx   1/1       Running   0          15s
-sise-deploy-3513442901-sn74v   1/1       Running   0          15s
+sise-deploy-3513442901-cndsx   1/1       Running   0          25s
+sise-deploy-3513442901-sn74v   1/1       Running   0          25s
 ```
+
+Note the naming of the pods and replica set, derived from the deployment name.
 
 At this point in time the `sise` containers running in the pods are configured
 to return the version `0.9`. Let's verify that from within the cluster (using `kubectl describe`
@@ -58,6 +64,15 @@ sise-deploy-2958877261-nfv28   1/1       Running       0          25s
 sise-deploy-2958877261-w024b   1/1       Running       0          25s
 sise-deploy-3513442901-cndsx   1/1       Terminating   0          16m
 sise-deploy-3513442901-sn74v   1/1       Terminating   0          16m
+```
+
+Also, a new replica set has been created by the deployment:
+
+```bash
+$ kubectl get rs
+NAME                     DESIRED   CURRENT   READY     AGE
+sise-deploy-2958877261   2         2         2         4s
+sise-deploy-3513442901   0         0         0         24m
 ```
 
 Note that during the deployment you can check the progress using `kubectl rollout status deploy/sise-deploy`.
@@ -103,7 +118,8 @@ sise-deploy-3513442901-s8q4s   1/1       Running   0          1m
 At this point in time we're back at where we started, with two new pods serving
 again version `0.9`.
 
-Finally, to clean up, we remove the deployment and with it the pods it supervises:
+Finally, to clean up, we remove the deployment and with it the replica sets and
+pods it supervises:
 
 ```bash
 $ kubectl delete deploy sise-deploy
