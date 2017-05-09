@@ -1,4 +1,4 @@
-Browse the examples:
+This is a a hands-on introduction to Kubernetes. Browse the examples:
 
 - [pods](/pods/)
 - [labels](/labels/)
@@ -15,4 +15,5 @@ Browse the examples:
 - [nodes](/nodes/)
 
 
-Want to try it out yourself? Follow the instructions [here](/diy/).
+Want to try it out yourself? Follow the instructions [here](/diy/) for a local
+setup or sign up for [OpenShift.io](https://openshift.io/) for an online environment.
