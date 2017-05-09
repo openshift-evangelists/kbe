@@ -5,6 +5,7 @@ This is a hands-on introduction to Kubernetes. Browse the examples:
 - [replication controllers](/rcs/)
 - [deployments](/deployments/)
 - [services](/services/)
+- [service discovery](/sd/)
 - [health checks](/healthz/)
 - [environment variables](/envs/)
 - [namespaces](/ns/)
