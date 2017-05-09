@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: ready
+spec:
+  containers:
+  - name: sise
+    image: mhausenblas/simpleservice:0.5.0
+    ports:
+    - containerPort: 9876
+    readinessProbe:
+      initialDelaySeconds: 10
+      httpGet:
+        path: /health
+        port: 9876

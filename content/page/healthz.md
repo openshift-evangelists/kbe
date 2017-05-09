@@ -5,11 +5,16 @@ date = "2017-04-25"
 url = "/healthz/"
 +++
 
-In order to verify if a container in a pod is in a state to serve traffic,
-Kubernetes provides for a range of health checking mechanisms. We will
-focus on HTTP health checks in the following. It is the responsibility
-of the application developer to expose an endpoint that Kubernetes can
-use to determine if the container is healthy.
+In order to verify if a container in a pod is healthy and ready to serve traffic,
+Kubernetes provides for a range of health checking mechanisms. Health checks,
+or probes as they are called in Kubernetes, are carried out
+by the [kubelet](https://kubernetes.io/docs/admin/kubelet/) to determine when to
+restart a container (for `livenessProbe`) and by [services](/services/) to
+determine if a pod should receive traffic or not (for `readinessProbe`).
+
+We will focus on HTTP health checks in the following. Note that it is the responsibility
+of the application developer to expose a URL that the kubelet can
+use to determine if the container is healthy (and potentially ready).
 
 Let's create a [pod](https://github.com/mhausenblas/kbe/blob/master/specs/healthz/pod.yaml)
 that exposes an endpoint `health/`, responding with a HTTP `200` status code:
@@ -91,3 +96,34 @@ hc                        1/1       Running   0          6m
 
 From above you can see that the `badpod` had already been re-launched 4 times,
 since the health check failed.
+
+In addition to a `livenessProbe` you can also specify a `readinessProbe`, which
+can be configured in the same way but has a different use case and semantics:
+it's used to check the start-up phase of a container in the pod. Imagine a container
+that loads some data from external storage such as S3 or a database that needs
+to initialize some tables. In this case you want to signal when the container is
+ready to serve traffic.
+
+Let's create a [pod](https://github.com/mhausenblas/kbe/blob/master/specs/healthz/ready.yaml)
+with a `readinessProbe` that kicks in after 10 seconds:
+
+```bash
+$ kubectl create -f https://raw.githubusercontent.com/mhausenblas/kbe/master/specs/healthz/ready.yaml
+```
+
+Looking at the events of the pod, we can see that, eventually, the pod is ready
+to serve traffic:
+
+```bash
+$ kubectl describe pod ready
+...
+Conditions:                                                                                                                                                               [0/1888]
+  Type          Status
+  Initialized   True
+  Ready         True
+  PodScheduled  True
+...
+```
+
+Learn more about configuring probes, including TCP and command probes, via the
+[docs](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/).
