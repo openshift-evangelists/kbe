@@ -17,3 +17,11 @@ googleAnalytics = "UA-34425776-2"
   name = "Michael Hausenblas"
   github = "mhausenblas"
   twitter = "mhausenblas"
+
+[[menu.main]]
+  name = "Try out!"
+  url = "diy/"
+
+[[menu.main]]
+  name = "Contribute"
+  url = "https://github.com/mhausenblas/kbe"
