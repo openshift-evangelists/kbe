@@ -8,7 +8,7 @@ googleAnalytics = "UA-34425776-2"
 [Params]
   subtitle = "Brought to you by the OpenShift team"
   logo = "img/kbe-logo.png"
-  favicon = "img/kbe-logo.png"
+  favicon = "img/kbe-logo.ico"
   dateFormat = "2006-01-02"
   commit = false
   rss = false
