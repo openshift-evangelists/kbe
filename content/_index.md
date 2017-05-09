@@ -1,4 +1,4 @@
-This is a a hands-on introduction to Kubernetes. Browse the examples:
+This is a hands-on introduction to Kubernetes. Browse the examples:
 
 - [pods](/pods/)
 - [labels](/labels/)
