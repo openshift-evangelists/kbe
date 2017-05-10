@@ -5,12 +5,12 @@ date = "2017-04-24"
 url = "/pods/"
 +++
 
-The basic unit of deployment in Kubernetes is a pod. A pod is a collection of
-containers sharing a network and mount namespace with the guarantee that all of
-the containers are scheduled on the same node.
+A pod is a collection of containers sharing a network and mount namespace
+and is the basic unit of deployment in Kubernetes. All containers in a pod
+are scheduled on the same node.
 
-To launch a pod using a [Docker image](https://github.com/mhausenblas/simpleservice)
-that exposes a HTTP API at port `9876`, execute:
+To launch a pod using the container [image](https://hub.docker.com/r/mhausenblas/simpleservice/)
+`mhausenblas/simpleservice:0.5.0` and exposing a HTTP API on port `9876`, execute:
 
 ```bash
 $ kubectl run sise --image=mhausenblas/simpleservice:0.5.0 --port=9876
@@ -60,6 +60,30 @@ $ kubectl exec twocontainers -c shell -i -t -- bash
 [root@twocontainers /]# curl localhost:9876/info
 {"host": "localhost:9876", "version": "0.5.0", "from": "127.0.0.1"}
 ```
+
+Specify the `resources` field in the pod to influence how much CPU and/or RAM a
+container in a [pod](https://github.com/mhausenblas/kbe/blob/master/specs/pods/constraint-pod.yaml)
+can use (here: `64MB` of RAM and `0.5` CPUs):
+
+```bash
+$ kubectl create -f https://raw.githubusercontent.com/mhausenblas/kbe/master/specs/pods/constraint-pod.yaml
+
+$ kubectl describe pod constraintpod
+...
+Containers:
+  sise:
+    ...
+    Limits:
+      cpu:      500m
+      memory:   64Mi
+    Requests:
+      cpu:      500m
+      memory:   64Mi
+...
+```
+
+Learn more about resource constraints in Kubernetes via the docs [here](https://kubernetes.io/docs/tasks/configure-pod-container/assign-cpu-ram-container/)
+and [here](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/).
 
 To sum up, launching one or more containers (together) in Kubernetes is simple,
 however doing it directly as shown above comes with a serious limitation: you have to
