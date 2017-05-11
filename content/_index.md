@@ -17,4 +17,4 @@ This is a hands-on introduction to Kubernetes. Browse the examples:
 
 
 Want to try it out yourself? Follow the instructions [here](/diy/) for a local
-setup or sign up for [OpenShift.io](https://openshift.io/) for an online environment.
+setup or sign up for [OpenShift.com](https://openshift.com/) for an online environment.
