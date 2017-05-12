@@ -109,7 +109,7 @@ Let’s now add a second pod by scaling up the RC supervising it:
 $ kubectl scale --replicas=2 rc/rcsise
 replicationcontroller "rcsise" scaled
 
-$ kubectl gkubectl get pods -l app=sise
+$ kubectl get pods -l app=sise
 NAME           READY     STATUS    RESTARTS   AGE
 rcsise-6nq3k   1/1       Running   0          15m
 rcsise-nv8zm   1/1       Running   0          5s
