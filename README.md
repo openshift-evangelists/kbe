@@ -12,7 +12,8 @@ for the content in Markdown and [specs/](specs/) for respective YAML specificati
 
 ## Build locally
 
-Local preview (in top-level dir):
+1. Install `hugo` by referring [installation guide](https://gohugo.io/overview/installing)
+1. Get your local preview by running following command in top-level dir:
 
 ```bash
 hugo server --theme=beautifulhugo --buildDrafts
