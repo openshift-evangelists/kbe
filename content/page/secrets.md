@@ -6,7 +6,7 @@ url = "/secrets/"
 +++
 
 You don't want sensitive information such as a database password or an
-API key keep around in clear text. Secrets provide you with a mechanism
+API key kept around in clear text. Secrets provide you with a mechanism
 to use such information in a safe and reliable way with the following properties:
 
 - Secrets are namespaced objects, that is, exist in the context of a namespace
