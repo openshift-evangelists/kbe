@@ -12,7 +12,7 @@ container produces available, which is a good use case for debugging. More advan
 them in a central place, either within the cluster or via a dedicated (cloud-based) service.
 
 Let's create a [pod](https://github.com/mhausenblas/kbe/blob/master/specs/logging/pod.yaml)
-called `logme` now that runs a container writing to `stdout` and `stderr`:
+called `logme` that runs a container writing to `stdout` and `stderr`:
 
 ```bash
 $ kubectl create -f https://raw.githubusercontent.com/mhausenblas/kbe/master/specs/logging/pod.yaml
