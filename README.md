@@ -12,25 +12,41 @@ for the content in Markdown and [specs/](specs/) for respective YAML specificati
 
 ## Build locally
 
-1. Install `hugo` by referring [installation guide](https://gohugo.io/overview/installing)
-1. Get your local preview by running following command in top-level dir:
+1. Install `hugo` following the installation [guide](https://gohugo.io/overview/installing)
+1. Get your local preview by running following command in the top-level dir:
 
 ```bash
-hugo server --theme=beautifulhugo --buildDrafts
+$ hugo server --theme=beautifulhugo --buildDrafts
 ```
 
 ## Publish
 
 For site admins only, requires push access to this repo.
 
+### Init
+
+Initially, that is, the first time when you git clone this repo you will have to
+carry out the following steps to set up the publishing workflow:
+
+- in `public/` do:
+  - `git init` followed by a
+  - `git remote add origin git@github.com:osevg/kbe.git` and finally a
+  - `git checkout -b gh-pages`
+- in `public/` create a file `CNAME` with the content `kubernetesbyexample.com`
+- from this moment on the publish workflow is the same as described below
+
+### Updates
+
+To update the live site with new content:
+
 ```bash
 # still in top-level dir build the content in public/ dir:
-hugo --theme=beautifulhugo
+$ hugo --theme=beautifulhugo
 # add generated content (which lives in the gh-pages branch):
-cd public/
-git add --all
-git commit -m "publishes site"
-git push -f origin gh-pages
+$ cd public/
+$ git add --all
+$ git commit -m "publishes site"
+$ git push -f origin gh-pages
 ```
 
 ## References
