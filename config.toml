@@ -24,4 +24,4 @@ googleAnalytics = "UA-34425776-2"
 
 [[menu.main]]
   name = "Contribute"
-  url = "https://github.com/osevg/kbe"
+  url = "https://github.com/openshift-evangelists/kbe"
