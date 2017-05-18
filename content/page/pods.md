@@ -27,7 +27,7 @@ $ kubectl describe pod sise-3210265840-k705b | grep IP:
 IP:                     172.17.0.3
 ```
 
-From within the cluster (e.g. via `minishit ssh`) this pod is accessible via the pod IP `172.17.0.3`,
+From within the cluster (e.g. via `minishift ssh`) this pod is accessible via the pod IP `172.17.0.3`,
 which we've learned from the `kubectl describe` command above:
 
 ```bash
