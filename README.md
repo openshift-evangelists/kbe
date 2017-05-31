@@ -1,7 +1,6 @@
-# KBE site code
+# Kubernetes By Example (KBE)
 
-This is the source code for `kubernetesbyexample.com` using [Hugo](https://gohugo.io)
-as the engine.
+This repository contains the source code for website [`kubernetesbyexample.com`](http://kubernetesbyexample.com) using [Hugo](https://gohugo.io) as the website engine.
 
 ## Contribute
 
