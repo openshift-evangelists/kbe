@@ -20,7 +20,7 @@ NAME             STATUS    AGE
 ```
 
 One interesting task, from a developer point of view, is to make Kubernetes
-schedule a pod on a certain task. For this, we first need to label the node
+schedule a pod on a certain node. For this, we first need to label the node
 we want to target:
 
 ```bash
