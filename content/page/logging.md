@@ -5,7 +5,7 @@ date = "2017-04-27"
 url = "/logging/"
 +++
 
-Logging is one option to understand what it going on inside your applications
+Logging is one option to understand what is going on inside your applications
 and the cluster at large. Basic logging in Kubernetes makes the output a
 container produces available, which is a good use case for debugging. More advanced
 [setups](http://some.ops4devs.info/logging/) consider logs across nodes and store
