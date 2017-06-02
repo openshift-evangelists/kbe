@@ -29,7 +29,7 @@ node "192.168.99.100" labeled
 ```
 
 Now we can create a [pod](https://github.com/mhausenblas/kbe/blob/master/specs/nodes/pod.yaml)
-that gets scheduled on the node we've with the label `shouldrun=here`:
+that gets scheduled on the node with the label `shouldrun=here`:
 
 ```bash
 $ kubectl create -f https://raw.githubusercontent.com/mhausenblas/kbe/master/specs/nodes/pod.yaml
