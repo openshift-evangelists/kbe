@@ -1,12 +1,12 @@
-apiVersion: v1
-kind: Pod
+apiVersion:   v1
+kind:         Pod
 metadata:
-  name: jumpod
+  name:       jumpod
 spec:
   containers:
-  - name: shell
-    image: centos:7
+  - name:     shell
+    image:    centos:7
     command:
       - "bin/bash"
       - "-c"
-      - "yum -y install bind-utils && sleep 10000"
+      - "sleep 10000"
