@@ -84,3 +84,5 @@ podintest   1/1       Running   0          16s
 
 If you're an admin, you might want to check out the [docs](https://kubernetes.io/docs/tasks/administer-cluster/namespaces/)
 for more info how to handle namespaces.
+
+[Previous](/envs) | [Next](/volumes)

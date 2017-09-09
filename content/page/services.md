@@ -138,3 +138,5 @@ In above routing table listing we see rules for the newly created pod serving at
 
 This causes the traffic to the service being equally split between our two pods
 by invoking the `statistics` module of IPtables.
+
+[Previous](/deployments) | [Next](/sd)

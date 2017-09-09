@@ -56,3 +56,5 @@ A19fh68B001j
 
 Note that for service accounts Kubernetes automatically creates secrets containing
 credentials for accessing the API and modifies your pods to use this type of secret.
+
+[Previous](/volumes) | [Next](/logging)

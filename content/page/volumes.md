@@ -58,3 +58,5 @@ some data
 
 Note that in each container you need to decide where to mount the volume and
 that for `emptyDir` you currently can not specify resource consumption limits.
+
+[Previous](/ns) | [Next](/secrets)

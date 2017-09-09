@@ -58,3 +58,5 @@ ROUTER_PORT=tcp://172.30.246.127:80
 
 In addition to the above provided environment variables, you can expose more using
 the [downward API](https://kubernetes.io/docs/user-guide/downward-api/).
+
+[Previous](/healthz) | [Next](/ns)

@@ -50,7 +50,7 @@ Labels:			beta.kubernetes.io/arch=amd64
 			shouldrun=here
 Taints:			<none>
 CreationTimestamp:	Wed, 12 Apr 2017 17:17:13 +0100
-Phase:			
+Phase:
 Conditions:
   Type			Status	LastHeartbeatTime			LastTransitionTime			Reason				Message
   ----			------	-----------------			------------------			------				-------
@@ -94,3 +94,5 @@ Allocated resources:
   200m (10%)	0 (0%)		512Mi (25%)	0 (0%)
 No events.
 ```
+
+[Previous](/jobs)

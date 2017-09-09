@@ -73,3 +73,5 @@ labelexother   1/1       Running   0          3m
 
 Note that labels are not restricted to pods. In fact you can apply them to
 all sorts of objects, such as nodes or services.
+
+[Previous](/pods) | [Next](/rcs)
