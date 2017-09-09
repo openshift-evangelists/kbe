@@ -97,7 +97,7 @@ REVISION        CHANGE-CAUSE
 
 If there are problems in the deployment Kubernetes will automatically roll back to
 the previous version, however you can also explicitly roll back to a specific revision,
-as in our case to revision 1 (the original pod version ):
+as in our case to revision 1 (the original pod version):
 
 ```bash
 $ kubectl rollout undo deploy/sise-deploy --to-revision=1

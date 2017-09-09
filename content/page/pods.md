@@ -39,8 +39,10 @@ Note that `kubectl run` creates a [deployment](/deployments/), so in order to
 get rid of the pod you have to execute `kubectl delete deployment sise`.
 
 
-Alternatively you can create a pod from a configuration file. In our case
-the [pod](https://github.com/mhausenblas/kbe/blob/master/specs/pods/pod.yaml) is
+#### Using configuration file
+
+You can also create a pod from a configuration file.
+In this case the [pod](https://github.com/mhausenblas/kbe/blob/master/specs/pods/pod.yaml) is
 running the already known `simpleservice` image from above along with
 a generic `CentOS` container:
 
@@ -57,7 +59,7 @@ on localhost:
 
 ```bash
 $ kubectl exec twocontainers -c shell -i -t -- bash
-[root@twocontainers /]# curl localhost:9876/info
+[root@twocontainers /]# curl -s localhost:9876/info
 {"host": "localhost:9876", "version": "0.5.0", "from": "127.0.0.1"}
 ```
 

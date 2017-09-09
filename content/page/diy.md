@@ -9,18 +9,18 @@ If you want to try out the examples here yourself, you can use the same setup
 I've got locally running on my machine:
 
 1. Install [Minishift](https://docs.openshift.org/latest/minishift/getting-started/installing.html)
-1. Install [oc](https://docs.openshift.org/latest/cli_reference/get_started_cli.html#installing-the-cli)
 1. Run `minishift start`
+1. Configure OpenShift Client binary (`oc`) by running `eval $(minishift oc-env)`
 1. Log in using `oc login -u system:admin` with password `admin`
-1. Create a symlink from `oc` like so:  `ln -s oc kubectl`
+1. Create a symlink from `oc` like so:  `ln -s $(which oc) /usr/local/bin/kubectl`
 
-All examples have been carried out with the following version, that is, [oc 1.4.1](https://github.com/openshift/origin/releases/tag/v1.4.1) and [Minishift 1.0.0-rc.1](https://github.com/minishift/minishift/releases/tag/v1.0.0-rc.1) (i.e., Kubernetes 1.5):
+All examples have been carried out with Minishift version [v1.7.0](https://github.com/minishift/minishift/releases/tag/v1.7.0) and OpenShift Client Binary (`oc`) version [v3.6.0](https://github.com/openshift/origin/releases/tag/v3.6.0) (i.e. Kubernetes [v1.6.1](https://github.com/kubernetes/kubernetes/releases/tag/v1.6.1))
 
 ```bash
 $ minishift version
-Minishift version: 1.0.0-rc.1
+minishift v1.7.0+15491358
 
 $ kubectl version
-Client Version: version.Info{Major:"1", Minor:"4", GitVersion:"v1.4.0+776c994", GitCommit:"a9e9cf3", GitTreeState:"clean", BuildDate:"2017-01-24T15:12:46Z", GoVersion:"go1.7.4", Compiler:"gc", Platform:"darwin/amd64"}
-Server Version: version.Info{Major:"1", Minor:"5", GitVersion:"v1.5.2+43a9be4", GitCommit:"43a9be4", GitTreeState:"clean", BuildDate:"2017-03-09T19:51:29Z", GoVersion:"go1.7.4", Compiler:"gc", Platform:"linux/amd64"}
+Client Version: version.Info{Major:"1", Minor:"6", GitVersion:"v1.6.1+5115d708d7", GitCommit:"fff65cf", GitTreeState:"clean", BuildDate:"2017-07-30T21:47:33Z", GoVersion:"go1.7.6", Compiler:"gc", Platform:"linux/amd64"}
+Server Version: version.Info{Major:"1", Minor:"6", GitVersion:"v1.6.1+5115d708d7", GitCommit:"fff65cf", GitTreeState:"clean", BuildDate:"2017-08-01T06:24:02Z", GoVersion:"go1.7.6", Compiler:"gc", Platform:"linux/amd64"}
 ```
