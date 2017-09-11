@@ -76,3 +76,5 @@ $ kubectl exec jumpod -c shell -i -t -- curl http://thesvc.other/info
 
 Summing up, DNS-based service discovery provides a flexible and generic way to
 connect to services across the cluster.
+
+[Previous](/services) | [Next](/healthz)

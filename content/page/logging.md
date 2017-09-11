@@ -63,3 +63,5 @@ $ kubectl logs -p oneshot -c gen
 2
 1
 ```
+
+[Previous](/secrets) | [Next](/jobs)
