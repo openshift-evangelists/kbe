@@ -17,7 +17,7 @@ of the application developer to expose a URL that the kubelet can
 use to determine if the container is healthy (and potentially ready).
 
 Let's create a [pod](https://github.com/mhausenblas/kbe/blob/master/specs/healthz/pod.yaml)
-that exposes an endpoint `health/`, responding with a HTTP `200` status code:
+that exposes an endpoint `/health`, responding with a HTTP `200` status code:
 
 ```bash
 $ kubectl create -f https://raw.githubusercontent.com/mhausenblas/kbe/master/specs/healthz/pod.yaml
@@ -34,8 +34,7 @@ livenessProbe:
     port: 9876
 ```
 
-Above means that Kubernetes will after 2 seconds check the `health/` endpoint
-every 5 seconds.
+Above means that Kubernetes will start checking `/health` endpoint in every 5 seconds after waiting 2 seconds for the first check.
 
 If we now look at the pod we can see that it is considered healthy:
 
