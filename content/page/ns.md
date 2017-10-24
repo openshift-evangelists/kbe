@@ -74,7 +74,7 @@ metadata:
   namespace: test
 ```
 
-To list namespaced objects such as our pod `podintest`, you execute:
+To list namespaced objects such as our pod `podintest`, run following command as:
 
 ```bash
 $ kubectl get pods --namespace=test

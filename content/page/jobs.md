@@ -5,7 +5,7 @@ date = "2017-04-27"
 url = "/jobs/"
 +++
 
-A jobs is a supervisor for pods carrying out batch processes, that is,
+A job is a supervisor for pods carrying out batch processes, that is,
 a process that runs for a certain time to completion, for example a calculation
 or a backup operation.
 

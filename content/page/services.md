@@ -35,7 +35,7 @@ $ kubectl describe pod rcsise-6nq3k
 Name:                   rcsise-6nq3k
 Namespace:              default
 Security Policy:        restricted
-Node:                   192.168.99.100/192.168.99.100
+Node:                   localhost/192.168.99.100
 Start Time:             Tue, 25 Apr 2017 14:47:45 +0100
 Labels:                 app=sise
 Status:                 Running
@@ -54,7 +54,7 @@ assigned IP `172.17.0.3`:
 ```
 
 This is however, as mentioned above, not advisable since the IPs assigned
-to pods may change. Enter the `simpleservice` we've created:
+to pods may change. Hence, enter the `simpleservice` we've created:
 
 ```bash
 $ kubectl get svc
