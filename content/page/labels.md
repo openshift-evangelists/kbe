@@ -71,6 +71,23 @@ labelex        1/1       Running   0          43m
 labelexother   1/1       Running   0          3m
 ```
 
+Other verbs also support label selection, for example, you could
+remove both of these pods with:
+
+```bash
+$ kubectl delete pods -l 'env in (production, development)'
+```
+
+Beware that this will destroy any pods with those labels.
+
+You can also delete them normally with:
+
+```bash
+$ kubectl delete pods labelex
+
+$ kubectl delete pods labelexother
+```
+
 Note that labels are not restricted to pods. In fact you can apply them to
 all sorts of objects, such as nodes or services.
 
