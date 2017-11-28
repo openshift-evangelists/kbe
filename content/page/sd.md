@@ -77,4 +77,18 @@ $ kubectl exec jumpod -c shell -i -t -- curl http://thesvc.other/info
 Summing up, DNS-based service discovery provides a flexible and generic way to
 connect to services across the cluster.
 
+You can destroy all the resources created with:
+
+```bash
+$ kubectl delete pods jumpod
+
+$ kubectl delete svc thesvc
+
+$ kubectl delete rc rcsise
+
+$ kubectl delete ns other
+```
+
+Keep in mind that removing a namespace will destroy every resource inside.
+
 [Previous](/services) | [Next](/healthz)
