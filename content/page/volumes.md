@@ -59,4 +59,12 @@ some data
 Note that in each container you need to decide where to mount the volume and
 that for `emptyDir` you currently can not specify resource consumption limits.
 
+You can remove the pod with:
+
+```bash
+$ kubectl delete pod/sharevol
+```
+
+As already described, this will destroy the shared volume and all its contents.
+
 [Previous](/ns) | [Next](/secrets)

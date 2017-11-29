@@ -64,4 +64,10 @@ $ kubectl logs -p oneshot -c gen
 1
 ```
 
+You can remove the created pods with:
+
+```bash
+$ kubectl delete pod/logme pod/oneshot
+```
+
 [Previous](/secrets) | [Next](/jobs)

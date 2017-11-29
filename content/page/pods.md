@@ -87,6 +87,14 @@ Containers:
 Learn more about resource constraints in Kubernetes via the docs [here](https://kubernetes.io/docs/tasks/configure-pod-container/assign-cpu-ram-container/)
 and [here](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/).
 
+To remove all the pods created, just run:
+
+```bash
+$ kubectl delete pod twocontainers
+
+$ kubectl delete pod constraintpod
+```
+
 To sum up, launching one or more containers (together) in Kubernetes is simple,
 however doing it directly as shown above comes with a serious limitation: you have to
 manually take care of keeping them running in case of a failure. A better way

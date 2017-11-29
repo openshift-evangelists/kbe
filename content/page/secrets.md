@@ -57,4 +57,10 @@ A19fh68B001j
 Note that for service accounts Kubernetes automatically creates secrets containing
 credentials for accessing the API and modifies your pods to use this type of secret.
 
+You can remove both the pod and the secret with
+
+```bash
+$ kubectl delete pod/consumesec secret/apikey
+```
+
 [Previous](/volumes) | [Next](/logging)

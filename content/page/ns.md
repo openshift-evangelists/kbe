@@ -82,6 +82,12 @@ NAME        READY     STATUS    RESTARTS   AGE
 podintest   1/1       Running   0          16s
 ```
 
+You can remove the namespace (and everything inside) with:
+
+```bash
+$ kubectl delete ns test
+```
+
 If you're an admin, you might want to check out the [docs](https://kubernetes.io/docs/tasks/administer-cluster/namespaces/)
 for more info how to handle namespaces.
 

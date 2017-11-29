@@ -56,6 +56,12 @@ ROUTER_PORT=tcp://172.30.246.127:80
 ...
 ```
 
+You can destroy the created pod with:
+
+```bash
+$ kubectl delete pod/envs
+```
+
 In addition to the above provided environment variables, you can expose more using
 the [downward API](https://kubernetes.io/docs/user-guide/downward-api/).
 

@@ -123,6 +123,11 @@ Conditions:                                                                     
   PodScheduled  True
 ...
 ```
+You can remove all the created pods with:
+
+```bash
+$ kubectl delete pod/hc pod/ready pod/badpod
+```
 
 Learn more about configuring probes, including TCP and command probes, via the
 [docs](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/).
