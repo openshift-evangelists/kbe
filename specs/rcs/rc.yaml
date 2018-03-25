@@ -1,19 +1,19 @@
 apiVersion: v1
 kind: ReplicationController
 metadata:
-  name: rcex
+  name: rchelloapp
 spec:
   replicas: 1
   selector:
-    app: sise
+    app: helloapp
   template:
     metadata:
-      name: somename
+      name: myhelloapp
       labels:
-        app: sise
+        app: helloapp
     spec:
       containers:
-      - name: sise
-        image: mhausenblas/simpleservice:0.5.0
+      - name: helloapp
+        image: helloapp:v1
         ports:
-        - containerPort: 9876
+        - containerPort: 8080
