@@ -1,0 +1,27 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: sise-deploy
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: sise
+    spec:
+      containers:
+      - name: sise
+        image: mhausenblas/simpleservice:0.5.0
+        ports:
+        - containerPort: 9876
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: simpleservice
+spec:
+  ports:
+    - port: 80
+      targetPort: 9876
+  selector:
+    app: sise
