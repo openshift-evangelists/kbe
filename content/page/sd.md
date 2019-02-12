@@ -32,7 +32,7 @@ The DNS add-on will make sure that our service `thesvc` is available via the FQD
 
 ```bash
 $ kubectl exec jumpod -c shell -i -t -- ping thesvc.default.svc.cluster.local
-PING thesvc.reshifter.svc.cluster.local (172.30.251.137) 56(84) bytes of data.
+PING thesvc.default.svc.cluster.local (172.30.251.137) 56(84) bytes of data.
 ...
 ```
 
