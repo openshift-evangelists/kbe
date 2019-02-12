@@ -6,6 +6,7 @@ This is a hands-on introduction to Kubernetes. Browse the examples:
 - [deployments](/deployments/)
 - [services](/services/)
 - [service discovery](/sd/)
+- [port forward](/pf/)
 - [health checks](/healthz/)
 - [environment variables](/envs/)
 - [namespaces](/ns/)
