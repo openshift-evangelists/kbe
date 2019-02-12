@@ -29,7 +29,7 @@ carry out the following steps to set up the publishing workflow:
 
 - in `public/` do:
   - `git init` followed by a
-  - `git remote add origin git@github.com:openshift-evangelists/kbe.git` and finally a
+  - `git remote add origin https://github.com/openshift-evangelists/kbe.git` and finally a
   - `git checkout -b gh-pages`
 - in `public/` create a file `CNAME` with the content `kubernetesbyexample.com`
 - from this moment on the publish workflow is the same as described below
