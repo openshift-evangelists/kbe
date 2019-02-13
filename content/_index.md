@@ -15,6 +15,7 @@ This is a hands-on introduction to Kubernetes. Browse the examples:
 - [logging](/logging/)
 - [jobs](/jobs/)
 - [nodes](/nodes/)
+- [API server](/api/)
 
 
 Want to try it out yourself? You can run all this on Red Hat's distribution of
