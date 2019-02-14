@@ -11,6 +11,7 @@ This is a hands-on introduction to Kubernetes. Browse the examples:
 - [environment variables](/envs/)
 - [namespaces](/ns/)
 - [volumes](/volumes/)
+- [persistent volumes](/pv/)
 - [secrets](/secrets/)
 - [logging](/logging/)
 - [jobs](/jobs/)
