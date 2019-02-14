@@ -67,4 +67,4 @@ $ kubectl delete pod/sharevol
 
 As already described, this will destroy the shared volume and all its contents.
 
-[Previous](/ns) | [Next](/secrets)
+[Previous](/ns) | [Next](/pv)
