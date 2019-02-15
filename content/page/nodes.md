@@ -95,4 +95,4 @@ Allocated resources:
 No events.
 ```
 
-[Previous](/jobs) | [Next](/api)
+[Previous](/statefulset) | [Next](/api)
