@@ -9,7 +9,7 @@ If you have a stateless app you want to use a deployment. However, for a statefu
 
 In order to see how this all plays together, we will be using an [educational Kubernetes-native NoSQL datastore](https://blog.openshift.com/kubernetes-statefulset-in-action/). 
 
-Let's start with creating the `StatefulSet` along with the persistent volumes and the headless service:
+Let's start with creating the [stateful app](https://raw.githubusercontent.com/mhausenblas/mehdb/master/app.yaml), that is, the `StatefulSet` along with the persistent volumes and the headless service:
 
 ```bash
 $ kubectl apply -f https://raw.githubusercontent.com/mhausenblas/mehdb/master/app.yaml

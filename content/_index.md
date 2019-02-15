@@ -15,6 +15,7 @@ This is a hands-on introduction to Kubernetes. Browse the examples:
 - [secrets](/secrets/)
 - [logging](/logging/)
 - [jobs](/jobs/)
+- [stateful sets](/statefulset/)
 - [nodes](/nodes/)
 - [API server](/api/)
 
