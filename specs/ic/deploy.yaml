@@ -1,0 +1,34 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: ic-deploy
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: ic
+    spec:
+      initContainers:
+      - name: msginit
+        image: centos:7
+        command:
+        - "bin/bash"
+        - "-c"
+        - "echo INIT_DONE > /ic/this"
+        volumeMounts:
+        - mountPath: /ic
+          name: msg
+      containers:
+      - name: main
+        image: centos:7
+        command:
+        - "bin/bash"
+        - "-c"
+        - "while true; do cat /ic/this; sleep 5; done"
+        volumeMounts:
+        - mountPath: /ic
+          name: msg
+      volumes:
+      - name: msg
+        emptyDir: {}
