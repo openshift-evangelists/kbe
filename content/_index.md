@@ -16,6 +16,7 @@ This is a hands-on introduction to Kubernetes. Browse the examples:
 - [logging](/logging/)
 - [jobs](/jobs/)
 - [stateful sets](/statefulset/)
+- [init containers](/ic/)
 - [nodes](/nodes/)
 - [API server](/api/)
 

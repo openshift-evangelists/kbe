@@ -95,4 +95,4 @@ Allocated resources:
 No events.
 ```
 
-[Previous](/statefulset) | [Next](/api)
+[Previous](/ic) | [Next](/api)

@@ -35,4 +35,4 @@ INIT_DONE
 If you want to learn more about init containers and related topics, check out the blog post [Kubernetes: A Pod’s Life](https://blog.openshift.com/kubernetes-pods-life/).
 
 
-[Previous](/sd) | [Next](/healthz)
+[Previous](/statefulset) | [Next](/nodes)

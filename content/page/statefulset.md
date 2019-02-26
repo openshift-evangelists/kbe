@@ -47,4 +47,4 @@ And indeed we see `0` keys being available, reported above.
 
 Note that sometimes a `StatefulSet` is not the best fit for your stateful app. You might be better off defining a [custom resource](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/) along with writing a custom controller to have finer-grained control over your workload.
 
-[Previous](/jobs) | [Next](/nodes)
+[Previous](/jobs) | [Next](/ic)
