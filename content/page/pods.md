@@ -1,7 +1,7 @@
 +++
 title = "Pods"
 subtitle = "Kubernetes pods by example"
-date = "2017-04-24"
+date = "2019-02-27"
 url = "/pods/"
 +++
 
@@ -42,12 +42,12 @@ get rid of the pod you have to execute `kubectl delete deployment sise`.
 #### Using configuration file
 
 You can also create a pod from a configuration file.
-In this case the [pod](https://github.com/mhausenblas/kbe/blob/master/specs/pods/pod.yaml) is
+In this case the [pod](https://github.com/openshift-evangelists/kbe/blob/master/specs/pods/pod.yaml) is
 running the already known `simpleservice` image from above along with
 a generic `CentOS` container:
 
 ```bash
-$ kubectl create -f https://raw.githubusercontent.com/mhausenblas/kbe/master/specs/pods/pod.yaml
+$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/master/specs/pods/pod.yaml
 
 $ kubectl get pods
 NAME                      READY     STATUS    RESTARTS   AGE
@@ -64,11 +64,11 @@ $ kubectl exec twocontainers -c shell -i -t -- bash
 ```
 
 Specify the `resources` field in the pod to influence how much CPU and/or RAM a
-container in a [pod](https://github.com/mhausenblas/kbe/blob/master/specs/pods/constraint-pod.yaml)
+container in a [pod](https://github.com/openshift-evangelists/kbe/blob/master/specs/pods/constraint-pod.yaml)
 can use (here: `64MB` of RAM and `0.5` CPUs):
 
 ```bash
-$ kubectl create -f https://raw.githubusercontent.com/mhausenblas/kbe/master/specs/pods/constraint-pod.yaml
+$ kubectl create -f https://raw.githubusercontent.com/openshift-evangelists/kbe/master/specs/pods/constraint-pod.yaml
 
 $ kubectl describe pod constraintpod
 ...
