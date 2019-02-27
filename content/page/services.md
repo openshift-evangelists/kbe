@@ -1,27 +1,22 @@
 +++
 title = "Services"
 subtitle = "Kubernetes services by example"
-date = "2017-04-25"
+date = "2019-02-27"
 url = "/services/"
 +++
 
-A service is an abstraction for pods, providing a stable, virtual IP (VIP) address.
-While pods may come and go, services allow clients to reliably connect to the
-containers running in the pods, using the VIP. The `virtual` in VIP means it’s
-not an actual IP address connected to a network interface but its purpose is purely
-to forward traffic to one or more pods. Keeping the mapping between the VIP and the
-pods up-to-date is the job of [kube-proxy](https://kubernetes.io/docs/admin/kube-proxy/),
-a process that runs on every node, which queries the API server to learn about
+A service is an abstraction for pods, providing a stable, so called virtual IP (VIP) address. While pods may come and go and with it their IP addresses, a service allows clients to reliably connect to the containers running in the pod using the VIP. The `virtual` in VIP means it is not an actual IP address connected to a network interface, but its purpose is purely to forward traffic to one or more pods. Keeping the mapping between the VIP and the
+pods up-to-date is the job of [kube-proxy](https://kubernetes.io/docs/admin/kube-proxy/), a process that runs on every node, which queries the API server to learn about
 new services in the cluster.
 
-Let's create a pod supervised by an [RC](https://github.com/mhausenblas/kbe/blob/master/specs/services/rc.yaml)
-and a [service](https://github.com/mhausenblas/kbe/blob/master/specs/services/svc.yaml)
+Let's create a pod supervised by an [RC](https://github.com/openshift-evangelists/kbe/blob/master/specs/services/rc.yaml)
+and a [service](https://github.com/openshift-evangelists/kbe/blob/master/specs/services/svc.yaml)
 along with it:
 
 ```bash
-$ kubectl create -f https://raw.githubusercontent.com/mhausenblas/kbe/master/specs/services/rc.yaml
+$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/master/specs/services/rc.yaml
 
-$ kubectl create -f https://raw.githubusercontent.com/mhausenblas/kbe/master/specs/services/svc.yaml
+$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/master/specs/services/svc.yaml
 ```
 
 Now we have the supervised pod running:
