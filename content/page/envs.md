@@ -1,7 +1,7 @@
 +++
 title = "Environment Variables"
 subtitle = "Kubernetes environment variables by example"
-date = "2017-04-26"
+date = "2019-02-27"
 url = "/envs/"
 +++
 
@@ -9,11 +9,11 @@ You can set environment variables for containers running in a pod and in
 addition, Kubernetes exposes certain runtime infos via environment variables
 automatically.
 
-Let's launch a [pod](https://github.com/mhausenblas/kbe/blob/master/specs/envs/pod.yaml)
+Let's launch a [pod](https://github.com/openshift-evangelists/kbe/blob/master/specs/envs/pod.yaml)
 that we pass an environment variable `SIMPLE_SERVICE_VERSION` with the value `1.0`:
 
 ```bash
-$ kubectl create -f https://raw.githubusercontent.com/mhausenblas/kbe/master/specs/envs/pod.yaml
+$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/master/specs/envs/pod.yaml
 
 $ kubectl describe pod envs | grep IP:
 IP:                     172.17.0.3
@@ -27,8 +27,7 @@ has picked up the environment variable `SIMPLE_SERVICE_VERSION`:
 {"host": "172.17.0.3:9876", "version": "1.0", "from": "172.17.0.1"}
 ```
 
-And indeed it has picked up the user-provided environment variable (the default,
-response would be `"version": "0.5.0"`).
+And indeed it has picked up the user-provided environment variable since the default response would be `"version": "0.5.0"`.
 
 You can check what environment variables Kubernetes itself provides automatically
 (from within the cluster, using a dedicated endpoint that the [app](https://github.com/mhausenblas/simpleservice)
