@@ -1,20 +1,20 @@
 +++
 title = "Deployments"
 subtitle = "Kubernetes deployments by example"
-date = "2017-04-27"
+date = "2019-02-27"
 url = "/deployments/"
 +++
 
 A deployment is a supervisor for [pods](/pods/), giving you fine-grained control over how and when a new pod version is rolled out as well as rolled back to a previous state.
 
-Let's create a [deployment](https://github.com/mhausenblas/kbe/blob/master/specs/deployments/d09.yaml)
+Let's create a [deployment](https://github.com/openshift-evangelists/kbe/blob/master/specs/deployments/d09.yaml)
 called `sise-deploy` that supervises two replicas of a pod as well as a replica set:
 
 ```bash
-$ kubectl create -f https://raw.githubusercontent.com/mhausenblas/kbe/master/specs/deployments/d09.yaml
+$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/master/specs/deployments/d09.yaml
 ```
 
-You can see the deployment, the replica set and the pods it looks after like so:
+You can have a look at the deployment, as well as the the replica set and the pods the deployment looks after like so:
 
 ```bash
 $ kubectl get deploy
@@ -43,10 +43,10 @@ first to get the IP of one of the pods):
 ```
 
 Let's now see what happens if we change that version to `1.0` in an updated
-[deployment](https://github.com/mhausenblas/kbe/blob/master/specs/deployments/d10.yaml):
+[deployment](https://github.com/openshift-evangelists/kbe/blob/master/specs/deployments/d10.yaml):
 
 ```bash
-$ kubectl apply -f https://raw.githubusercontent.com/mhausenblas/kbe/master/specs/deployments/d10.yaml
+$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/master/specs/deployments/d10.yaml
 deployment "sise-deploy" configured
 ```
 
