@@ -1,7 +1,7 @@
 +++
 title = "Replication Controllers"
 subtitle = "Kubernetes replication controllers by example"
-date = "2017-04-25"
+date = "2019-02-27"
 url = "/rcs/"
 +++
 
@@ -10,11 +10,11 @@ An RC will launch a specified number of pods called `replicas` and makes
 sure that they keep running, for example when a node fails or something
 inside of a pod, that is, in one of its containers goes wrong.
 
-Let's create an [RC](https://github.com/mhausenblas/kbe/blob/master/specs/rcs/rc.yaml)
+Let's create an [RC](https://github.com/openshift-evangelists/kbe/blob/master/specs/rcs/rc.yaml)
 that supervises a single replica of a pod:
 
 ```bash
-$ kubectl create -f https://raw.githubusercontent.com/mhausenblas/kbe/master/specs/rcs/rc.yaml
+$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/master/specs/rcs/rc.yaml
 ```
 
 You can see the RC and the pod it looks after like so:
