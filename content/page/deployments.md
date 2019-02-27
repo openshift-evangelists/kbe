@@ -5,8 +5,7 @@ date = "2017-04-27"
 url = "/deployments/"
 +++
 
-A deployment is a supervisor for [pods](/pods/) and [replica sets](/rcs/), giving you fine-grained control over how
-and when a new pod version is rolled out as well as rolled back to a previous state.
+A deployment is a supervisor for [pods](/pods/), giving you fine-grained control over how and when a new pod version is rolled out as well as rolled back to a previous state.
 
 Let's create a [deployment](https://github.com/mhausenblas/kbe/blob/master/specs/deployments/d09.yaml)
 called `sise-deploy` that supervises two replicas of a pod as well as a replica set:
@@ -129,4 +128,4 @@ deployment "sise-deploy" deleted
 See also the [docs](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/)
 for more options on deployments and when they are triggered.
 
-[Previous](/rcs) | [Next](/services)
+[Previous](/labels) | [Next](/services)

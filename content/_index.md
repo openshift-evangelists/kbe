@@ -2,7 +2,6 @@ This is a hands-on introduction to Kubernetes. Browse the examples:
 
 - [pods](/pods/)
 - [labels](/labels/)
-- [replication controllers](/rcs/)
 - [deployments](/deployments/)
 - [services](/services/)
 - [service discovery](/sd/)

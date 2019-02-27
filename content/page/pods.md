@@ -98,7 +98,6 @@ $ kubectl delete pod constraintpod
 To sum up, launching one or more containers (together) in Kubernetes is simple,
 however doing it directly as shown above comes with a serious limitation: you have to
 manually take care of keeping them running in case of a failure. A better way
-to supervise pods is to use [replication controllers](/rcs/), or even better
-[deployments](/deployments), giving you much more control.
+to supervise pods is to use [deployments](/deployments), giving you much more control over the life cycle, including rolling out a new version.
 
 [Next](/labels)
