@@ -1,7 +1,7 @@
 +++
 title = "Logging"
 subtitle = "Kubernetes logging by example"
-date = "2017-04-27"
+date = "2019-02-28"
 url = "/logging/"
 +++
 
@@ -11,11 +11,11 @@ container produces available, which is a good use case for debugging. More advan
 [setups](http://some.ops4devs.info/logging/) consider logs across nodes and store
 them in a central place, either within the cluster or via a dedicated (cloud-based) service.
 
-Let's create a [pod](https://github.com/mhausenblas/kbe/blob/master/specs/logging/pod.yaml)
+Let's create a [pod](https://github.com/openshift-evangelists/kbe/blob/master/specs/logging/pod.yaml)
 called `logme` that runs a container writing to `stdout` and `stderr`:
 
 ```bash
-$ kubectl create -f https://raw.githubusercontent.com/mhausenblas/kbe/master/specs/logging/pod.yaml
+$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/master/specs/logging/pod.yaml
 ```
 
 To view the five most recent log lines of the `gen` container in the `logme` pod,
@@ -46,12 +46,12 @@ Note that if you wouldn't have specified `--since=10s` in the above command, you
 would have gotten all log lines from the start of the container.
 
 You can also view logs of pods that have already completed their lifecycle.
-For this we create a [pod](https://github.com/mhausenblas/kbe/blob/master/specs/logging/oneshotpod.yaml)
+For this we create a [pod](https://github.com/openshift-evangelists/kbe/blob/master/specs/logging/oneshotpod.yaml)
 called `oneshot` that counts down from 9 to 1 and then exits. Using the `-p` option
 you can print the logs for previous instances of the container in a pod:
 
 ```bash
-$ kubectl create -f https://raw.githubusercontent.com/mhausenblas/kbe/master/specs/logging/oneshotpod.yaml
+$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/master/specs/logging/oneshotpod.yaml
 $ kubectl logs -p oneshot -c gen
 9
 8
