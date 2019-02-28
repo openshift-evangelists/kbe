@@ -1,13 +1,11 @@
 +++
 title = "Nodes"
 subtitle = "Kubernetes nodes by example"
-date = "2017-04-27"
+date = "2019-02-28"
 url = "/nodes/"
 +++
 
-In Kubernetes, the nodes are the worker machines where your pods run.
-
-As a developer you typically don't deal with nodes, however as an admin
+In Kubernetes, nodes are the (virtual) machines where your workloads in shape of pods run. As a developer you typically don't deal with nodes directly, however as an admin
 you might want to familiarize yourself with node [operations](https://kubernetes.io/docs/concepts/nodes/node/).
 
 To list available nodes in your cluster (note that the output will depend on the environment
@@ -28,11 +26,11 @@ $ kubectl label nodes 192.168.99.100 shouldrun=here
 node "192.168.99.100" labeled
 ```
 
-Now we can create a [pod](https://github.com/mhausenblas/kbe/blob/master/specs/nodes/pod.yaml)
+Now we can create a [pod](https://github.com/openshift-evangelists/kbe/blob/master/specs/nodes/pod.yaml)
 that gets scheduled on the node with the label `shouldrun=here`:
 
 ```bash
-$ kubectl create -f https://raw.githubusercontent.com/mhausenblas/kbe/master/specs/nodes/pod.yaml
+$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/master/specs/nodes/pod.yaml
 
 $ kubectl get pods --output=wide
 NAME                      READY     STATUS    RESTARTS   AGE       IP               NODE
@@ -94,5 +92,7 @@ Allocated resources:
   200m (10%)	0 (0%)		512Mi (25%)	0 (0%)
 No events.
 ```
+
+Note that there are more sophisticated methods than shown above, such as using affinity, to [assign pods to nodes](https://kubernetes.io/docs/concepts/configuration/assign-pod-node/) and depending on your use case, you might want to check those out as well.
 
 [Previous](/ic) | [Next](/api)
