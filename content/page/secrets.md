@@ -1,7 +1,7 @@
 +++
 title = "Secrets"
 subtitle = "Kubernetes secrets by example"
-date = "2017-04-27"
+date = "2019-02-28"
 url = "/secrets/"
 +++
 
@@ -36,18 +36,18 @@ Data
 apikey.txt:     12 bytes
 ```
 
-Now let's use the secret in a [pod](https://github.com/mhausenblas/kbe/blob/master/specs/secrets/pod.yaml)
+Now let's use the secret in a [pod](https://github.com/openshift-evangelists/kbe/blob/master/specs/secrets/pod.yaml)
 via a [volume](/volumes/):
 
 
 ```bash
-$ kubectl create -f https://raw.githubusercontent.com/mhausenblas/kbe/master/specs/secrets/pod.yaml
+$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/master/specs/secrets/pod.yaml
 ```
 
 If we now exec into the container we see the secret mounted at `/tmp/apikey`:
 
 ```
-$ kubectl exec consumesec -c shell -i -t -- bash
+$ kubectl exec -it consumesec -c shell -- bash
 [root@consumesec /]# mount | grep apikey
 tmpfs on /tmp/apikey type tmpfs (ro,relatime)
 [root@consumesec /]# cat /tmp/apikey/apikey.txt
@@ -57,7 +57,7 @@ A19fh68B001j
 Note that for service accounts Kubernetes automatically creates secrets containing
 credentials for accessing the API and modifies your pods to use this type of secret.
 
-You can remove both the pod and the secret with
+You can remove both the pod and the secret with:
 
 ```bash
 $ kubectl delete pod/consumesec secret/apikey
