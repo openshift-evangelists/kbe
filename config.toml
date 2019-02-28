@@ -13,11 +13,6 @@ googleAnalytics = "UA-34425776-2"
   commit = false
   rss = false
 
-[Author]
-  name = "Michael Hausenblas"
-  github = "mhausenblas"
-  twitter = "mhausenblas"
-
 [[menu.main]]
   name = "Try out!"
   url = "diy/"
