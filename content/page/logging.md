@@ -52,7 +52,7 @@ you can print the logs for previous instances of the container in a pod:
 
 ```bash
 $ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/master/specs/logging/oneshotpod.yaml
-$ kubectl logs -p oneshot -c gen
+$ kubectl logs -p oneshot
 9
 8
 7
