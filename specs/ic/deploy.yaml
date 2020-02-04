@@ -4,6 +4,9 @@ metadata:
   name: ic-deploy
 spec:
   replicas: 1
+  elector:
+    matchLabels:
+      app: ic
   template:
     metadata:
       labels:

@@ -4,6 +4,9 @@ metadata:
   name: pv-deploy
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      app: mypv
   template:
     metadata:
       labels:

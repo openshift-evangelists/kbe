@@ -4,6 +4,9 @@ metadata:
   name: sise-deploy
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      app: sise
   template:
     metadata:
       labels:
