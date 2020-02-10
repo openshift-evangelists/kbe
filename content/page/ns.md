@@ -52,7 +52,7 @@ openshift-infra   Active    13d
 test              Active    3s
 ```
 
-Alternatively, we can could have created the namespace using the `kubectl create namespace test` command.
+Alternatively, we could have created the namespace using the `kubectl create namespace test` command.
 
 To launch a [pod](https://github.com/openshift-evangelists/kbe/blob/master/specs/ns/pod.yaml) in
 the newly created namespace `test`, do:
