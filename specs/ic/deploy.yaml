@@ -1,9 +1,12 @@
-apiVersion: apps/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ic-deploy
 spec:
   replicas: 1
+  elector:
+    matchLabels:
+      app: ic
   template:
     metadata:
       labels:
