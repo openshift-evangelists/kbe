@@ -4,7 +4,7 @@ metadata:
   name: ic-deploy
 spec:
   replicas: 1
-  elector:
+  selector:
     matchLabels:
       app: ic
   template:
