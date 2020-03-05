@@ -4,7 +4,7 @@ This repository contains the source code for website [`kubernetesbyexample.com`]
 
 ## Contribute
 
-To contribute, please either raise an [issue](https://github.com/mhausenblas/kbe/issues)
+To contribute, please either raise an [issue](https://github.com/openshift-evangelists/kbe/issues)
 describing what you want to see covered here or send in a PR to the `master` branch.
 If you plan to contribute content, check out [content/page/](content/page/)
 for the content in Markdown and [specs/](specs/) for respective YAML specifications.
