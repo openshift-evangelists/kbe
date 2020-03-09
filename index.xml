@@ -5,10 +5,19 @@
     <link>http://kubernetesbyexample.com/</link>
     <description>Recent content on Kubernetes By Example</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Thu, 28 Feb 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 08 Mar 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="http://kubernetesbyexample.com/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Namespaces</title>
+      <link>http://kubernetesbyexample.com/ns/</link>
+      <pubDate>Sun, 08 Mar 2020 00:00:00 +0000</pubDate>
+      
+      <guid>http://kubernetesbyexample.com/ns/</guid>
+      <description>Namespaces provide for a scope of Kubernetes resource, carving up your cluster in smaller units. You can think of it as a workspace you&amp;rsquo;re sharing with other users. Many resources such as pods and services are namespaced, while some, for example, nodes are not namespaced (but cluster-wide). As a developer you&amp;rsquo;d usually use an assigned namespace, however admins may wish to manage them, for example to set up access control or resource quotas.</description>
+    </item>
     
     <item>
       <title>DIY</title>
@@ -103,15 +112,6 @@ We will focus on HTTP health checks in the following.</description>
       <guid>http://kubernetesbyexample.com/labels/</guid>
       <description>Labels are the mechanism you use to organize Kubernetes objects. A label is a key-value pair with certain restrictions concerning length and allowed values but without any pre-defined meaning. So you&amp;rsquo;re free to choose labels as you see fit, for example, to express environments such as &amp;lsquo;this pod is running in production&amp;rsquo; or ownership, like &amp;lsquo;department X owns that pod&amp;rsquo;.
 Let&amp;rsquo;s create a pod that initially has one label (env=development):</description>
-    </item>
-    
-    <item>
-      <title>Namespaces</title>
-      <link>http://kubernetesbyexample.com/ns/</link>
-      <pubDate>Wed, 27 Feb 2019 00:00:00 +0000</pubDate>
-      
-      <guid>http://kubernetesbyexample.com/ns/</guid>
-      <description>Namespaces provide for a scope of Kubernetes resource, carving up your cluster in smaller units. You can think of it as a workspace you&amp;rsquo;re sharing with other users. Many resources such as pods and services are namespaced, while some, for example, nodes are not namespaced (but cluster-wide). As a developer you&amp;rsquo;d usually use an assigned namespace, however admins may wish to manage them, for example to set up access control or resource quotas.</description>
     </item>
     
     <item>
