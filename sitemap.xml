@@ -3,122 +3,122 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>http://kubernetesbyexample.com/</loc>
+    <loc>https://kubernetesbyexample.com/</loc>
     <lastmod>2020-03-08T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://kubernetesbyexample.com/ns/</loc>
+    <loc>https://kubernetesbyexample.com/ns/</loc>
     <lastmod>2020-03-08T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://kubernetesbyexample.com/page/</loc>
+    <loc>https://kubernetesbyexample.com/page/</loc>
     <lastmod>2020-03-08T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://kubernetesbyexample.com/diy/</loc>
+    <loc>https://kubernetesbyexample.com/diy/</loc>
     <lastmod>2019-02-28T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://kubernetesbyexample.com/jobs/</loc>
+    <loc>https://kubernetesbyexample.com/jobs/</loc>
     <lastmod>2019-02-28T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://kubernetesbyexample.com/logging/</loc>
+    <loc>https://kubernetesbyexample.com/logging/</loc>
     <lastmod>2019-02-28T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://kubernetesbyexample.com/nodes/</loc>
+    <loc>https://kubernetesbyexample.com/nodes/</loc>
     <lastmod>2019-02-28T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://kubernetesbyexample.com/secrets/</loc>
+    <loc>https://kubernetesbyexample.com/secrets/</loc>
     <lastmod>2019-02-28T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://kubernetesbyexample.com/deployments/</loc>
+    <loc>https://kubernetesbyexample.com/deployments/</loc>
     <lastmod>2019-02-27T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://kubernetesbyexample.com/envs/</loc>
+    <loc>https://kubernetesbyexample.com/envs/</loc>
     <lastmod>2019-02-27T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://kubernetesbyexample.com/healthz/</loc>
+    <loc>https://kubernetesbyexample.com/healthz/</loc>
     <lastmod>2019-02-27T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://kubernetesbyexample.com/labels/</loc>
+    <loc>https://kubernetesbyexample.com/labels/</loc>
     <lastmod>2019-02-27T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://kubernetesbyexample.com/pv/</loc>
+    <loc>https://kubernetesbyexample.com/pv/</loc>
     <lastmod>2019-02-27T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://kubernetesbyexample.com/pods/</loc>
+    <loc>https://kubernetesbyexample.com/pods/</loc>
     <lastmod>2019-02-27T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://kubernetesbyexample.com/rcs/</loc>
+    <loc>https://kubernetesbyexample.com/rcs/</loc>
     <lastmod>2019-02-27T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://kubernetesbyexample.com/sd/</loc>
+    <loc>https://kubernetesbyexample.com/sd/</loc>
     <lastmod>2019-02-27T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://kubernetesbyexample.com/services/</loc>
+    <loc>https://kubernetesbyexample.com/services/</loc>
     <lastmod>2019-02-27T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://kubernetesbyexample.com/volumes/</loc>
+    <loc>https://kubernetesbyexample.com/volumes/</loc>
     <lastmod>2019-02-27T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://kubernetesbyexample.com/ic/</loc>
+    <loc>https://kubernetesbyexample.com/ic/</loc>
     <lastmod>2019-02-26T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://kubernetesbyexample.com/statefulset/</loc>
+    <loc>https://kubernetesbyexample.com/statefulset/</loc>
     <lastmod>2019-02-15T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://kubernetesbyexample.com/api/</loc>
+    <loc>https://kubernetesbyexample.com/api/</loc>
     <lastmod>2019-02-13T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://kubernetesbyexample.com/pf/</loc>
+    <loc>https://kubernetesbyexample.com/pf/</loc>
     <lastmod>2019-02-12T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://kubernetesbyexample.com/categories/</loc>
+    <loc>https://kubernetesbyexample.com/categories/</loc>
   </url>
   
   <url>
-    <loc>http://kubernetesbyexample.com/tags/</loc>
+    <loc>https://kubernetesbyexample.com/tags/</loc>
   </url>
   
 </urlset>
