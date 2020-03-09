@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>Pods</title>
+  <meta property="og:title" content="Pods" />
+  <meta name="twitter:title" content="Pods" />
+  <meta name="description" content="Kubernetes pods by example">
+  <meta property="og:description" content="Kubernetes pods by example">
+  <meta name="twitter:description" content="Kubernetes pods by example">
+  <meta name="author" content=""/>
+  <link href='http://kubernetesbyexample.com/img/kbe-logo.ico' rel='icon' type='image/x-icon'/>
+  <meta property="og:image" content="http://kubernetesbyexample.com/img/kbe-logo.png" />
+  <meta name="twitter:image" content="http://kubernetesbyexample.com/img/kbe-logo.png" />
+  <meta name="twitter:card" content="summary" />
+  <meta property="og:url" content="http://kubernetesbyexample.com/pods/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Kubernetes By Example" />
+
+  <meta name="generator" content="Hugo 0.66.0" />
+  <link rel="canonical" href="http://kubernetesbyexample.com/pods/" />
+  <link rel="alternate" href="http://kubernetesbyexample.com/index.xml" type="application/rss+xml" title="Kubernetes By Example">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css" integrity="sha384-wITovz90syo1dJWVh32uuETPVEtGigN07tkttEqPv+uR2SE/mbQcG7ATL28aI9H0" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="http://kubernetesbyexample.com/css/main.css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+  <link rel="stylesheet" href="http://kubernetesbyexample.com/css/pygment_highlights.css" />
+  <link rel="stylesheet" href="http://kubernetesbyexample.com/css/highlight.min.css" />
+</head>
+
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="http://kubernetesbyexample.com/">Home</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+        
+          
+            <li>
+              <a title="Contribute" href="https://github.com/openshift-evangelists/kbe">Contribute</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="Try out!" href="/diy/">Try out!</a>
+            </li>
+          
+        
+
+        
+
+        
+      </ul>
+    </div>
+
+    <div class="avatar-container">
+      <div class="avatar-img-border">
+        
+          <a title="Kubernetes By Example" href="http://kubernetesbyexample.com/">
+            <img class="avatar-img" src="http://kubernetesbyexample.com/img/kbe-logo.png" alt="Kubernetes By Example" />
+          </a>
+        
+      </div>
+    </div>
+
+  </div>
+</nav>
+
+
+
+
+    
+  
+  
+  
+
+
+
+
+  
+
+  <header class="header-section ">
+    
+    <div class="intro-header no-img">
+      
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div class="page-heading">
+              <h1>Pods</h1>
+                
+                  
+                    <hr class="small">
+                    <span class="page-subheading">Kubernetes pods by example</span>
+                  
+                
+                
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+
+    
+  <div class="container" role="main">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <p>A pod is a collection of containers sharing a network and mount namespace
+and is the basic unit of deployment in Kubernetes. All containers in a pod
+are scheduled on the same node.</p>
+<p>To launch a pod using the container <a href="https://hub.docker.com/r/mhausenblas/simpleservice/">image</a>
+<code>mhausenblas/simpleservice:0.5.0</code> and exposing a HTTP API on port <code>9876</code>, execute:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kubectl run sise --image<span style="color:#f92672">=</span>mhausenblas/simpleservice:0.5.0 --port<span style="color:#f92672">=</span><span style="color:#ae81ff">9876</span>
+</code></pre></div><p>We can now see that the pod is running:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kubectl get pods
+NAME                      READY     STATUS    RESTARTS   AGE
+sise-3210265840-k705b     1/1       Running   <span style="color:#ae81ff">0</span>          1m
+
+$ kubectl describe pod sise-3210265840-k705b | grep IP:
+IP:                     172.17.0.3
+</code></pre></div><p>From within the cluster (e.g. via <code>minishift ssh</code>) this pod is accessible via the pod IP <code>172.17.0.3</code>,
+which we&rsquo;ve learned from the <code>kubectl describe</code> command above:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#f92672">[</span>cluster<span style="color:#f92672">]</span> $ curl 172.17.0.3:9876/info
+<span style="color:#f92672">{</span><span style="color:#e6db74">&#34;host&#34;</span>: <span style="color:#e6db74">&#34;172.17.0.3:9876&#34;</span>, <span style="color:#e6db74">&#34;version&#34;</span>: <span style="color:#e6db74">&#34;0.5.0&#34;</span>, <span style="color:#e6db74">&#34;from&#34;</span>: <span style="color:#e6db74">&#34;172.17.0.1&#34;</span><span style="color:#f92672">}</span>
+</code></pre></div><p>Note that <code>kubectl run</code> creates a <a href="/deployments/">deployment</a>, so in order to
+get rid of the pod you have to execute <code>kubectl delete deployment sise</code>.</p>
+<h4 id="using-configuration-file">Using configuration file</h4>
+<p>You can also create a pod from a configuration file.
+In this case the <a href="https://github.com/openshift-evangelists/kbe/blob/master/specs/pods/pod.yaml">pod</a> is
+running the already known <code>simpleservice</code> image from above along with
+a generic <code>CentOS</code> container:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/master/specs/pods/pod.yaml
+
+$ kubectl get pods
+NAME                      READY     STATUS    RESTARTS   AGE
+twocontainers             2/2       Running   <span style="color:#ae81ff">0</span>          7s
+</code></pre></div><p>Now we can exec into the <code>CentOS</code> container and access the <code>simpleservice</code>
+on localhost:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kubectl exec twocontainers -c shell -i -t -- bash
+<span style="color:#f92672">[</span>root@twocontainers /<span style="color:#f92672">]</span><span style="color:#75715e"># curl -s localhost:9876/info</span>
+<span style="color:#f92672">{</span><span style="color:#e6db74">&#34;host&#34;</span>: <span style="color:#e6db74">&#34;localhost:9876&#34;</span>, <span style="color:#e6db74">&#34;version&#34;</span>: <span style="color:#e6db74">&#34;0.5.0&#34;</span>, <span style="color:#e6db74">&#34;from&#34;</span>: <span style="color:#e6db74">&#34;127.0.0.1&#34;</span><span style="color:#f92672">}</span>
+</code></pre></div><p>Specify the <code>resources</code> field in the pod to influence how much CPU and/or RAM a
+container in a <a href="https://github.com/openshift-evangelists/kbe/blob/master/specs/pods/constraint-pod.yaml">pod</a>
+can use (here: <code>64MB</code> of RAM and <code>0.5</code> CPUs):</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kubectl create -f https://raw.githubusercontent.com/openshift-evangelists/kbe/master/specs/pods/constraint-pod.yaml
+
+$ kubectl describe pod constraintpod
+...
+Containers:
+  sise:
+    ...
+    Limits:
+      cpu:      500m
+      memory:   64Mi
+    Requests:
+      cpu:      500m
+      memory:   64Mi
+...
+</code></pre></div><p>Learn more about resource constraints in Kubernetes via the docs <a href="https://kubernetes.io/docs/tasks/configure-pod-container/assign-cpu-ram-container/">here</a>
+and <a href="https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/">here</a>.</p>
+<p>To remove all the pods created, just run:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kubectl delete pod twocontainers
+
+$ kubectl delete pod constraintpod
+</code></pre></div><p>To sum up, launching one or more containers (together) in Kubernetes is simple,
+however doing it directly as shown above comes with a serious limitation: you have to
+manually take care of keeping them running in case of a failure. A better way
+to supervise pods is to use <a href="/deployments">deployments</a>, giving you much more control over the life cycle, including rolling out a new version.</p>
+<p><a href="/labels">Next</a></p>
+
+        
+      </div>
+    </div>
+  </div>
+
+    <footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+          
+        </ul>
+        <p class="credits copyright text-muted">
+          
+          &nbsp;&bull;&nbsp;
+          2019
+
+          
+            &nbsp;&bull;&nbsp;
+            <a href="http://kubernetesbyexample.com/">Kubernetes By Example</a>
+          
+        </p>
+        
+        <p class="credits theme-by text-muted">
+          <a href="http://gohugo.io">Hugo v0.66.0</a> powered &nbsp;&bull;&nbsp; Theme by <a href="http://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a> adapted to <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a>
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.js" integrity="sha384-/y1Nn9+QQAipbNQWU65krzJralCnuOasHncUFXGkdwntGeSvQicrYkiUBwsgUqc1" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/contrib/auto-render.min.js" integrity="sha384-dq1/gEHSxPZQ7DdrM82ID4YVol9BYyU7GbWlIwnwyPzotpoc57wDw/guX8EaYGPx" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="http://kubernetesbyexample.com/js/main.js"></script>
+<script src="http://kubernetesbyexample.com/js/highlight.min.js"></script>
+<script> hljs.initHighlightingOnLoad(); </script>
+<script> renderMathInElement(document.body); </script>
+
+
+
+
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-34425776-2', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+
+  </body>
+</html>
+

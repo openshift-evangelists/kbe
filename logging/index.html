@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>Logging</title>
+  <meta property="og:title" content="Logging" />
+  <meta name="twitter:title" content="Logging" />
+  <meta name="description" content="Kubernetes logging by example">
+  <meta property="og:description" content="Kubernetes logging by example">
+  <meta name="twitter:description" content="Kubernetes logging by example">
+  <meta name="author" content=""/>
+  <link href='http://kubernetesbyexample.com/img/kbe-logo.ico' rel='icon' type='image/x-icon'/>
+  <meta property="og:image" content="http://kubernetesbyexample.com/img/kbe-logo.png" />
+  <meta name="twitter:image" content="http://kubernetesbyexample.com/img/kbe-logo.png" />
+  <meta name="twitter:card" content="summary" />
+  <meta property="og:url" content="http://kubernetesbyexample.com/logging/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Kubernetes By Example" />
+
+  <meta name="generator" content="Hugo 0.66.0" />
+  <link rel="canonical" href="http://kubernetesbyexample.com/logging/" />
+  <link rel="alternate" href="http://kubernetesbyexample.com/index.xml" type="application/rss+xml" title="Kubernetes By Example">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css" integrity="sha384-wITovz90syo1dJWVh32uuETPVEtGigN07tkttEqPv+uR2SE/mbQcG7ATL28aI9H0" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="http://kubernetesbyexample.com/css/main.css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+  <link rel="stylesheet" href="http://kubernetesbyexample.com/css/pygment_highlights.css" />
+  <link rel="stylesheet" href="http://kubernetesbyexample.com/css/highlight.min.css" />
+</head>
+
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="http://kubernetesbyexample.com/">Home</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+        
+          
+            <li>
+              <a title="Contribute" href="https://github.com/openshift-evangelists/kbe">Contribute</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="Try out!" href="/diy/">Try out!</a>
+            </li>
+          
+        
+
+        
+
+        
+      </ul>
+    </div>
+
+    <div class="avatar-container">
+      <div class="avatar-img-border">
+        
+          <a title="Kubernetes By Example" href="http://kubernetesbyexample.com/">
+            <img class="avatar-img" src="http://kubernetesbyexample.com/img/kbe-logo.png" alt="Kubernetes By Example" />
+          </a>
+        
+      </div>
+    </div>
+
+  </div>
+</nav>
+
+
+
+
+    
+  
+  
+  
+
+
+
+
+  
+
+  <header class="header-section ">
+    
+    <div class="intro-header no-img">
+      
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div class="page-heading">
+              <h1>Logging</h1>
+                
+                  
+                    <hr class="small">
+                    <span class="page-subheading">Kubernetes logging by example</span>
+                  
+                
+                
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+
+    
+  <div class="container" role="main">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <p>Logging is one option to understand what is going on inside your applications
+and the cluster at large. Basic logging in Kubernetes makes the output a
+container produces available, which is a good use case for debugging. More advanced
+<a href="http://some.ops4devs.info/logging/">setups</a> consider logs across nodes and store
+them in a central place, either within the cluster or via a dedicated (cloud-based) service.</p>
+<p>Let&rsquo;s create a <a href="https://github.com/openshift-evangelists/kbe/blob/master/specs/logging/pod.yaml">pod</a>
+called <code>logme</code> that runs a container writing to <code>stdout</code> and <code>stderr</code>:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/master/specs/logging/pod.yaml
+</code></pre></div><p>To view the five most recent log lines of the <code>gen</code> container in the <code>logme</code> pod,
+execute:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kubectl logs --tail<span style="color:#f92672">=</span><span style="color:#ae81ff">5</span> logme -c gen
+Thu Apr <span style="color:#ae81ff">27</span> 11:34:40 UTC <span style="color:#ae81ff">2017</span>
+Thu Apr <span style="color:#ae81ff">27</span> 11:34:41 UTC <span style="color:#ae81ff">2017</span>
+Thu Apr <span style="color:#ae81ff">27</span> 11:34:41 UTC <span style="color:#ae81ff">2017</span>
+Thu Apr <span style="color:#ae81ff">27</span> 11:34:42 UTC <span style="color:#ae81ff">2017</span>
+Thu Apr <span style="color:#ae81ff">27</span> 11:34:42 UTC <span style="color:#ae81ff">2017</span>
+</code></pre></div><p>To stream the log of the <code>gen</code> container in the <code>logme</code> pod (like <code>tail -f</code>), do:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kubectl logs -f --since<span style="color:#f92672">=</span>10s logme -c gen
+Thu Apr <span style="color:#ae81ff">27</span> 11:43:11 UTC <span style="color:#ae81ff">2017</span>
+Thu Apr <span style="color:#ae81ff">27</span> 11:43:11 UTC <span style="color:#ae81ff">2017</span>
+Thu Apr <span style="color:#ae81ff">27</span> 11:43:12 UTC <span style="color:#ae81ff">2017</span>
+Thu Apr <span style="color:#ae81ff">27</span> 11:43:12 UTC <span style="color:#ae81ff">2017</span>
+Thu Apr <span style="color:#ae81ff">27</span> 11:43:13 UTC <span style="color:#ae81ff">2017</span>
+...
+</code></pre></div><p>Note that if you wouldn&rsquo;t have specified <code>--since=10s</code> in the above command, you
+would have gotten all log lines from the start of the container.</p>
+<p>You can also view logs of pods that have already completed their lifecycle.
+For this we create a <a href="https://github.com/openshift-evangelists/kbe/blob/master/specs/logging/oneshotpod.yaml">pod</a>
+called <code>oneshot</code> that counts down from 9 to 1 and then exits. Using the <code>-p</code> option
+you can print the logs for previous instances of the container in a pod:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/master/specs/logging/oneshotpod.yaml
+$ kubectl logs -p oneshot -c gen
+<span style="color:#ae81ff">9</span>
+<span style="color:#ae81ff">8</span>
+<span style="color:#ae81ff">7</span>
+<span style="color:#ae81ff">6</span>
+<span style="color:#ae81ff">5</span>
+<span style="color:#ae81ff">4</span>
+<span style="color:#ae81ff">3</span>
+<span style="color:#ae81ff">2</span>
+<span style="color:#ae81ff">1</span>
+</code></pre></div><p>You can remove the created pods with:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kubectl delete pod/logme pod/oneshot
+</code></pre></div><p><a href="/secrets">Previous</a> | <a href="/jobs">Next</a></p>
+
+        
+      </div>
+    </div>
+  </div>
+
+    <footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+          
+        </ul>
+        <p class="credits copyright text-muted">
+          
+          &nbsp;&bull;&nbsp;
+          2019
+
+          
+            &nbsp;&bull;&nbsp;
+            <a href="http://kubernetesbyexample.com/">Kubernetes By Example</a>
+          
+        </p>
+        
+        <p class="credits theme-by text-muted">
+          <a href="http://gohugo.io">Hugo v0.66.0</a> powered &nbsp;&bull;&nbsp; Theme by <a href="http://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a> adapted to <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a>
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.js" integrity="sha384-/y1Nn9+QQAipbNQWU65krzJralCnuOasHncUFXGkdwntGeSvQicrYkiUBwsgUqc1" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/contrib/auto-render.min.js" integrity="sha384-dq1/gEHSxPZQ7DdrM82ID4YVol9BYyU7GbWlIwnwyPzotpoc57wDw/guX8EaYGPx" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="http://kubernetesbyexample.com/js/main.js"></script>
+<script src="http://kubernetesbyexample.com/js/highlight.min.js"></script>
+<script> hljs.initHighlightingOnLoad(); </script>
+<script> renderMathInElement(document.body); </script>
+
+
+
+
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-34425776-2', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+
+  </body>
+</html>
+

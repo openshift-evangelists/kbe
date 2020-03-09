@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>Health Checks</title>
+  <meta property="og:title" content="Health Checks" />
+  <meta name="twitter:title" content="Health Checks" />
+  <meta name="description" content="Kubernetes health checks by example">
+  <meta property="og:description" content="Kubernetes health checks by example">
+  <meta name="twitter:description" content="Kubernetes health checks by example">
+  <meta name="author" content=""/>
+  <link href='http://kubernetesbyexample.com/img/kbe-logo.ico' rel='icon' type='image/x-icon'/>
+  <meta property="og:image" content="http://kubernetesbyexample.com/img/kbe-logo.png" />
+  <meta name="twitter:image" content="http://kubernetesbyexample.com/img/kbe-logo.png" />
+  <meta name="twitter:card" content="summary" />
+  <meta property="og:url" content="http://kubernetesbyexample.com/healthz/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Kubernetes By Example" />
+
+  <meta name="generator" content="Hugo 0.66.0" />
+  <link rel="canonical" href="http://kubernetesbyexample.com/healthz/" />
+  <link rel="alternate" href="http://kubernetesbyexample.com/index.xml" type="application/rss+xml" title="Kubernetes By Example">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css" integrity="sha384-wITovz90syo1dJWVh32uuETPVEtGigN07tkttEqPv+uR2SE/mbQcG7ATL28aI9H0" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="http://kubernetesbyexample.com/css/main.css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+  <link rel="stylesheet" href="http://kubernetesbyexample.com/css/pygment_highlights.css" />
+  <link rel="stylesheet" href="http://kubernetesbyexample.com/css/highlight.min.css" />
+</head>
+
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="http://kubernetesbyexample.com/">Home</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+        
+          
+            <li>
+              <a title="Contribute" href="https://github.com/openshift-evangelists/kbe">Contribute</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="Try out!" href="/diy/">Try out!</a>
+            </li>
+          
+        
+
+        
+
+        
+      </ul>
+    </div>
+
+    <div class="avatar-container">
+      <div class="avatar-img-border">
+        
+          <a title="Kubernetes By Example" href="http://kubernetesbyexample.com/">
+            <img class="avatar-img" src="http://kubernetesbyexample.com/img/kbe-logo.png" alt="Kubernetes By Example" />
+          </a>
+        
+      </div>
+    </div>
+
+  </div>
+</nav>
+
+
+
+
+    
+  
+  
+  
+
+
+
+
+  
+
+  <header class="header-section ">
+    
+    <div class="intro-header no-img">
+      
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div class="page-heading">
+              <h1>Health Checks</h1>
+                
+                  
+                    <hr class="small">
+                    <span class="page-subheading">Kubernetes health checks by example</span>
+                  
+                
+                
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+
+    
+  <div class="container" role="main">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <p>In order to verify if a container in a pod is healthy and ready to serve traffic,
+Kubernetes provides for a range of health checking mechanisms. Health checks,
+or <strong>probes</strong> as they are called in Kubernetes, are carried out
+by the <a href="https://kubernetes.io/docs/admin/kubelet/">kubelet</a> to determine when to
+restart a container (for <code>livenessProbe</code>) and used by services and deployments to determine if a pod should receive traffic (for <code>readinessProbe</code>).</p>
+<p>We will focus on HTTP health checks in the following. Note that it is the responsibility
+of the application developer to expose a URL that the kubelet can
+use to determine if the container is healthy (and potentially ready).</p>
+<p>Let&rsquo;s create a <a href="https://github.com/openshift-evangelists/kbe/blob/master/specs/healthz/pod.yaml">pod</a>
+that exposes an endpoint <code>/health</code>, responding with a HTTP <code>200</code> status code:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/master/specs/healthz/pod.yaml
+</code></pre></div><p>In the pod specification we&rsquo;ve defined the following:</p>
+<pre><code>livenessProbe:
+  initialDelaySeconds: 2
+  periodSeconds: 5
+  httpGet:
+    path: /health
+    port: 9876
+</code></pre><p>Above means that Kubernetes will start checking the <code>/health</code> endpoint, after initially waiting 2 seconds, every 5 seconds.</p>
+<p>If we now look at the pod we can see that it is considered healthy:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kubectl describe pod hc
+Name:                   hc
+Namespace:              default
+Security Policy:        anyuid
+Node:                   192.168.99.100/192.168.99.100
+Start Time:             Tue, <span style="color:#ae81ff">25</span> Apr <span style="color:#ae81ff">2017</span> 16:21:11 +0100
+Labels:                 &lt;none&gt;
+Status:                 Running
+...
+Events:
+  FirstSeen     LastSeen        Count   From                            SubobjectPath           Type            Reason          Message
+  ---------     --------        -----   ----                            -------------           --------        ------          -------
+  3s            3s              <span style="color:#ae81ff">1</span>       <span style="color:#f92672">{</span>default-scheduler <span style="color:#f92672">}</span>                                    Normal          Scheduled       Successfully assigned hc to 192.168.99.100
+  3s            3s              <span style="color:#ae81ff">1</span>       <span style="color:#f92672">{</span>kubelet 192.168.99.100<span style="color:#f92672">}</span>        spec.containers<span style="color:#f92672">{</span>sise<span style="color:#f92672">}</span>   Normal          Pulled          Container image <span style="color:#e6db74">&#34;mhausenblas/simpleservice:0.5.0&#34;</span>
+already present on machine
+  3s            3s              <span style="color:#ae81ff">1</span>       <span style="color:#f92672">{</span>kubelet 192.168.99.100<span style="color:#f92672">}</span>        spec.containers<span style="color:#f92672">{</span>sise<span style="color:#f92672">}</span>   Normal          Created         Created container with docker id 8a628578d6ad; Security:<span style="color:#f92672">[</span>seccomp<span style="color:#f92672">=</span>unconfined<span style="color:#f92672">]</span>
+  2s            2s              <span style="color:#ae81ff">1</span>       <span style="color:#f92672">{</span>kubelet 192.168.99.100<span style="color:#f92672">}</span>        spec.containers<span style="color:#f92672">{</span>sise<span style="color:#f92672">}</span>   Normal          Started         Started container with docker id 8a628578d6ad
+</code></pre></div><p>Now we launch a <a href="https://github.com/openshift-evangelists/kbe/blob/master/specs/healthz/badpod.yaml">bad pod</a>,
+that is, a pod that has a container that randomly (in the time range 1 to 4 sec)
+does not return a 200 code:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/master/specs/healthz/badpod.yaml
+</code></pre></div><p>Looking at the events of the bad pod, we can see that the health check failed:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kubectl describe pod badpod
+...
+Events:
+  FirstSeen     LastSeen        Count   From                            SubobjectPath           Type            Reason          Message
+  ---------     --------        -----   ----                            -------------           --------        ------          -------
+  1m            1m              <span style="color:#ae81ff">1</span>       <span style="color:#f92672">{</span>default-scheduler <span style="color:#f92672">}</span>                                    Normal          Scheduled       Successfully assigned badpod to 192.168.99.100
+  1m            1m              <span style="color:#ae81ff">1</span>       <span style="color:#f92672">{</span>kubelet 192.168.99.100<span style="color:#f92672">}</span>        spec.containers<span style="color:#f92672">{</span>sise<span style="color:#f92672">}</span>   Normal          Created         Created container with docker id 7dd660f04945; Security:<span style="color:#f92672">[</span>seccomp<span style="color:#f92672">=</span>unconfined<span style="color:#f92672">]</span>
+  1m            1m              <span style="color:#ae81ff">1</span>       <span style="color:#f92672">{</span>kubelet 192.168.99.100<span style="color:#f92672">}</span>        spec.containers<span style="color:#f92672">{</span>sise<span style="color:#f92672">}</span>   Normal          Started         Started container with docker id 7dd660f04945
+  1m            23s             <span style="color:#ae81ff">2</span>       <span style="color:#f92672">{</span>kubelet 192.168.99.100<span style="color:#f92672">}</span>        spec.containers<span style="color:#f92672">{</span>sise<span style="color:#f92672">}</span>   Normal          Pulled          Container image <span style="color:#e6db74">&#34;mhausenblas/simpleservice:0.5.0&#34;</span> already present on machine
+  23s           23s             <span style="color:#ae81ff">1</span>       <span style="color:#f92672">{</span>kubelet 192.168.99.100<span style="color:#f92672">}</span>        spec.containers<span style="color:#f92672">{</span>sise<span style="color:#f92672">}</span>   Normal          Killing         Killing container with docker id 7dd660f04945: pod <span style="color:#e6db74">&#34;badpod_default(53e5c06a-29cb-11e7-b44f-be3e8f4350ff)&#34;</span> container <span style="color:#e6db74">&#34;sise&#34;</span> is unhealthy, it will be killed and re-created.
+  23s           23s             <span style="color:#ae81ff">1</span>       <span style="color:#f92672">{</span>kubelet 192.168.99.100<span style="color:#f92672">}</span>        spec.containers<span style="color:#f92672">{</span>sise<span style="color:#f92672">}</span>   Normal          Created         Created container with docker id ec63dc3edfaa; Security:<span style="color:#f92672">[</span>seccomp<span style="color:#f92672">=</span>unconfined<span style="color:#f92672">]</span>
+  23s           23s             <span style="color:#ae81ff">1</span>       <span style="color:#f92672">{</span>kubelet 192.168.99.100<span style="color:#f92672">}</span>        spec.containers<span style="color:#f92672">{</span>sise<span style="color:#f92672">}</span>   Normal          Started         Started container with docker id ec63dc3edfaa
+  1m            18s             <span style="color:#ae81ff">4</span>       <span style="color:#f92672">{</span>kubelet 192.168.99.100<span style="color:#f92672">}</span>        spec.containers<span style="color:#f92672">{</span>sise<span style="color:#f92672">}</span>   Warning         Unhealthy       Liveness probe failed: Get http://172.17.0.4:9876/health: net/http: request canceled <span style="color:#f92672">(</span>Client.Timeout exceeded <span style="color:#66d9ef">while</span> awaiting headers<span style="color:#f92672">)</span>
+</code></pre></div><p>This can also be verified as follows:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kubectl get pods
+NAME                      READY     STATUS    RESTARTS   AGE
+badpod                    1/1       Running   <span style="color:#ae81ff">4</span>          2m
+hc                        1/1       Running   <span style="color:#ae81ff">0</span>          6m
+</code></pre></div><p>From above you can see that the <code>badpod</code> had already been re-launched 4 times,
+since the health check failed.</p>
+<p>In addition to a <code>livenessProbe</code> you can also specify a <code>readinessProbe</code>, which
+can be configured in the same way but has a different use case and semantics:
+it&rsquo;s used to check the start-up phase of a container in the pod. Imagine a container
+that loads some data from external storage such as S3 or a database that needs
+to initialize some tables. In this case you want to signal when the container is
+ready to serve traffic.</p>
+<p>Let&rsquo;s create a <a href="https://github.com/openshift-evangelists/kbe/blob/master/specs/healthz/ready.yaml">pod</a>
+with a <code>readinessProbe</code> that kicks in after 10 seconds:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/master/specs/healthz/ready.yaml
+</code></pre></div><p>Looking at the events of the pod, we can see that, eventually, the pod is ready
+to serve traffic:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kubectl describe pod ready
+...
+Conditions:                                                                                                                                                               <span style="color:#f92672">[</span>0/1888<span style="color:#f92672">]</span>
+  Type          Status
+  Initialized   True
+  Ready         True
+  PodScheduled  True
+...
+</code></pre></div><p>You can remove all the created pods with:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kubectl delete pod/hc pod/ready pod/badpod
+</code></pre></div><p>Learn more about configuring probes, including TCP and command probes, via the
+<a href="https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/">docs</a>.</p>
+<p><a href="/sd">Previous</a> | <a href="/envs">Next</a></p>
+
+        
+      </div>
+    </div>
+  </div>
+
+    <footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+          
+        </ul>
+        <p class="credits copyright text-muted">
+          
+          &nbsp;&bull;&nbsp;
+          2019
+
+          
+            &nbsp;&bull;&nbsp;
+            <a href="http://kubernetesbyexample.com/">Kubernetes By Example</a>
+          
+        </p>
+        
+        <p class="credits theme-by text-muted">
+          <a href="http://gohugo.io">Hugo v0.66.0</a> powered &nbsp;&bull;&nbsp; Theme by <a href="http://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a> adapted to <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a>
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.js" integrity="sha384-/y1Nn9+QQAipbNQWU65krzJralCnuOasHncUFXGkdwntGeSvQicrYkiUBwsgUqc1" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/contrib/auto-render.min.js" integrity="sha384-dq1/gEHSxPZQ7DdrM82ID4YVol9BYyU7GbWlIwnwyPzotpoc57wDw/guX8EaYGPx" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="http://kubernetesbyexample.com/js/main.js"></script>
+<script src="http://kubernetesbyexample.com/js/highlight.min.js"></script>
+<script> hljs.initHighlightingOnLoad(); </script>
+<script> renderMathInElement(document.body); </script>
+
+
+
+
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-34425776-2', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+
+  </body>
+</html>
+

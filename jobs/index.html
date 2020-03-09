@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>Jobs</title>
+  <meta property="og:title" content="Jobs" />
+  <meta name="twitter:title" content="Jobs" />
+  <meta name="description" content="Kubernetes jobs by example">
+  <meta property="og:description" content="Kubernetes jobs by example">
+  <meta name="twitter:description" content="Kubernetes jobs by example">
+  <meta name="author" content=""/>
+  <link href='http://kubernetesbyexample.com/img/kbe-logo.ico' rel='icon' type='image/x-icon'/>
+  <meta property="og:image" content="http://kubernetesbyexample.com/img/kbe-logo.png" />
+  <meta name="twitter:image" content="http://kubernetesbyexample.com/img/kbe-logo.png" />
+  <meta name="twitter:card" content="summary" />
+  <meta property="og:url" content="http://kubernetesbyexample.com/jobs/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Kubernetes By Example" />
+
+  <meta name="generator" content="Hugo 0.66.0" />
+  <link rel="canonical" href="http://kubernetesbyexample.com/jobs/" />
+  <link rel="alternate" href="http://kubernetesbyexample.com/index.xml" type="application/rss+xml" title="Kubernetes By Example">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css" integrity="sha384-wITovz90syo1dJWVh32uuETPVEtGigN07tkttEqPv+uR2SE/mbQcG7ATL28aI9H0" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="http://kubernetesbyexample.com/css/main.css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+  <link rel="stylesheet" href="http://kubernetesbyexample.com/css/pygment_highlights.css" />
+  <link rel="stylesheet" href="http://kubernetesbyexample.com/css/highlight.min.css" />
+</head>
+
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="http://kubernetesbyexample.com/">Home</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+        
+          
+            <li>
+              <a title="Contribute" href="https://github.com/openshift-evangelists/kbe">Contribute</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="Try out!" href="/diy/">Try out!</a>
+            </li>
+          
+        
+
+        
+
+        
+      </ul>
+    </div>
+
+    <div class="avatar-container">
+      <div class="avatar-img-border">
+        
+          <a title="Kubernetes By Example" href="http://kubernetesbyexample.com/">
+            <img class="avatar-img" src="http://kubernetesbyexample.com/img/kbe-logo.png" alt="Kubernetes By Example" />
+          </a>
+        
+      </div>
+    </div>
+
+  </div>
+</nav>
+
+
+
+
+    
+  
+  
+  
+
+
+
+
+  
+
+  <header class="header-section ">
+    
+    <div class="intro-header no-img">
+      
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div class="page-heading">
+              <h1>Jobs</h1>
+                
+                  
+                    <hr class="small">
+                    <span class="page-subheading">Kubernetes jobs by example</span>
+                  
+                
+                
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+
+    
+  <div class="container" role="main">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <p>A <a href="https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/">job</a> in Kubernetes is a supervisor for pods carrying out batch processes, that is,
+a process that runs for a certain time to completion, for example a calculation
+or a backup operation.</p>
+<p>Let&rsquo;s create a <a href="https://github.com/openshift-evangelists/kbe/blob/master/specs/jobs/job.yaml">job</a>
+called <code>countdown</code> that supervises a pod counting from 9 down to 1:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/master/specs/jobs/job.yaml
+</code></pre></div><p>You can see the job and the pod it looks after like so:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kubectl get jobs
+NAME                      DESIRED   SUCCESSFUL   AGE
+countdown                 <span style="color:#ae81ff">1</span>         <span style="color:#ae81ff">1</span>            5s
+
+$ kubectl get pods --show-all
+NAME                            READY     STATUS      RESTARTS   AGE
+countdown-lc80g                 0/1       Completed   <span style="color:#ae81ff">0</span>          16s
+</code></pre></div><p>To learn more about the status of the job, do:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kubectl describe jobs/countdown
+Name:           countdown
+Namespace:      default
+Image<span style="color:#f92672">(</span>s<span style="color:#f92672">)</span>:       centos:7
+Selector:       controller-uid<span style="color:#f92672">=</span>ff585b92-2b43-11e7-b44f-be3e8f4350ff
+Parallelism:    <span style="color:#ae81ff">1</span>
+Completions:    <span style="color:#ae81ff">1</span>
+Start Time:     Thu, <span style="color:#ae81ff">27</span> Apr <span style="color:#ae81ff">2017</span> 13:21:10 +0100
+Labels:         controller-uid<span style="color:#f92672">=</span>ff585b92-2b43-11e7-b44f-be3e8f4350ff
+                job-name<span style="color:#f92672">=</span>countdown
+Pods Statuses:  <span style="color:#ae81ff">0</span> Running / <span style="color:#ae81ff">1</span> Succeeded / <span style="color:#ae81ff">0</span> Failed
+No volumes.
+Events:
+  FirstSeen     LastSeen        Count   From                    SubobjectPath   Type            Reason                  Message
+  ---------     --------        -----   ----                    -------------   --------        ------                  -------
+  2m            2m              <span style="color:#ae81ff">1</span>       <span style="color:#f92672">{</span>job-controller <span style="color:#f92672">}</span>                       Normal          SuccessfulCreate        Created pod: countdown-lc80g
+</code></pre></div><p>And to see the output of the job via the pod it supervised, execute:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">kubectl logs countdown-lc80g
+<span style="color:#ae81ff">9</span>
+<span style="color:#ae81ff">8</span>
+<span style="color:#ae81ff">7</span>
+<span style="color:#ae81ff">6</span>
+<span style="color:#ae81ff">5</span>
+<span style="color:#ae81ff">4</span>
+<span style="color:#ae81ff">3</span>
+<span style="color:#ae81ff">2</span>
+<span style="color:#ae81ff">1</span>
+</code></pre></div><p>To clean up, use the <code>delete</code> verb on the job object which will remove all the
+supervised pods:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kubectl delete job countdown
+job <span style="color:#e6db74">&#34;countdown&#34;</span> deleted
+</code></pre></div><p>Note that there are also more advanced ways to use jobs, for example,
+by utilizing a <a href="https://kubernetes.io/docs/tasks/job/coarse-parallel-processing-work-queue/">work queue</a>
+or scheduling the execution at a certain time via <a href="https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/">cron jobs</a>.</p>
+<p><a href="/logging">Previous</a> | <a href="/statefulset">Next</a></p>
+
+        
+      </div>
+    </div>
+  </div>
+
+    <footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+          
+        </ul>
+        <p class="credits copyright text-muted">
+          
+          &nbsp;&bull;&nbsp;
+          2019
+
+          
+            &nbsp;&bull;&nbsp;
+            <a href="http://kubernetesbyexample.com/">Kubernetes By Example</a>
+          
+        </p>
+        
+        <p class="credits theme-by text-muted">
+          <a href="http://gohugo.io">Hugo v0.66.0</a> powered &nbsp;&bull;&nbsp; Theme by <a href="http://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a> adapted to <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a>
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.js" integrity="sha384-/y1Nn9+QQAipbNQWU65krzJralCnuOasHncUFXGkdwntGeSvQicrYkiUBwsgUqc1" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/contrib/auto-render.min.js" integrity="sha384-dq1/gEHSxPZQ7DdrM82ID4YVol9BYyU7GbWlIwnwyPzotpoc57wDw/guX8EaYGPx" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="http://kubernetesbyexample.com/js/main.js"></script>
+<script src="http://kubernetesbyexample.com/js/highlight.min.js"></script>
+<script> hljs.initHighlightingOnLoad(); </script>
+<script> renderMathInElement(document.body); </script>
+
+
+
+
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-34425776-2', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+
+  </body>
+</html>
+

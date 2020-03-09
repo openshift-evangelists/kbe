@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>Service Discovery</title>
+  <meta property="og:title" content="Service Discovery" />
+  <meta name="twitter:title" content="Service Discovery" />
+  <meta name="description" content="Kubernetes service discovery by example">
+  <meta property="og:description" content="Kubernetes service discovery by example">
+  <meta name="twitter:description" content="Kubernetes service discovery by example">
+  <meta name="author" content=""/>
+  <link href='http://kubernetesbyexample.com/img/kbe-logo.ico' rel='icon' type='image/x-icon'/>
+  <meta property="og:image" content="http://kubernetesbyexample.com/img/kbe-logo.png" />
+  <meta name="twitter:image" content="http://kubernetesbyexample.com/img/kbe-logo.png" />
+  <meta name="twitter:card" content="summary" />
+  <meta property="og:url" content="http://kubernetesbyexample.com/sd/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Kubernetes By Example" />
+
+  <meta name="generator" content="Hugo 0.66.0" />
+  <link rel="canonical" href="http://kubernetesbyexample.com/sd/" />
+  <link rel="alternate" href="http://kubernetesbyexample.com/index.xml" type="application/rss+xml" title="Kubernetes By Example">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css" integrity="sha384-wITovz90syo1dJWVh32uuETPVEtGigN07tkttEqPv+uR2SE/mbQcG7ATL28aI9H0" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="http://kubernetesbyexample.com/css/main.css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+  <link rel="stylesheet" href="http://kubernetesbyexample.com/css/pygment_highlights.css" />
+  <link rel="stylesheet" href="http://kubernetesbyexample.com/css/highlight.min.css" />
+</head>
+
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="http://kubernetesbyexample.com/">Home</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+        
+          
+            <li>
+              <a title="Contribute" href="https://github.com/openshift-evangelists/kbe">Contribute</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="Try out!" href="/diy/">Try out!</a>
+            </li>
+          
+        
+
+        
+
+        
+      </ul>
+    </div>
+
+    <div class="avatar-container">
+      <div class="avatar-img-border">
+        
+          <a title="Kubernetes By Example" href="http://kubernetesbyexample.com/">
+            <img class="avatar-img" src="http://kubernetesbyexample.com/img/kbe-logo.png" alt="Kubernetes By Example" />
+          </a>
+        
+      </div>
+    </div>
+
+  </div>
+</nav>
+
+
+
+
+    
+  
+  
+  
+
+
+
+
+  
+
+  <header class="header-section ">
+    
+    <div class="intro-header no-img">
+      
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div class="page-heading">
+              <h1>Service Discovery</h1>
+                
+                  
+                    <hr class="small">
+                    <span class="page-subheading">Kubernetes service discovery by example</span>
+                  
+                
+                
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+
+    
+  <div class="container" role="main">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <p>Service discovery is the process of figuring out how to connect to a <a href="/service/">service</a>.
+While there is a service discovery option based on <a href="https://kubernetes.io/docs/concepts/services-networking/connect-applications-service/#environment-variables">environment variables</a> available,
+the DNS-based service discovery is preferable. Note that DNS is a <a href="https://github.com/kubernetes/kubernetes/blob/master/cluster/addons/dns/README.md">cluster add-on</a> so make sure your Kubernetes distribution provides for one or install it yourself.</p>
+<p>Let&rsquo;s create a <a href="https://github.com/openshift-evangelists/kbe/blob/master/specs/sd/svc.yaml">service</a> named
+<code>thesvc</code> and an <a href="https://github.com/openshift-evangelists/kbe/blob/master/specs/sd/rc.yaml">RC</a> supervising
+some pods along with it:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/master/specs/sd/rc.yaml
+
+$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/master/specs/sd/svc.yaml
+</code></pre></div><p>Now we want to connect to the <code>thesvc</code> service from within the cluster, say, from another service.
+To simulate this, we create a <a href="https://github.com/openshift-evangelists/kbe/blob/master/specs/sd/jumpod.yaml">jump pod</a>
+in the same namespace (<code>default</code>, since we didn&rsquo;t specify anything else):</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/master/specs/sd/jumpod.yaml
+</code></pre></div><p>The DNS add-on will make sure that our service <code>thesvc</code> is available via the FQDN
+<code>thesvc.default.svc.cluster.local</code> from other pods in the cluster. Let&rsquo;s try it out:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kubectl exec -it jumpod -c shell -- ping thesvc.default.svc.cluster.local
+PING thesvc.default.svc.cluster.local <span style="color:#f92672">(</span>172.30.251.137<span style="color:#f92672">)</span> 56<span style="color:#f92672">(</span>84<span style="color:#f92672">)</span> bytes of data.
+...
+</code></pre></div><p>The answer to the <code>ping</code> tells us that the service is available via the cluster
+IP <code>172.30.251.137</code>. We can directly connect to and consume the service (in the same namespace) like so:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kubectl exec -it jumpod -c shell -- curl http://thesvc/info
+<span style="color:#f92672">{</span><span style="color:#e6db74">&#34;host&#34;</span>: <span style="color:#e6db74">&#34;thesvc&#34;</span>, <span style="color:#e6db74">&#34;version&#34;</span>: <span style="color:#e6db74">&#34;0.5.0&#34;</span>, <span style="color:#e6db74">&#34;from&#34;</span>: <span style="color:#e6db74">&#34;172.17.0.5&#34;</span><span style="color:#f92672">}</span>
+</code></pre></div><p>Note that the IP address <code>172.17.0.5</code> above is the cluster-internal IP address
+of the jump pod.</p>
+<p>To access a service that is deployed in a different namespace than the one you&rsquo;re
+accessing it from, use a FQDN in the form <code>$SVC.$NAMESPACE.svc.cluster.local</code>.</p>
+<p>Let&rsquo;s see how that works by creating:</p>
+<ol>
+<li>a <a href="https://github.com/openshift-evangelists/kbe/blob/master/specs/sd/other-ns.yaml">namespace</a> <code>other</code></li>
+<li>a <a href="https://github.com/openshift-evangelists/kbe/blob/master/specs/sd/other-svc.yaml">service</a> <code>thesvc</code> in namespace <code>other</code></li>
+<li>an <a href="https://github.com/openshift-evangelists/kbe/blob/master/specs/sd/other-rc.yaml">RC</a> supervising the pods, also in namespace <code>other</code></li>
+</ol>
+<p>If you&rsquo;re not familiar with namespaces, check out the <a href="/ns/">namespace examples</a> first.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/master/specs/sd/other-ns.yaml
+
+$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/master/specs/sd/other-rc.yaml
+
+$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/master/specs/sd/other-svc.yaml
+</code></pre></div><p>We&rsquo;re now in the position to consume the service <code>thesvc</code> in namespace <code>other</code> from the
+<code>default</code> namespace (again via the jump pod):</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kubectl exec -it jumpod -c shell -- curl http://thesvc.other/info
+<span style="color:#f92672">{</span><span style="color:#e6db74">&#34;host&#34;</span>: <span style="color:#e6db74">&#34;thesvc.other&#34;</span>, <span style="color:#e6db74">&#34;version&#34;</span>: <span style="color:#e6db74">&#34;0.5.0&#34;</span>, <span style="color:#e6db74">&#34;from&#34;</span>: <span style="color:#e6db74">&#34;172.17.0.5&#34;</span><span style="color:#f92672">}</span>
+</code></pre></div><p>Summing up, DNS-based service discovery provides a flexible and generic way to
+connect to services across the cluster.</p>
+<p>You can destroy all the resources created with:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kubectl delete pods jumpod
+
+$ kubectl delete svc thesvc
+
+$ kubectl delete rc rcsise
+
+$ kubectl delete ns other
+</code></pre></div><p>Keep in mind that removing a namespace will destroy every resource inside.</p>
+<p><a href="/services">Previous</a> | <a href="/pf">Next</a></p>
+
+        
+      </div>
+    </div>
+  </div>
+
+    <footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+          
+        </ul>
+        <p class="credits copyright text-muted">
+          
+          &nbsp;&bull;&nbsp;
+          2019
+
+          
+            &nbsp;&bull;&nbsp;
+            <a href="http://kubernetesbyexample.com/">Kubernetes By Example</a>
+          
+        </p>
+        
+        <p class="credits theme-by text-muted">
+          <a href="http://gohugo.io">Hugo v0.66.0</a> powered &nbsp;&bull;&nbsp; Theme by <a href="http://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a> adapted to <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a>
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.js" integrity="sha384-/y1Nn9+QQAipbNQWU65krzJralCnuOasHncUFXGkdwntGeSvQicrYkiUBwsgUqc1" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/contrib/auto-render.min.js" integrity="sha384-dq1/gEHSxPZQ7DdrM82ID4YVol9BYyU7GbWlIwnwyPzotpoc57wDw/guX8EaYGPx" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="http://kubernetesbyexample.com/js/main.js"></script>
+<script src="http://kubernetesbyexample.com/js/highlight.min.js"></script>
+<script> hljs.initHighlightingOnLoad(); </script>
+<script> renderMathInElement(document.body); </script>
+
+
+
+
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-34425776-2', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+
+  </body>
+</html>
+

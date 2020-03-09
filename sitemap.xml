@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  
+  <url>
+    <loc>http://kubernetesbyexample.com/</loc>
+    <lastmod>2019-02-28T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://kubernetesbyexample.com/diy/</loc>
+    <lastmod>2019-02-28T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://kubernetesbyexample.com/jobs/</loc>
+    <lastmod>2019-02-28T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://kubernetesbyexample.com/logging/</loc>
+    <lastmod>2019-02-28T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://kubernetesbyexample.com/nodes/</loc>
+    <lastmod>2019-02-28T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://kubernetesbyexample.com/page/</loc>
+    <lastmod>2019-02-28T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://kubernetesbyexample.com/secrets/</loc>
+    <lastmod>2019-02-28T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://kubernetesbyexample.com/deployments/</loc>
+    <lastmod>2019-02-27T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://kubernetesbyexample.com/envs/</loc>
+    <lastmod>2019-02-27T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://kubernetesbyexample.com/healthz/</loc>
+    <lastmod>2019-02-27T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://kubernetesbyexample.com/labels/</loc>
+    <lastmod>2019-02-27T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://kubernetesbyexample.com/ns/</loc>
+    <lastmod>2019-02-27T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://kubernetesbyexample.com/pv/</loc>
+    <lastmod>2019-02-27T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://kubernetesbyexample.com/pods/</loc>
+    <lastmod>2019-02-27T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://kubernetesbyexample.com/rcs/</loc>
+    <lastmod>2019-02-27T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://kubernetesbyexample.com/sd/</loc>
+    <lastmod>2019-02-27T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://kubernetesbyexample.com/services/</loc>
+    <lastmod>2019-02-27T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://kubernetesbyexample.com/volumes/</loc>
+    <lastmod>2019-02-27T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://kubernetesbyexample.com/ic/</loc>
+    <lastmod>2019-02-26T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://kubernetesbyexample.com/statefulset/</loc>
+    <lastmod>2019-02-15T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://kubernetesbyexample.com/api/</loc>
+    <lastmod>2019-02-13T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://kubernetesbyexample.com/pf/</loc>
+    <lastmod>2019-02-12T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://kubernetesbyexample.com/categories/</loc>
+  </url>
+  
+  <url>
+    <loc>http://kubernetesbyexample.com/tags/</loc>
+  </url>
+  
+</urlset>

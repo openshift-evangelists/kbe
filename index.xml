@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Kubernetes By Example</title>
+    <link>http://kubernetesbyexample.com/</link>
+    <description>Recent content on Kubernetes By Example</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Thu, 28 Feb 2019 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="http://kubernetesbyexample.com/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>DIY</title>
+      <link>http://kubernetesbyexample.com/diy/</link>
+      <pubDate>Thu, 28 Feb 2019 00:00:00 +0000</pubDate>
+      
+      <guid>http://kubernetesbyexample.com/diy/</guid>
+      <description>If you want to try out the examples here yourself, you can use the same setup I&amp;rsquo;ve got locally running on my machine:
+ Install Minishift Run minishift start Configure OpenShift Client binary (oc) by running eval $(minishift oc-env) Log in using oc login -u system:admin with password admin Create a symlink from oc like so: ln -s $(which oc) /usr/local/bin/kubectl  All examples have been carried out with Minishift version v1.</description>
+    </item>
+    
+    <item>
+      <title>Jobs</title>
+      <link>http://kubernetesbyexample.com/jobs/</link>
+      <pubDate>Thu, 28 Feb 2019 00:00:00 +0000</pubDate>
+      
+      <guid>http://kubernetesbyexample.com/jobs/</guid>
+      <description>A job in Kubernetes is a supervisor for pods carrying out batch processes, that is, a process that runs for a certain time to completion, for example a calculation or a backup operation.
+Let&amp;rsquo;s create a job called countdown that supervises a pod counting from 9 down to 1:
+$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/master/specs/jobs/job.yaml You can see the job and the pod it looks after like so:
+$ kubectl get jobs NAME DESIRED SUCCESSFUL AGE countdown 1 1 5s $ kubectl get pods --show-all NAME READY STATUS RESTARTS AGE countdown-lc80g 0/1 Completed 0 16s To learn more about the status of the job, do:</description>
+    </item>
+    
+    <item>
+      <title>Logging</title>
+      <link>http://kubernetesbyexample.com/logging/</link>
+      <pubDate>Thu, 28 Feb 2019 00:00:00 +0000</pubDate>
+      
+      <guid>http://kubernetesbyexample.com/logging/</guid>
+      <description>Logging is one option to understand what is going on inside your applications and the cluster at large. Basic logging in Kubernetes makes the output a container produces available, which is a good use case for debugging. More advanced setups consider logs across nodes and store them in a central place, either within the cluster or via a dedicated (cloud-based) service.
+Let&amp;rsquo;s create a pod called logme that runs a container writing to stdout and stderr:</description>
+    </item>
+    
+    <item>
+      <title>Nodes</title>
+      <link>http://kubernetesbyexample.com/nodes/</link>
+      <pubDate>Thu, 28 Feb 2019 00:00:00 +0000</pubDate>
+      
+      <guid>http://kubernetesbyexample.com/nodes/</guid>
+      <description>In Kubernetes, nodes are the (virtual) machines where your workloads in shape of pods run. As a developer you typically don&amp;rsquo;t deal with nodes directly, however as an admin you might want to familiarize yourself with node operations.
+To list available nodes in your cluster (note that the output will depend on the environment you&amp;rsquo;re using, I&amp;rsquo;m using Minishift):
+$ kubectl get nodes NAME STATUS AGE 192.168.99.100 Ready 14d One interesting task, from a developer point of view, is to make Kubernetes schedule a pod on a certain node.</description>
+    </item>
+    
+    <item>
+      <title>Secrets</title>
+      <link>http://kubernetesbyexample.com/secrets/</link>
+      <pubDate>Thu, 28 Feb 2019 00:00:00 +0000</pubDate>
+      
+      <guid>http://kubernetesbyexample.com/secrets/</guid>
+      <description>You don&amp;rsquo;t want sensitive information such as a database password or an API key kept around in clear text. Secrets provide you with a mechanism to use such information in a safe and reliable way with the following properties:
+ Secrets are namespaced objects, that is, exist in the context of a namespace You can access them via a volume or an environment variable from a container running in a pod The secret data on nodes is stored in tmpfs volumes A per-secret size limit of 1MB exists The API server stores secrets as plaintext in etcd  Let&amp;rsquo;s create a secret apikey that holds a (made-up) API key:</description>
+    </item>
+    
+    <item>
+      <title>Deployments</title>
+      <link>http://kubernetesbyexample.com/deployments/</link>
+      <pubDate>Wed, 27 Feb 2019 00:00:00 +0000</pubDate>
+      
+      <guid>http://kubernetesbyexample.com/deployments/</guid>
+      <description>A deployment is a supervisor for pods, giving you fine-grained control over how and when a new pod version is rolled out as well as rolled back to a previous state.
+Let&amp;rsquo;s create a deployment called sise-deploy that supervises two replicas of a pod as well as a replica set:
+$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/master/specs/deployments/d09.yaml You can have a look at the deployment, as well as the the replica set and the pods the deployment looks after like so:</description>
+    </item>
+    
+    <item>
+      <title>Environment Variables</title>
+      <link>http://kubernetesbyexample.com/envs/</link>
+      <pubDate>Wed, 27 Feb 2019 00:00:00 +0000</pubDate>
+      
+      <guid>http://kubernetesbyexample.com/envs/</guid>
+      <description>You can set environment variables for containers running in a pod and in addition, Kubernetes exposes certain runtime infos via environment variables automatically.
+Let&amp;rsquo;s launch a pod that we pass an environment variable SIMPLE_SERVICE_VERSION with the value 1.0:
+$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/master/specs/envs/pod.yaml $ kubectl describe pod envs | grep IP: IP: 172.17.0.3 Now, let&amp;rsquo;s verify from within the cluster if the application running in the pod has picked up the environment variable SIMPLE_SERVICE_VERSION:</description>
+    </item>
+    
+    <item>
+      <title>Health Checks</title>
+      <link>http://kubernetesbyexample.com/healthz/</link>
+      <pubDate>Wed, 27 Feb 2019 00:00:00 +0000</pubDate>
+      
+      <guid>http://kubernetesbyexample.com/healthz/</guid>
+      <description>In order to verify if a container in a pod is healthy and ready to serve traffic, Kubernetes provides for a range of health checking mechanisms. Health checks, or probes as they are called in Kubernetes, are carried out by the kubelet to determine when to restart a container (for livenessProbe) and used by services and deployments to determine if a pod should receive traffic (for readinessProbe).
+We will focus on HTTP health checks in the following.</description>
+    </item>
+    
+    <item>
+      <title>Labels</title>
+      <link>http://kubernetesbyexample.com/labels/</link>
+      <pubDate>Wed, 27 Feb 2019 00:00:00 +0000</pubDate>
+      
+      <guid>http://kubernetesbyexample.com/labels/</guid>
+      <description>Labels are the mechanism you use to organize Kubernetes objects. A label is a key-value pair with certain restrictions concerning length and allowed values but without any pre-defined meaning. So you&amp;rsquo;re free to choose labels as you see fit, for example, to express environments such as &amp;lsquo;this pod is running in production&amp;rsquo; or ownership, like &amp;lsquo;department X owns that pod&amp;rsquo;.
+Let&amp;rsquo;s create a pod that initially has one label (env=development):</description>
+    </item>
+    
+    <item>
+      <title>Namespaces</title>
+      <link>http://kubernetesbyexample.com/ns/</link>
+      <pubDate>Wed, 27 Feb 2019 00:00:00 +0000</pubDate>
+      
+      <guid>http://kubernetesbyexample.com/ns/</guid>
+      <description>Namespaces provide for a scope of Kubernetes resource, carving up your cluster in smaller units. You can think of it as a workspace you&amp;rsquo;re sharing with other users. Many resources such as pods and services are namespaced, while some, for example, nodes are not namespaced (but cluster-wide). As a developer you&amp;rsquo;d usually use an assigned namespace, however admins may wish to manage them, for example to set up access control or resource quotas.</description>
+    </item>
+    
+    <item>
+      <title>Persistent Volumes</title>
+      <link>http://kubernetesbyexample.com/pv/</link>
+      <pubDate>Wed, 27 Feb 2019 00:00:00 +0000</pubDate>
+      
+      <guid>http://kubernetesbyexample.com/pv/</guid>
+      <description>A persistent volume (PV) is a cluster-wide resource that you can use to store data in a way that it persists beyond the lifetime of a pod. The PV is not backed by locally-attached storage on a worker node but by networked storage system such as EBS or NFS or a distributed filesystem like Ceph.
+In order to use a PV you need to claim it first, using a persistent volume claim (PVC).</description>
+    </item>
+    
+    <item>
+      <title>Pods</title>
+      <link>http://kubernetesbyexample.com/pods/</link>
+      <pubDate>Wed, 27 Feb 2019 00:00:00 +0000</pubDate>
+      
+      <guid>http://kubernetesbyexample.com/pods/</guid>
+      <description>A pod is a collection of containers sharing a network and mount namespace and is the basic unit of deployment in Kubernetes. All containers in a pod are scheduled on the same node.
+To launch a pod using the container image mhausenblas/simpleservice:0.5.0 and exposing a HTTP API on port 9876, execute:
+$ kubectl run sise --image=mhausenblas/simpleservice:0.5.0 --port=9876 We can now see that the pod is running:
+$ kubectl get pods NAME READY STATUS RESTARTS AGE sise-3210265840-k705b 1/1 Running 0 1m $ kubectl describe pod sise-3210265840-k705b | grep IP: IP: 172.</description>
+    </item>
+    
+    <item>
+      <title>Replication Controllers</title>
+      <link>http://kubernetesbyexample.com/rcs/</link>
+      <pubDate>Wed, 27 Feb 2019 00:00:00 +0000</pubDate>
+      
+      <guid>http://kubernetesbyexample.com/rcs/</guid>
+      <description>A replication controller (RC) is a supervisor for long-running pods. An RC will launch a specified number of pods called replicas and makes sure that they keep running, for example when a node fails or something inside of a pod, that is, in one of its containers goes wrong.
+Let&amp;rsquo;s create an RC that supervises a single replica of a pod:
+$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/master/specs/rcs/rc.yaml You can see the RC and the pod it looks after like so:</description>
+    </item>
+    
+    <item>
+      <title>Service Discovery</title>
+      <link>http://kubernetesbyexample.com/sd/</link>
+      <pubDate>Wed, 27 Feb 2019 00:00:00 +0000</pubDate>
+      
+      <guid>http://kubernetesbyexample.com/sd/</guid>
+      <description>Service discovery is the process of figuring out how to connect to a service. While there is a service discovery option based on environment variables available, the DNS-based service discovery is preferable. Note that DNS is a cluster add-on so make sure your Kubernetes distribution provides for one or install it yourself.
+Let&amp;rsquo;s create a service named thesvc and an RC supervising some pods along with it:
+$ kubectl apply -f https://raw.</description>
+    </item>
+    
+    <item>
+      <title>Services</title>
+      <link>http://kubernetesbyexample.com/services/</link>
+      <pubDate>Wed, 27 Feb 2019 00:00:00 +0000</pubDate>
+      
+      <guid>http://kubernetesbyexample.com/services/</guid>
+      <description>A service is an abstraction for pods, providing a stable, so called virtual IP (VIP) address. While pods may come and go and with it their IP addresses, a service allows clients to reliably connect to the containers running in the pod using the VIP. The virtual in VIP means it is not an actual IP address connected to a network interface, but its purpose is purely to forward traffic to one or more pods.</description>
+    </item>
+    
+    <item>
+      <title>Volumes</title>
+      <link>http://kubernetesbyexample.com/volumes/</link>
+      <pubDate>Wed, 27 Feb 2019 00:00:00 +0000</pubDate>
+      
+      <guid>http://kubernetesbyexample.com/volumes/</guid>
+      <description>A Kubernetes volume is essentially a directory accessible to all containers running in a pod. In contrast to the container-local filesystem, the data in volumes is preserved across container restarts. The medium backing a volume and its contents are determined by the volume type:
+ node-local types such as emptyDir or hostPath file-sharing types such as nfs cloud provider-specific types like awsElasticBlockStore, azureDisk, or gcePersistentDisk distributed file system types, for example glusterfs or cephfs special-purpose types like secret, gitRepo  A special type of volume is PersistentVolume, which we will cover elsewhere.</description>
+    </item>
+    
+    <item>
+      <title>Init Containers</title>
+      <link>http://kubernetesbyexample.com/ic/</link>
+      <pubDate>Tue, 26 Feb 2019 00:00:00 +0000</pubDate>
+      
+      <guid>http://kubernetesbyexample.com/ic/</guid>
+      <description>It&amp;rsquo;s sometimes necessary to prepare a container running in a pod. For example, you might want to wait for a service being available, want to configure things at runtime, or init some data in a database. In all of these cases, init containers are useful. Note that Kubernetes will execute all init containers (and they must all exit successfully) before the main container(s) are executed.
+So let&amp;rsquo;s create an deployment consisting of an init container that writes a message into a file at /ic/this and the main (long-running) container reading out this file, then:</description>
+    </item>
+    
+    <item>
+      <title>StatefulSet</title>
+      <link>http://kubernetesbyexample.com/statefulset/</link>
+      <pubDate>Fri, 15 Feb 2019 00:00:00 +0000</pubDate>
+      
+      <guid>http://kubernetesbyexample.com/statefulset/</guid>
+      <description>If you have a stateless app you want to use a deployment. However, for a stateful app you might want to use a StatefulSet. Unlike a deployment, the StatefulSet provides certain guarantees about the identity of the pods it is managing (that is, predictable names) and about the startup order. Two more things that are different compared to a deployment: for network communication you need to create a headless services and for persistency the StatefulSet manages a persistent volume per pod.</description>
+    </item>
+    
+    <item>
+      <title>API Server access</title>
+      <link>http://kubernetesbyexample.com/api/</link>
+      <pubDate>Wed, 13 Feb 2019 00:00:00 +0000</pubDate>
+      
+      <guid>http://kubernetesbyexample.com/api/</guid>
+      <description>Sometimes it&amp;rsquo;s useful or necessary to directly access the Kubernetes API server, for exploratory or testing purposes.
+In order to do this, one option is to proxy the API to your local environment, using:
+$ kubectl proxy --port=8080 Starting to serve on 127.0.0.1:8080 Now you can query the API (in a separate terminal session) like so:
+$ curl http://localhost:8080/api/v1 { &amp;#34;kind&amp;#34;: &amp;#34;APIResourceList&amp;#34;, &amp;#34;groupVersion&amp;#34;: &amp;#34;v1&amp;#34;, &amp;#34;resources&amp;#34;: [ { ... { &amp;#34;name&amp;#34;: &amp;#34;services/status&amp;#34;, &amp;#34;singularName&amp;#34;: &amp;#34;&amp;#34;, &amp;#34;namespaced&amp;#34;: true, &amp;#34;kind&amp;#34;: &amp;#34;Service&amp;#34;, &amp;#34;verbs&amp;#34;: [ &amp;#34;get&amp;#34;, &amp;#34;patch&amp;#34;, &amp;#34;update&amp;#34; ] } ] } Alternatively, without proxying, you can use kubectl directly as follows to achieve the same:</description>
+    </item>
+    
+    <item>
+      <title>Port Forward</title>
+      <link>http://kubernetesbyexample.com/pf/</link>
+      <pubDate>Tue, 12 Feb 2019 00:00:00 +0000</pubDate>
+      
+      <guid>http://kubernetesbyexample.com/pf/</guid>
+      <description>In the context of developing apps on Kubernetes it is often useful to quickly access a service from your local environment without exposing it using, for example, a load balancer or an ingress resource. In this case you can use port forwarding.
+Let&amp;rsquo;s create an app consisting of a deployment and a service called simpleservice, serving on port 80:
+$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/master/specs/pf/app.yaml Let&amp;rsquo;s say want to access the simpleservice service from the local environment, say, your laptop, on port 8080.</description>
+    </item>
+    
+  </channel>
+</rss>
