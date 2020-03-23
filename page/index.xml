@@ -5,40 +5,96 @@
     <link>https://kubernetesbyexample.com/page/</link>
     <description>Recent content in Pages on Kubernetes By Example</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Sun, 08 Mar 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 23 Mar 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://kubernetesbyexample.com/page/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
+      <title>DIY</title>
+      <link>https://kubernetesbyexample.com/diy/</link>
+      <pubDate>Mon, 23 Mar 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://kubernetesbyexample.com/diy/</guid>
+      <description>If you want to try out the examples here yourself, here are a couple of options:
+OpenShift Playground You can use the OpenShift Playground to get access to a cluster for 60 minutes at a time. This option doesn&amp;rsquo;t require you to install anything. This is the option we used for most of the examples on the site.
+OpenShift Playground
+Click the red START SCENARIO button, and then you will have access to an OpenShift cluster via a web-based terminal window with kubectl available.</description>
+    </item>
+    
+    <item>
       <title>Namespaces</title>
       <link>https://kubernetesbyexample.com/ns/</link>
-      <pubDate>Sun, 08 Mar 2020 00:00:00 +0000</pubDate>
+      <pubDate>Mon, 23 Mar 2020 00:00:00 +0000</pubDate>
       
       <guid>https://kubernetesbyexample.com/ns/</guid>
       <description>Namespaces provide for a scope of Kubernetes resource, carving up your cluster in smaller units. You can think of it as a workspace you&amp;rsquo;re sharing with other users. Many resources such as pods and services are namespaced, while some, for example, nodes are not namespaced (but cluster-wide). As a developer you&amp;rsquo;d usually use an assigned namespace, however admins may wish to manage them, for example to set up access control or resource quotas.</description>
     </item>
     
     <item>
-      <title>DIY</title>
-      <link>https://kubernetesbyexample.com/diy/</link>
-      <pubDate>Thu, 28 Feb 2019 00:00:00 +0000</pubDate>
+      <title>Nodes</title>
+      <link>https://kubernetesbyexample.com/nodes/</link>
+      <pubDate>Mon, 23 Mar 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://kubernetesbyexample.com/diy/</guid>
-      <description>If you want to try out the examples here yourself, you can use the same setup I&amp;rsquo;ve got locally running on my machine:
- Install Minishift Run minishift start Configure OpenShift Client binary (oc) by running eval $(minishift oc-env) Log in using oc login -u system:admin with password admin Create a symlink from oc like so: ln -s $(which oc) /usr/local/bin/kubectl  All examples have been carried out with Minishift version v1.</description>
+      <guid>https://kubernetesbyexample.com/nodes/</guid>
+      <description>In Kubernetes, nodes are the (virtual) machines where your workloads in shape of pods run. As a developer you typically don&amp;rsquo;t deal with nodes directly, however as an admin you might want to familiarize yourself with node operations.
+To list available nodes in your cluster (note that the output will depend on the environment you&amp;rsquo;re using. This example is using the OpenShift Playground):
+$ kubectl get nodes NAME STATUS ROLES AGE VERSION crc-rk2fc-master-0 Ready master,worker 102d v1.</description>
+    </item>
+    
+    <item>
+      <title>StatefulSet</title>
+      <link>https://kubernetesbyexample.com/statefulset/</link>
+      <pubDate>Mon, 23 Mar 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://kubernetesbyexample.com/statefulset/</guid>
+      <description>If you have a stateless app you want to use a deployment. However, for a stateful app you might want to use a StatefulSet. Unlike a deployment, the StatefulSet provides certain guarantees about the identity of the pods it is managing (that is, predictable names) and about the startup order. Two more things that are different compared to a deployment: for network communication you need to create a headless services and for persistency the StatefulSet manages a persistent volume per pod.</description>
     </item>
     
     <item>
       <title>Jobs</title>
       <link>https://kubernetesbyexample.com/jobs/</link>
-      <pubDate>Thu, 28 Feb 2019 00:00:00 +0000</pubDate>
+      <pubDate>Thu, 19 Mar 2020 00:00:00 +0000</pubDate>
       
       <guid>https://kubernetesbyexample.com/jobs/</guid>
       <description>A job in Kubernetes is a supervisor for pods carrying out batch processes, that is, a process that runs for a certain time to completion, for example a calculation or a backup operation.
 Let&amp;rsquo;s create a job called countdown that supervises a pod counting from 9 down to 1:
 $ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/master/specs/jobs/job.yaml You can see the job and the pod it looks after like so:
-$ kubectl get jobs NAME DESIRED SUCCESSFUL AGE countdown 1 1 5s $ kubectl get pods --show-all NAME READY STATUS RESTARTS AGE countdown-lc80g 0/1 Completed 0 16s To learn more about the status of the job, do:</description>
+$ kubectl get jobs NAME DESIRED SUCCESSFUL AGE countdown 1 1 5s $ kubectl get pods NAME READY STATUS RESTARTS AGE countdown-qkjx8 0/1 Completed 0 2m17s To learn more about the status of the job, do:</description>
+    </item>
+    
+    <item>
+      <title>Volumes</title>
+      <link>https://kubernetesbyexample.com/volumes/</link>
+      <pubDate>Thu, 19 Mar 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://kubernetesbyexample.com/volumes/</guid>
+      <description>A Kubernetes volume is essentially a directory accessible to all containers running in a pod. In contrast to the container-local filesystem, the data in volumes is preserved across container restarts. The medium backing a volume and its contents are determined by the volume type:
+ node-local types such as emptyDir or hostPath file-sharing types such as nfs cloud provider-specific types like awsElasticBlockStore, azureDisk, or gcePersistentDisk distributed file system types, for example glusterfs or cephfs special-purpose types like secret, gitRepo  A special type of volume is PersistentVolume, which we will cover elsewhere.</description>
+    </item>
+    
+    <item>
+      <title>API Server access</title>
+      <link>https://kubernetesbyexample.com/api/</link>
+      <pubDate>Sat, 23 Mar 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://kubernetesbyexample.com/api/</guid>
+      <description>Sometimes it&amp;rsquo;s useful or necessary to directly access the Kubernetes API server, for exploratory or testing purposes.
+In order to do this, one option is to proxy the API to your local environment, using:
+$ kubectl proxy --port=8080 Starting to serve on 127.0.0.1:8080 Now you can query the API (in a separate terminal session) like so:
+$ curl http://localhost:8080/api/v1 { &amp;#34;kind&amp;#34;: &amp;#34;APIResourceList&amp;#34;, &amp;#34;groupVersion&amp;#34;: &amp;#34;v1&amp;#34;, &amp;#34;resources&amp;#34;: [ { ... { &amp;#34;name&amp;#34;: &amp;#34;services/status&amp;#34;, &amp;#34;singularName&amp;#34;: &amp;#34;&amp;#34;, &amp;#34;namespaced&amp;#34;: true, &amp;#34;kind&amp;#34;: &amp;#34;Service&amp;#34;, &amp;#34;verbs&amp;#34;: [ &amp;#34;get&amp;#34;, &amp;#34;patch&amp;#34;, &amp;#34;update&amp;#34; ] } ] } Alternatively, without proxying, you can use kubectl directly as follows to achieve the same:</description>
+    </item>
+    
+    <item>
+      <title>Pods</title>
+      <link>https://kubernetesbyexample.com/pods/</link>
+      <pubDate>Sat, 23 Mar 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://kubernetesbyexample.com/pods/</guid>
+      <description>A pod is a collection of containers sharing a network and mount namespace and is the basic unit of deployment in Kubernetes. All containers in a pod are scheduled on the same node.
+To launch a pod using the container image mhausenblas/simpleservice:0.5.0 and exposing a HTTP API on port 9876, execute:
+$ kubectl run sise --image=mhausenblas/simpleservice:0.5.0 --port=9876 We can now see that the pod is running:
+$ kubectl get pods NAME READY STATUS RESTARTS AGE sise-3210265840-k705b 1/1 Running 0 1m $ kubectl describe pod sise-3210265840-k705b | grep IP: IP: 172.</description>
     </item>
     
     <item>
@@ -49,17 +105,6 @@ $ kubectl get jobs NAME DESIRED SUCCESSFUL AGE countdown 1 1 5s $ kubectl get po
       <guid>https://kubernetesbyexample.com/logging/</guid>
       <description>Logging is one option to understand what is going on inside your applications and the cluster at large. Basic logging in Kubernetes makes the output a container produces available, which is a good use case for debugging. More advanced setups consider logs across nodes and store them in a central place, either within the cluster or via a dedicated (cloud-based) service.
 Let&amp;rsquo;s create a pod called logme that runs a container writing to stdout and stderr:</description>
-    </item>
-    
-    <item>
-      <title>Nodes</title>
-      <link>https://kubernetesbyexample.com/nodes/</link>
-      <pubDate>Thu, 28 Feb 2019 00:00:00 +0000</pubDate>
-      
-      <guid>https://kubernetesbyexample.com/nodes/</guid>
-      <description>In Kubernetes, nodes are the (virtual) machines where your workloads in shape of pods run. As a developer you typically don&amp;rsquo;t deal with nodes directly, however as an admin you might want to familiarize yourself with node operations.
-To list available nodes in your cluster (note that the output will depend on the environment you&amp;rsquo;re using, I&amp;rsquo;m using Minishift):
-$ kubectl get nodes NAME STATUS AGE 192.168.99.100 Ready 14d One interesting task, from a developer point of view, is to make Kubernetes schedule a pod on a certain node.</description>
     </item>
     
     <item>
@@ -125,18 +170,6 @@ In order to use a PV you need to claim it first, using a persistent volume claim
     </item>
     
     <item>
-      <title>Pods</title>
-      <link>https://kubernetesbyexample.com/pods/</link>
-      <pubDate>Wed, 27 Feb 2019 00:00:00 +0000</pubDate>
-      
-      <guid>https://kubernetesbyexample.com/pods/</guid>
-      <description>A pod is a collection of containers sharing a network and mount namespace and is the basic unit of deployment in Kubernetes. All containers in a pod are scheduled on the same node.
-To launch a pod using the container image mhausenblas/simpleservice:0.5.0 and exposing a HTTP API on port 9876, execute:
-$ kubectl run sise --image=mhausenblas/simpleservice:0.5.0 --port=9876 We can now see that the pod is running:
-$ kubectl get pods NAME READY STATUS RESTARTS AGE sise-3210265840-k705b 1/1 Running 0 1m $ kubectl describe pod sise-3210265840-k705b | grep IP: IP: 172.</description>
-    </item>
-    
-    <item>
       <title>Replication Controllers</title>
       <link>https://kubernetesbyexample.com/rcs/</link>
       <pubDate>Wed, 27 Feb 2019 00:00:00 +0000</pubDate>
@@ -168,16 +201,6 @@ $ kubectl apply -f https://raw.</description>
     </item>
     
     <item>
-      <title>Volumes</title>
-      <link>https://kubernetesbyexample.com/volumes/</link>
-      <pubDate>Wed, 27 Feb 2019 00:00:00 +0000</pubDate>
-      
-      <guid>https://kubernetesbyexample.com/volumes/</guid>
-      <description>A Kubernetes volume is essentially a directory accessible to all containers running in a pod. In contrast to the container-local filesystem, the data in volumes is preserved across container restarts. The medium backing a volume and its contents are determined by the volume type:
- node-local types such as emptyDir or hostPath file-sharing types such as nfs cloud provider-specific types like awsElasticBlockStore, azureDisk, or gcePersistentDisk distributed file system types, for example glusterfs or cephfs special-purpose types like secret, gitRepo  A special type of volume is PersistentVolume, which we will cover elsewhere.</description>
-    </item>
-    
-    <item>
       <title>Init Containers</title>
       <link>https://kubernetesbyexample.com/ic/</link>
       <pubDate>Tue, 26 Feb 2019 00:00:00 +0000</pubDate>
@@ -185,27 +208,6 @@ $ kubectl apply -f https://raw.</description>
       <guid>https://kubernetesbyexample.com/ic/</guid>
       <description>It&amp;rsquo;s sometimes necessary to prepare a container running in a pod. For example, you might want to wait for a service being available, want to configure things at runtime, or init some data in a database. In all of these cases, init containers are useful. Note that Kubernetes will execute all init containers (and they must all exit successfully) before the main container(s) are executed.
 So let&amp;rsquo;s create an deployment consisting of an init container that writes a message into a file at /ic/this and the main (long-running) container reading out this file, then:</description>
-    </item>
-    
-    <item>
-      <title>StatefulSet</title>
-      <link>https://kubernetesbyexample.com/statefulset/</link>
-      <pubDate>Fri, 15 Feb 2019 00:00:00 +0000</pubDate>
-      
-      <guid>https://kubernetesbyexample.com/statefulset/</guid>
-      <description>If you have a stateless app you want to use a deployment. However, for a stateful app you might want to use a StatefulSet. Unlike a deployment, the StatefulSet provides certain guarantees about the identity of the pods it is managing (that is, predictable names) and about the startup order. Two more things that are different compared to a deployment: for network communication you need to create a headless services and for persistency the StatefulSet manages a persistent volume per pod.</description>
-    </item>
-    
-    <item>
-      <title>API Server access</title>
-      <link>https://kubernetesbyexample.com/api/</link>
-      <pubDate>Wed, 13 Feb 2019 00:00:00 +0000</pubDate>
-      
-      <guid>https://kubernetesbyexample.com/api/</guid>
-      <description>Sometimes it&amp;rsquo;s useful or necessary to directly access the Kubernetes API server, for exploratory or testing purposes.
-In order to do this, one option is to proxy the API to your local environment, using:
-$ kubectl proxy --port=8080 Starting to serve on 127.0.0.1:8080 Now you can query the API (in a separate terminal session) like so:
-$ curl http://localhost:8080/api/v1 { &amp;#34;kind&amp;#34;: &amp;#34;APIResourceList&amp;#34;, &amp;#34;groupVersion&amp;#34;: &amp;#34;v1&amp;#34;, &amp;#34;resources&amp;#34;: [ { ... { &amp;#34;name&amp;#34;: &amp;#34;services/status&amp;#34;, &amp;#34;singularName&amp;#34;: &amp;#34;&amp;#34;, &amp;#34;namespaced&amp;#34;: true, &amp;#34;kind&amp;#34;: &amp;#34;Service&amp;#34;, &amp;#34;verbs&amp;#34;: [ &amp;#34;get&amp;#34;, &amp;#34;patch&amp;#34;, &amp;#34;update&amp;#34; ] } ] } Alternatively, without proxying, you can use kubectl directly as follows to achieve the same:</description>
     </item>
     
     <item>

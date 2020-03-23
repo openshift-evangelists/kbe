@@ -125,74 +125,91 @@
         <p>In Kubernetes, nodes are the (virtual) machines where your workloads in shape of pods run. As a developer you typically don&rsquo;t deal with nodes directly, however as an admin
 you might want to familiarize yourself with node <a href="https://kubernetes.io/docs/concepts/nodes/node/">operations</a>.</p>
 <p>To list available nodes in your cluster (note that the output will depend on the environment
-you&rsquo;re using, I&rsquo;m using <a href="/diy/">Minishift</a>):</p>
+you&rsquo;re using. This example is using the <a href="/diy/">OpenShift Playground</a>):</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kubectl get nodes
-NAME             STATUS    AGE
-192.168.99.100   Ready     14d
+NAME                 STATUS   ROLES           AGE    VERSION
+crc-rk2fc-master-0   Ready    master,worker   102d   v1.14.6+888f9c630
 </code></pre></div><p>One interesting task, from a developer point of view, is to make Kubernetes
 schedule a pod on a certain node. For this, we first need to label the node
 we want to target:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kubectl label nodes 192.168.99.100 shouldrun<span style="color:#f92672">=</span>here
-node <span style="color:#e6db74">&#34;192.168.99.100&#34;</span> labeled
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kubectl label nodes crc-rk2fc-master-0 shouldrun<span style="color:#f92672">=</span>here
+node/crc-rk2fc-master-0 labeled
 </code></pre></div><p>Now we can create a <a href="https://github.com/openshift-evangelists/kbe/blob/master/specs/nodes/pod.yaml">pod</a>
 that gets scheduled on the node with the label <code>shouldrun=here</code>:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/master/specs/nodes/pod.yaml
 
 $ kubectl get pods --output<span style="color:#f92672">=</span>wide
-NAME                      READY     STATUS    RESTARTS   AGE       IP               NODE
-onspecificnode            1/1       Running   <span style="color:#ae81ff">0</span>          8s        172.17.0.3       192.168.99.100
-</code></pre></div><p>To learn more about a specific node, <code>192.168.99.100</code> in our case, do:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kubectl describe node 192.168.99.100
-Name:			192.168.99.100
-Labels:			beta.kubernetes.io/arch<span style="color:#f92672">=</span>amd64
-			beta.kubernetes.io/os<span style="color:#f92672">=</span>linux
-			kubernetes.io/hostname<span style="color:#f92672">=</span>192.168.99.100
-			shouldrun<span style="color:#f92672">=</span>here
-Taints:			&lt;none&gt;
-CreationTimestamp:	Wed, <span style="color:#ae81ff">12</span> Apr <span style="color:#ae81ff">2017</span> 17:17:13 +0100
-Phase:
+NAME             READY   STATUS    RESTARTS   AGE     IP            NODE            NOMINATED NODE   READINESS GATES
+onspecificnode   1/1     Running   <span style="color:#ae81ff">0</span>          2m31s   10.128.1.11   crc-rk2fc-master-0   &lt;none&gt;           &lt;none&gt;
+</code></pre></div><p>To learn more about a specific node, <code>crc-rk2fc-master-0</code> in our case, do:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kubectl describe node crc-rk2fc-master-0
+Name:               crc-rk2fc-master-0
+Roles:              master,worker
+Labels:             beta.kubernetes.io/arch<span style="color:#f92672">=</span>amd64
+                    beta.kubernetes.io/os<span style="color:#f92672">=</span>linux
+                    kubernetes.io/arch<span style="color:#f92672">=</span>amd64
+                    kubernetes.io/hostname<span style="color:#f92672">=</span>crc-rk2fc-master-0
+                    kubernetes.io/os<span style="color:#f92672">=</span>linux
+                    node-role.kubernetes.io/master<span style="color:#f92672">=</span>
+                    node-role.kubernetes.io/worker<span style="color:#f92672">=</span>
+                    node.openshift.io/os_id<span style="color:#f92672">=</span>rhcos
+                    shouldrun<span style="color:#f92672">=</span>here
+Annotations:        machine.openshift.io/machine: openshift-machine-api/crc-rk2fc-master-0
+                    machineconfiguration.openshift.io/currentConfig: rendered-master-757d2d73a4ba859a3508c78070169043
+                    machineconfiguration.openshift.io/desiredConfig: rendered-master-757d2d73a4ba859a3508c78070169043
+                    machineconfiguration.openshift.io/reason:
+                    machineconfiguration.openshift.io/ssh: accessed
+                    machineconfiguration.openshift.io/state: Done
+                    volumes.kubernetes.io/controller-managed-attach-detach: true
+CreationTimestamp:  Thu, <span style="color:#ae81ff">12</span> Dec <span style="color:#ae81ff">2019</span> 06:47:09 +0000
+Taints:             &lt;none&gt;
+Unschedulable:      false
 Conditions:
-  Type			Status	LastHeartbeatTime			LastTransitionTime			Reason				Message
-  ----			------	-----------------			------------------			------				-------
-  OutOfDisk 		False 	Thu, <span style="color:#ae81ff">27</span> Apr <span style="color:#ae81ff">2017</span> 14:55:49 +0100 	Thu, <span style="color:#ae81ff">27</span> Apr <span style="color:#ae81ff">2017</span> 09:18:13 +0100 	KubeletHasSufficientDisk 	kubelet has sufficient disk space available
-  MemoryPressure 	False 	Thu, <span style="color:#ae81ff">27</span> Apr <span style="color:#ae81ff">2017</span> 14:55:49 +0100 	Wed, <span style="color:#ae81ff">12</span> Apr <span style="color:#ae81ff">2017</span> 17:17:13 +0100 	KubeletHasSufficientMemory 	kubelet has sufficient memory available
-  DiskPressure 		False 	Thu, <span style="color:#ae81ff">27</span> Apr <span style="color:#ae81ff">2017</span> 14:55:49 +0100 	Wed, <span style="color:#ae81ff">12</span> Apr <span style="color:#ae81ff">2017</span> 17:17:13 +0100 	KubeletHasNoDiskPressure 	kubelet has no disk pressure
-  Ready 		True 	Thu, <span style="color:#ae81ff">27</span> Apr <span style="color:#ae81ff">2017</span> 14:55:49 +0100 	Thu, <span style="color:#ae81ff">27</span> Apr <span style="color:#ae81ff">2017</span> 09:18:24 +0100 	KubeletReady 			kubelet is posting ready status
-Addresses:		192.168.99.100,192.168.99.100,192.168.99.100
+  Type             Status  LastHeartbeatTime                 LastTransitionTime                Reason                       Message
+  ----             ------  -----------------                 ------------------                ------                       -------
+  MemoryPressure   False   Mon, <span style="color:#ae81ff">23</span> Mar <span style="color:#ae81ff">2020</span> 18:20:39 +0000   Thu, <span style="color:#ae81ff">12</span> Dec <span style="color:#ae81ff">2019</span> 06:47:08 +0000   KubeletHasSufficientMemory   kubelet has sufficient memoryavailable
+  DiskPressure     False   Mon, <span style="color:#ae81ff">23</span> Mar <span style="color:#ae81ff">2020</span> 18:20:39 +0000   Thu, <span style="color:#ae81ff">12</span> Dec <span style="color:#ae81ff">2019</span> 06:47:08 +0000   KubeletHasNoDiskPressure     kubelet has no disk pressure
+  PIDPressure      False   Mon, <span style="color:#ae81ff">23</span> Mar <span style="color:#ae81ff">2020</span> 18:20:39 +0000   Thu, <span style="color:#ae81ff">12</span> Dec <span style="color:#ae81ff">2019</span> 06:47:08 +0000   KubeletHasSufficientPID      kubelet has sufficient PID available
+  Ready            True    Mon, <span style="color:#ae81ff">23</span> Mar <span style="color:#ae81ff">2020</span> 18:20:39 +0000   Mon, <span style="color:#ae81ff">23</span> Mar <span style="color:#ae81ff">2020</span> 17:56:48 +0000   KubeletReady                 kubelet is posting ready status
+Addresses:
+  InternalIP:  172.17.0.23
+  Hostname:    crc-rk2fc-master-0
 Capacity:
- alpha.kubernetes.io/nvidia-gpu:	<span style="color:#ae81ff">0</span>
- cpu:					<span style="color:#ae81ff">2</span>
- memory:				2050168Ki
- pods:					<span style="color:#ae81ff">20</span>
+ cpu:            <span style="color:#ae81ff">6</span>
+ hugepages-1Gi:  <span style="color:#ae81ff">0</span>
+ hugepages-2Mi:  <span style="color:#ae81ff">0</span>
+ memory:         16033876Ki
+ pods:           <span style="color:#ae81ff">250</span>
 Allocatable:
- alpha.kubernetes.io/nvidia-gpu:	<span style="color:#ae81ff">0</span>
- cpu:					<span style="color:#ae81ff">2</span>
- memory:				2050168Ki
- pods:					<span style="color:#ae81ff">20</span>
+ cpu:            5500m
+ hugepages-1Gi:  <span style="color:#ae81ff">0</span>
+ hugepages-2Mi:  <span style="color:#ae81ff">0</span>
+ memory:         15419476Ki
+ pods:           <span style="color:#ae81ff">250</span>
 System Info:
- Machine ID:			896b6d970cd14d158be1fd1c31ff1a8a
- System UUID:			F7771C31-30B0-44EC-8364-B3517DBC8767
- Boot ID:			1d589b36-3413-4e82-af80-b2756342eed4
- Kernel Version:		4.4.27-boot2docker
- OS Image:			CentOS Linux <span style="color:#ae81ff">7</span> <span style="color:#f92672">(</span>Core<span style="color:#f92672">)</span>
- Operating System:		linux
- Architecture:			amd64
- Container Runtime Version:	docker://1.12.3
- Kubelet Version:		v1.5.2+43a9be4
- Kube-Proxy Version:		v1.5.2+43a9be4
-ExternalID:			192.168.99.100
-Non-terminated Pods:		<span style="color:#f92672">(</span><span style="color:#ae81ff">3</span> in total<span style="color:#f92672">)</span>
-  Namespace			Name				CPU Requests	CPU Limits	Memory Requests	Memory Limits
-  ---------			----				------------	----------	---------------	-------------
-  default			docker-registry-1-hfpzp		100m <span style="color:#f92672">(</span>5%<span style="color:#f92672">)</span>	<span style="color:#ae81ff">0</span> <span style="color:#f92672">(</span>0%<span style="color:#f92672">)</span>		256Mi <span style="color:#f92672">(</span>12%<span style="color:#f92672">)</span>	<span style="color:#ae81ff">0</span> <span style="color:#f92672">(</span>0%<span style="color:#f92672">)</span>
-  default			onspecificnode			<span style="color:#ae81ff">0</span> <span style="color:#f92672">(</span>0%<span style="color:#f92672">)</span>		<span style="color:#ae81ff">0</span> <span style="color:#f92672">(</span>0%<span style="color:#f92672">)</span>		<span style="color:#ae81ff">0</span> <span style="color:#f92672">(</span>0%<span style="color:#f92672">)</span>		<span style="color:#ae81ff">0</span> <span style="color:#f92672">(</span>0%<span style="color:#f92672">)</span>
-  default			router-1-cdglk			100m <span style="color:#f92672">(</span>5%<span style="color:#f92672">)</span>	<span style="color:#ae81ff">0</span> <span style="color:#f92672">(</span>0%<span style="color:#f92672">)</span>		256Mi <span style="color:#f92672">(</span>12%<span style="color:#f92672">)</span>	<span style="color:#ae81ff">0</span> <span style="color:#f92672">(</span>0%<span style="color:#f92672">)</span>
+ Machine ID:                                             33c8de1eb5364c94b5e215e58eef30ac
+ System UUID:                                            33c8de1eb5364c94b5e215e58eef30ac
+ Boot ID:                                                f51f55d7-7702-48bc-bbc0-d68372e0fbf1
+ Kernel Version:                                         4.18.0-147.0.3.el8_1.x86_64
+ OS Image:                                               Red Hat Enterprise Linux CoreOS 42.81.20191203.0 <span style="color:#f92672">(</span>Ootpa<span style="color:#f92672">)</span>
+ Operating System:                                       linux
+ Architecture:                                           amd64
+ Container Runtime Version:                              cri-o://1.14.11-0.24.dev.rhaos4.2.gitc41de67.el8
+ Kubelet Version:                                        v1.14.6+888f9c630
+ Kube-Proxy Version:                                     v1.14.6+888f9c630
+Non-terminated Pods:                                     <span style="color:#f92672">(</span><span style="color:#ae81ff">46</span> in total<span style="color:#f92672">)</span>
+  Namespace                                              Name                                               CPU Requests  CPU Limits  Memory Requests  Memory Limits  AGE
+  ---------                                              ----                                               ------------  ----------  ---------------  -------------  ---
+  default                                                onspecificnode                                               <span style="color:#ae81ff">0</span> <span style="color:#f92672">(</span>0%<span style="color:#f92672">)</span>        <span style="color:#ae81ff">0</span> <span style="color:#f92672">(</span>0%<span style="color:#f92672">)</span>      <span style="color:#ae81ff">0</span> <span style="color:#f92672">(</span>0%<span style="color:#f92672">)</span>           <span style="color:#ae81ff">0</span> <span style="color:#f92672">(</span>0%<span style="color:#f92672">)</span>         3m2s
+  openshift-apiserver                                    
+...
 Allocated resources:
-  <span style="color:#f92672">(</span>Total limits may be over <span style="color:#ae81ff">100</span> percent, i.e., overcommitted.
-  CPU Requests	CPU Limits	Memory Requests	Memory Limits
-  ------------	----------	---------------	-------------
-  200m <span style="color:#f92672">(</span>10%<span style="color:#f92672">)</span>	<span style="color:#ae81ff">0</span> <span style="color:#f92672">(</span>0%<span style="color:#f92672">)</span>		512Mi <span style="color:#f92672">(</span>25%<span style="color:#f92672">)</span>	<span style="color:#ae81ff">0</span> <span style="color:#f92672">(</span>0%<span style="color:#f92672">)</span>
-No events.
+  <span style="color:#f92672">(</span>Total limits may be over <span style="color:#ae81ff">100</span> percent, i.e., overcommitted.<span style="color:#f92672">)</span>
+  Resource           Requests      Limits
+  --------           --------      ------
+  cpu                3010m <span style="color:#f92672">(</span>54%<span style="color:#f92672">)</span>   700m <span style="color:#f92672">(</span>12%<span style="color:#f92672">)</span>
+  memory             8289Mi <span style="color:#f92672">(</span>55%<span style="color:#f92672">)</span>  687Mi <span style="color:#f92672">(</span>4%<span style="color:#f92672">)</span>
+  ephemeral-storage  <span style="color:#ae81ff">0</span> <span style="color:#f92672">(</span>0%<span style="color:#f92672">)</span>        <span style="color:#ae81ff">0</span> <span style="color:#f92672">(</span>0%<span style="color:#f92672">)</span>
 </code></pre></div><p>Note that there are more sophisticated methods than shown above, such as using affinity, to <a href="https://kubernetes.io/docs/concepts/configuration/assign-pod-node/">assign pods to nodes</a> and depending on your use case, you might want to check those out as well.</p>
 <p><a href="/ic">Previous</a> | <a href="/api">Next</a></p>
 

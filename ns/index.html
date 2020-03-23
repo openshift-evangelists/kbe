@@ -126,14 +126,16 @@
 as a workspace you&rsquo;re sharing with other users. Many resources such as pods and
 services are namespaced, while some, for example, nodes are not namespaced (but cluster-wide). As a developer you&rsquo;d usually use an assigned namespace, however admins may wish to manage them, for example to set up access control or resource quotas.</p>
 <p>Let&rsquo;s list all namespaces (note that the output will depend on the environment
-you&rsquo;re using, I&rsquo;m using <a href="/diy/">Minishift</a> here):</p>
+you&rsquo;re using, we&rsquo;re using the <a href="/diy/">OpenShift Playground</a> here):</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kubectl get ns
-NAME              STATUS    AGE
-default           Active    13d
-kube-system       Active    13d
-namingthings      Active    12d
-openshift         Active    13d
-openshift-infra   Active    13d
+NAME                                                    STATUS   AGE
+default                                                 Active   98d
+kube-node-lease                                         Active   98d
+kube-public                                             Active   98d
+kube-system                                             Active   98d
+openshift                                               Active   98d
+openshift-apiserver                                     Active   98d
+...
 </code></pre></div><p>You can learn more about a namespace using the <code>describe</code> verb, for example:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kubectl describe ns default
 Name:   default
@@ -148,14 +150,16 @@ called <code>test</code> now:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/master/specs/ns/ns.yaml
 namespace <span style="color:#e6db74">&#34;test&#34;</span> created
 
-$ kubectl get ns
-NAME              STATUS    AGE
-default           Active    13d
-kube-system       Active    13d
-namingthings      Active    12d
-openshift         Active    13d
-openshift-infra   Active    13d
-test              Active    3s
+ kubectl get ns
+NAME                                                    STATUS   AGE
+default                                                 Active   98d
+kube-node-lease                                         Active   98d
+kube-public                                             Active   98d
+kube-system                                             Active   98d
+openshift                                               Active   98d
+openshift-apiserver                                     Active   98d
+...
+test                                                    Active   16s
 </code></pre></div><p>Alternatively, we could have created the namespace using the <code>kubectl create namespace test</code> command.</p>
 <p>To launch a <a href="https://github.com/openshift-evangelists/kbe/blob/master/specs/ns/pod.yaml">pod</a> in
 the newly created namespace <code>test</code>, do:</p>

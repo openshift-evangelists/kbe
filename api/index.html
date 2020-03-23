@@ -149,7 +149,7 @@ Starting to serve on 127.0.0.1:8080
   <span style="color:#f92672">]</span>
 <span style="color:#f92672">}</span>
 </code></pre></div><p>Alternatively, without proxying, you can use <code>kubectl</code> directly as follows to achieve the same:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kubectl get --raw<span style="color:#f92672">=</span>/api/v1
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kubectl get --raw /api/v1
 </code></pre></div><p>Further, if you want to explore the supported API versions and/or resources, you can use the following commands:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kubectl api-versions
 admissionregistration.k8s.io/v1beta1
@@ -157,10 +157,11 @@ admissionregistration.k8s.io/v1beta1
 v1
 
 $ kubectl api-resources
-NAME                                  SHORTNAMES     APIGROUP                       NAMESPACED   KIND
-bindings                                                                            true         Binding
+NAME                                  SHORTNAMES       APIGROUP         NAMESPACED   KIND
+bindings         true         Binding
+componentstatuses                     cs         false        ComponentStatus
+configmaps                            cm         true         ConfigMap
 ...
-storageclasses                        sc             storage.k8s.io                 false        StorageClass
 </code></pre></div><p><a href="/nodes">Previous</a></p>
 
         

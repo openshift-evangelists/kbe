@@ -4,37 +4,57 @@
   
   <url>
     <loc>https://kubernetesbyexample.com/</loc>
-    <lastmod>2020-03-08T00:00:00+00:00</lastmod>
+    <lastmod>2020-03-23T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://kubernetesbyexample.com/ns/</loc>
-    <lastmod>2020-03-08T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://kubernetesbyexample.com/page/</loc>
-    <lastmod>2020-03-08T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://kubernetesbyexample.com/diy/</loc>
-    <lastmod>2019-02-28T00:00:00+00:00</lastmod>
+    <lastmod>2020-03-23T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://kubernetesbyexample.com/jobs/</loc>
-    <lastmod>2019-02-28T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://kubernetesbyexample.com/logging/</loc>
-    <lastmod>2019-02-28T00:00:00+00:00</lastmod>
+    <loc>https://kubernetesbyexample.com/ns/</loc>
+    <lastmod>2020-03-23T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://kubernetesbyexample.com/nodes/</loc>
+    <lastmod>2020-03-23T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://kubernetesbyexample.com/page/</loc>
+    <lastmod>2020-03-23T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://kubernetesbyexample.com/statefulset/</loc>
+    <lastmod>2020-03-23T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://kubernetesbyexample.com/jobs/</loc>
+    <lastmod>2020-03-19T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://kubernetesbyexample.com/volumes/</loc>
+    <lastmod>2020-03-19T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://kubernetesbyexample.com/api/</loc>
+    <lastmod>2019-03-23T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://kubernetesbyexample.com/pods/</loc>
+    <lastmod>2019-03-23T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://kubernetesbyexample.com/logging/</loc>
     <lastmod>2019-02-28T00:00:00+00:00</lastmod>
   </url>
   
@@ -69,11 +89,6 @@
   </url>
   
   <url>
-    <loc>https://kubernetesbyexample.com/pods/</loc>
-    <lastmod>2019-02-27T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://kubernetesbyexample.com/rcs/</loc>
     <lastmod>2019-02-27T00:00:00+00:00</lastmod>
   </url>
@@ -89,23 +104,8 @@
   </url>
   
   <url>
-    <loc>https://kubernetesbyexample.com/volumes/</loc>
-    <lastmod>2019-02-27T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://kubernetesbyexample.com/ic/</loc>
     <lastmod>2019-02-26T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://kubernetesbyexample.com/statefulset/</loc>
-    <lastmod>2019-02-15T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://kubernetesbyexample.com/api/</loc>
-    <lastmod>2019-02-13T00:00:00+00:00</lastmod>
   </url>
   
   <url>

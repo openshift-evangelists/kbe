@@ -133,28 +133,45 @@ called <code>countdown</code> that supervises a pod counting from 9 down to 1:</
 NAME                      DESIRED   SUCCESSFUL   AGE
 countdown                 <span style="color:#ae81ff">1</span>         <span style="color:#ae81ff">1</span>            5s
 
-$ kubectl get pods --show-all
-NAME                            READY     STATUS      RESTARTS   AGE
-countdown-lc80g                 0/1       Completed   <span style="color:#ae81ff">0</span>          16s
+$ kubectl get pods
+NAME              READY   STATUS      RESTARTS   AGE
+countdown-qkjx8   0/1     Completed   <span style="color:#ae81ff">0</span>          2m17s
 </code></pre></div><p>To learn more about the status of the job, do:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kubectl describe jobs/countdown
 Name:           countdown
 Namespace:      default
-Image<span style="color:#f92672">(</span>s<span style="color:#f92672">)</span>:       centos:7
-Selector:       controller-uid<span style="color:#f92672">=</span>ff585b92-2b43-11e7-b44f-be3e8f4350ff
-Parallelism:    <span style="color:#ae81ff">1</span>
-Completions:    <span style="color:#ae81ff">1</span>
-Start Time:     Thu, <span style="color:#ae81ff">27</span> Apr <span style="color:#ae81ff">2017</span> 13:21:10 +0100
-Labels:         controller-uid<span style="color:#f92672">=</span>ff585b92-2b43-11e7-b44f-be3e8f4350ff
+Selector:       controller-uid<span style="color:#f92672">=</span>4960c8be-6a3f-11ea-84fd-0242ac11002a
+Labels:         controller-uid<span style="color:#f92672">=</span>4960c8be-6a3f-11ea-84fd-0242ac11002a
                 job-name<span style="color:#f92672">=</span>countdown
-Pods Statuses:  <span style="color:#ae81ff">0</span> Running / <span style="color:#ae81ff">1</span> Succeeded / <span style="color:#ae81ff">0</span> Failed
-No volumes.
-Events:
-  FirstSeen     LastSeen        Count   From                    SubobjectPath   Type            Reason                  Message
-  ---------     --------        -----   ----                    -------------   --------        ------                  -------
-  2m            2m              <span style="color:#ae81ff">1</span>       <span style="color:#f92672">{</span>job-controller <span style="color:#f92672">}</span>                       Normal          SuccessfulCreate        Created pod: countdown-lc80g
-</code></pre></div><p>And to see the output of the job via the pod it supervised, execute:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">kubectl logs countdown-lc80g
+Annotations:    kubectl.kubernetes.io/last-applied-configuration:
+                  <span style="color:#f92672">{</span><span style="color:#e6db74">&#34;apiVersion&#34;</span>:<span style="color:#e6db74">&#34;batch/v1&#34;</span>,<span style="color:#e6db74">&#34;kind&#34;</span>:<span style="color:#e6db74">&#34;Job&#34;</span>,<span style="color:#e6db74">&#34;metadata&#34;</span>:<span style="color:#f92672">{</span><span style="color:#e6db74">&#34;annotations&#34;</span>:<span style="color:#f92672">{}</span>,<span style="color:#e6db74">&#34;name&#34;</span>:<span style="color:#e6db74">&#34;countdown&#34;</span>,<span style="color:#e6db74">&#34;namespace&#34;</span>:<span style="color:#e6db74">&#34;default&#34;</span><span style="color:#f92672">}</span>,<span style="color:#e6db74">&#34;spec&#34;</span>:<span style="color:#f92672">{</span><span style="color:#e6db74">&#34;template&#34;</span>:<span style="color:#f92672">{</span><span style="color:#e6db74">&#34;metadata...
+</span><span style="color:#e6db74">Parallelism:    1
+</span><span style="color:#e6db74">Completions:    1
+</span><span style="color:#e6db74">Start Time:     Fri, 20 Mar 2020 00:11:03 +0000
+</span><span style="color:#e6db74">Completed At:   Fri, 20 Mar 2020 00:11:12 +0000
+</span><span style="color:#e6db74">Duration:       9s
+</span><span style="color:#e6db74">Pods Statuses:  0 Running / 1 Succeeded / 0 Failed
+</span><span style="color:#e6db74">Pod Template:
+</span><span style="color:#e6db74">  Labels:  controller-uid=4960c8be-6a3f-11ea-84fd-0242ac11002a
+</span><span style="color:#e6db74">           job-name=countdown
+</span><span style="color:#e6db74">  Containers:
+</span><span style="color:#e6db74">   counter:
+</span><span style="color:#e6db74">    Image:      centos:7
+</span><span style="color:#e6db74">    Port:       &lt;none&gt;
+</span><span style="color:#e6db74">    Host Port:  &lt;none&gt;
+</span><span style="color:#e6db74">    Command:
+</span><span style="color:#e6db74">      bin/bash
+</span><span style="color:#e6db74">      -c
+</span><span style="color:#e6db74">      for i in 9 8 7 6 5 4 3 2 1 ; do echo </span>$i<span style="color:#e6db74"> ; done
+</span><span style="color:#e6db74">    Environment:  &lt;none&gt;
+</span><span style="color:#e6db74">    Mounts:       &lt;none&gt;
+</span><span style="color:#e6db74">  Volumes:        &lt;none&gt;
+</span><span style="color:#e6db74">Events:
+</span><span style="color:#e6db74">  Type    Reason            Age    From            Message
+</span><span style="color:#e6db74">  ----    ------            ----   ----            -------
+</span><span style="color:#e6db74">  Normal  SuccessfulCreate  3m18s  job-controller  Created pod: countdown-qkjx8
+</span></code></pre></div><p>And to see the output of the job via the pod it supervised, execute:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">kubectl logs countdown-qkjx8
 <span style="color:#ae81ff">9</span>
 <span style="color:#ae81ff">8</span>
 <span style="color:#ae81ff">7</span>

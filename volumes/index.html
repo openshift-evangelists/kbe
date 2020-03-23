@@ -148,14 +148,16 @@ Volumes:
 and generate some data:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kubectl exec -it sharevol -c c1 -- bash
 <span style="color:#f92672">[</span>root@sharevol /<span style="color:#f92672">]</span><span style="color:#75715e"># mount | grep xchange</span>
-/dev/sda1 on /tmp/xchange type ext4 <span style="color:#f92672">(</span>rw,relatime,data<span style="color:#f92672">=</span>ordered<span style="color:#f92672">)</span>
+/dev/vda3 on /tmp/xchange type xfs <span style="color:#f92672">(</span>rw,relatime,seclabel,attr2,inode64,rjquota<span style="color:#f92672">)</span>
 <span style="color:#f92672">[</span>root@sharevol /<span style="color:#f92672">]</span><span style="color:#75715e"># echo &#39;some data&#39; &gt; /tmp/xchange/data</span>
 </code></pre></div><p>When we now exec into <code>c2</code>, the second container running in the pod, we can see
 the volume mounted at <code>/tmp/data</code> and are able to read the data created in the
 previous step:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kubectl exec -it sharevol -c c2 -- bash
 <span style="color:#f92672">[</span>root@sharevol /<span style="color:#f92672">]</span><span style="color:#75715e"># mount | grep /tmp/data</span>
-/dev/sda1 on /tmp/data type ext4 <span style="color:#f92672">(</span>rw,relatime,data<span style="color:#f92672">=</span>ordered<span style="color:#f92672">)</span>
+/dev/vda3 on /tmp/data type xfs <span style="color:#f92672">(</span>rw,relatime,seclabel,attr2,inode64,prjquota<span style="color:#f92672">)</span>
+<span style="color:#f92672">[</span>root@sharevol /<span style="color:#f92672">]</span><span style="color:#75715e"># cat /tmp/data/data/</span>
+cat: /tmp/data/data/: Not a directory
 <span style="color:#f92672">[</span>root@sharevol /<span style="color:#f92672">]</span><span style="color:#75715e"># cat /tmp/data/data</span>
 some data
 </code></pre></div><p>Note that in each container you need to decide where to mount the volume and
