@@ -1,7 +1,7 @@
 +++
 title = "Pods"
 subtitle = "Kubernetes pods by example"
-date = "2019-02-27"
+date = "2019-03-23"
 url = "/pods/"
 +++
 
@@ -27,7 +27,7 @@ $ kubectl describe pod sise-3210265840-k705b | grep IP:
 IP:                     172.17.0.3
 ```
 
-From within the cluster (e.g. via `minishift ssh`) this pod is accessible via the pod IP `172.17.0.3`,
+From within the cluster (e.g. via [`oc rsh`](https://docs.openshift.com/container-platform/latest/cli_reference/openshift_cli/developer-cli-commands.html#rsh)) this pod is accessible via the pod IP `172.17.0.3`,
 which we've learned from the `kubectl describe` command above:
 
 ```bash

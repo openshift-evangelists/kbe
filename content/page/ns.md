@@ -1,7 +1,7 @@
 +++
 title = "Namespaces"
 subtitle = "Kubernetes namespaces by example"
-date = "2020-03-08"
+date = "2020-03-23"
 url = "/ns/"
 +++
 
@@ -10,16 +10,18 @@ as a workspace you're sharing with other users. Many resources such as pods and
 services are namespaced, while some, for example, nodes are not namespaced (but cluster-wide). As a developer you'd usually use an assigned namespace, however admins may wish to manage them, for example to set up access control or resource quotas.
 
 Let's list all namespaces (note that the output will depend on the environment
-you're using, I'm using [Minishift](/diy/) here):
+you're using, we're using the [OpenShift Playground](/diy/) here):
 
 ```bash
 $ kubectl get ns
-NAME              STATUS    AGE
-default           Active    13d
-kube-system       Active    13d
-namingthings      Active    12d
-openshift         Active    13d
-openshift-infra   Active    13d
+NAME                                                    STATUS   AGE
+default                                                 Active   98d
+kube-node-lease                                         Active   98d
+kube-public                                             Active   98d
+kube-system                                             Active   98d
+openshift                                               Active   98d
+openshift-apiserver                                     Active   98d
+...
 ```
 
 You can learn more about a namespace using the `describe` verb, for example:
@@ -42,14 +44,16 @@ called `test` now:
 $ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/master/specs/ns/ns.yaml
 namespace "test" created
 
-$ kubectl get ns
-NAME              STATUS    AGE
-default           Active    13d
-kube-system       Active    13d
-namingthings      Active    12d
-openshift         Active    13d
-openshift-infra   Active    13d
-test              Active    3s
+ kubectl get ns
+NAME                                                    STATUS   AGE
+default                                                 Active   98d
+kube-node-lease                                         Active   98d
+kube-public                                             Active   98d
+kube-system                                             Active   98d
+openshift                                               Active   98d
+openshift-apiserver                                     Active   98d
+...
+test                                                    Active   16s
 ```
 
 Alternatively, we could have created the namespace using the `kubectl create namespace test` command.

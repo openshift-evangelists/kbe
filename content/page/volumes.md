@@ -1,7 +1,7 @@
 +++
 title = "Volumes"
 subtitle = "Kubernetes volumes by example"
-date = "2019-02-27"
+date = "2020-03-19"
 url = "/volumes/"
 +++
 
@@ -38,7 +38,7 @@ and generate some data:
 ```bash
 $ kubectl exec -it sharevol -c c1 -- bash
 [root@sharevol /]# mount | grep xchange
-/dev/sda1 on /tmp/xchange type ext4 (rw,relatime,data=ordered)
+/dev/vda3 on /tmp/xchange type xfs (rw,relatime,seclabel,attr2,inode64,rjquota)
 [root@sharevol /]# echo 'some data' > /tmp/xchange/data
 ```
 
@@ -49,7 +49,9 @@ previous step:
 ```bash
 $ kubectl exec -it sharevol -c c2 -- bash
 [root@sharevol /]# mount | grep /tmp/data
-/dev/sda1 on /tmp/data type ext4 (rw,relatime,data=ordered)
+/dev/vda3 on /tmp/data type xfs (rw,relatime,seclabel,attr2,inode64,prjquota)
+[root@sharevol /]# cat /tmp/data/data/
+cat: /tmp/data/data/: Not a directory
 [root@sharevol /]# cat /tmp/data/data
 some data
 ```

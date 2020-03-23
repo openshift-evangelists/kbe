@@ -1,7 +1,7 @@
 +++
 title = "Nodes"
 subtitle = "Kubernetes nodes by example"
-date = "2019-02-28"
+date = "2020-03-23"
 url = "/nodes/"
 +++
 
@@ -9,12 +9,12 @@ In Kubernetes, nodes are the (virtual) machines where your workloads in shape of
 you might want to familiarize yourself with node [operations](https://kubernetes.io/docs/concepts/nodes/node/).
 
 To list available nodes in your cluster (note that the output will depend on the environment
-you're using, I'm using [Minishift](/diy/)):
+you're using. This example is using the [OpenShift Playground](/diy/)):
 
 ```bash
 $ kubectl get nodes
-NAME             STATUS    AGE
-192.168.99.100   Ready     14d
+NAME                 STATUS   ROLES           AGE    VERSION
+crc-rk2fc-master-0   Ready    master,worker   102d   v1.14.6+888f9c630
 ```
 
 One interesting task, from a developer point of view, is to make Kubernetes
@@ -22,8 +22,8 @@ schedule a pod on a certain node. For this, we first need to label the node
 we want to target:
 
 ```bash
-$ kubectl label nodes 192.168.99.100 shouldrun=here
-node "192.168.99.100" labeled
+$ kubectl label nodes crc-rk2fc-master-0 shouldrun=here
+node/crc-rk2fc-master-0 labeled
 ```
 
 Now we can create a [pod](https://github.com/openshift-evangelists/kbe/blob/master/specs/nodes/pod.yaml)
@@ -33,64 +33,81 @@ that gets scheduled on the node with the label `shouldrun=here`:
 $ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/master/specs/nodes/pod.yaml
 
 $ kubectl get pods --output=wide
-NAME                      READY     STATUS    RESTARTS   AGE       IP               NODE
-onspecificnode            1/1       Running   0          8s        172.17.0.3       192.168.99.100
+NAME             READY   STATUS    RESTARTS   AGE     IP            NODE            NOMINATED NODE   READINESS GATES
+onspecificnode   1/1     Running   0          2m31s   10.128.1.11   crc-rk2fc-master-0   <none>           <none>
 ```
 
-To learn more about a specific node, `192.168.99.100` in our case, do:
+To learn more about a specific node, `crc-rk2fc-master-0` in our case, do:
 
 ```bash
-$ kubectl describe node 192.168.99.100
-Name:			192.168.99.100
-Labels:			beta.kubernetes.io/arch=amd64
-			beta.kubernetes.io/os=linux
-			kubernetes.io/hostname=192.168.99.100
-			shouldrun=here
-Taints:			<none>
-CreationTimestamp:	Wed, 12 Apr 2017 17:17:13 +0100
-Phase:
+$ kubectl describe node crc-rk2fc-master-0
+Name:               crc-rk2fc-master-0
+Roles:              master,worker
+Labels:             beta.kubernetes.io/arch=amd64
+                    beta.kubernetes.io/os=linux
+                    kubernetes.io/arch=amd64
+                    kubernetes.io/hostname=crc-rk2fc-master-0
+                    kubernetes.io/os=linux
+                    node-role.kubernetes.io/master=
+                    node-role.kubernetes.io/worker=
+                    node.openshift.io/os_id=rhcos
+                    shouldrun=here
+Annotations:        machine.openshift.io/machine: openshift-machine-api/crc-rk2fc-master-0
+                    machineconfiguration.openshift.io/currentConfig: rendered-master-757d2d73a4ba859a3508c78070169043
+                    machineconfiguration.openshift.io/desiredConfig: rendered-master-757d2d73a4ba859a3508c78070169043
+                    machineconfiguration.openshift.io/reason:
+                    machineconfiguration.openshift.io/ssh: accessed
+                    machineconfiguration.openshift.io/state: Done
+                    volumes.kubernetes.io/controller-managed-attach-detach: true
+CreationTimestamp:  Thu, 12 Dec 2019 06:47:09 +0000
+Taints:             <none>
+Unschedulable:      false
 Conditions:
-  Type			Status	LastHeartbeatTime			LastTransitionTime			Reason				Message
-  ----			------	-----------------			------------------			------				-------
-  OutOfDisk 		False 	Thu, 27 Apr 2017 14:55:49 +0100 	Thu, 27 Apr 2017 09:18:13 +0100 	KubeletHasSufficientDisk 	kubelet has sufficient disk space available
-  MemoryPressure 	False 	Thu, 27 Apr 2017 14:55:49 +0100 	Wed, 12 Apr 2017 17:17:13 +0100 	KubeletHasSufficientMemory 	kubelet has sufficient memory available
-  DiskPressure 		False 	Thu, 27 Apr 2017 14:55:49 +0100 	Wed, 12 Apr 2017 17:17:13 +0100 	KubeletHasNoDiskPressure 	kubelet has no disk pressure
-  Ready 		True 	Thu, 27 Apr 2017 14:55:49 +0100 	Thu, 27 Apr 2017 09:18:24 +0100 	KubeletReady 			kubelet is posting ready status
-Addresses:		192.168.99.100,192.168.99.100,192.168.99.100
+  Type             Status  LastHeartbeatTime                 LastTransitionTime                Reason                       Message
+  ----             ------  -----------------                 ------------------                ------                       -------
+  MemoryPressure   False   Mon, 23 Mar 2020 18:20:39 +0000   Thu, 12 Dec 2019 06:47:08 +0000   KubeletHasSufficientMemory   kubelet has sufficient memoryavailable
+  DiskPressure     False   Mon, 23 Mar 2020 18:20:39 +0000   Thu, 12 Dec 2019 06:47:08 +0000   KubeletHasNoDiskPressure     kubelet has no disk pressure
+  PIDPressure      False   Mon, 23 Mar 2020 18:20:39 +0000   Thu, 12 Dec 2019 06:47:08 +0000   KubeletHasSufficientPID      kubelet has sufficient PID available
+  Ready            True    Mon, 23 Mar 2020 18:20:39 +0000   Mon, 23 Mar 2020 17:56:48 +0000   KubeletReady                 kubelet is posting ready status
+Addresses:
+  InternalIP:  172.17.0.23
+  Hostname:    crc-rk2fc-master-0
 Capacity:
- alpha.kubernetes.io/nvidia-gpu:	0
- cpu:					2
- memory:				2050168Ki
- pods:					20
+ cpu:            6
+ hugepages-1Gi:  0
+ hugepages-2Mi:  0
+ memory:         16033876Ki
+ pods:           250
 Allocatable:
- alpha.kubernetes.io/nvidia-gpu:	0
- cpu:					2
- memory:				2050168Ki
- pods:					20
+ cpu:            5500m
+ hugepages-1Gi:  0
+ hugepages-2Mi:  0
+ memory:         15419476Ki
+ pods:           250
 System Info:
- Machine ID:			896b6d970cd14d158be1fd1c31ff1a8a
- System UUID:			F7771C31-30B0-44EC-8364-B3517DBC8767
- Boot ID:			1d589b36-3413-4e82-af80-b2756342eed4
- Kernel Version:		4.4.27-boot2docker
- OS Image:			CentOS Linux 7 (Core)
- Operating System:		linux
- Architecture:			amd64
- Container Runtime Version:	docker://1.12.3
- Kubelet Version:		v1.5.2+43a9be4
- Kube-Proxy Version:		v1.5.2+43a9be4
-ExternalID:			192.168.99.100
-Non-terminated Pods:		(3 in total)
-  Namespace			Name				CPU Requests	CPU Limits	Memory Requests	Memory Limits
-  ---------			----				------------	----------	---------------	-------------
-  default			docker-registry-1-hfpzp		100m (5%)	0 (0%)		256Mi (12%)	0 (0%)
-  default			onspecificnode			0 (0%)		0 (0%)		0 (0%)		0 (0%)
-  default			router-1-cdglk			100m (5%)	0 (0%)		256Mi (12%)	0 (0%)
+ Machine ID:                                             33c8de1eb5364c94b5e215e58eef30ac
+ System UUID:                                            33c8de1eb5364c94b5e215e58eef30ac
+ Boot ID:                                                f51f55d7-7702-48bc-bbc0-d68372e0fbf1
+ Kernel Version:                                         4.18.0-147.0.3.el8_1.x86_64
+ OS Image:                                               Red Hat Enterprise Linux CoreOS 42.81.20191203.0 (Ootpa)
+ Operating System:                                       linux
+ Architecture:                                           amd64
+ Container Runtime Version:                              cri-o://1.14.11-0.24.dev.rhaos4.2.gitc41de67.el8
+ Kubelet Version:                                        v1.14.6+888f9c630
+ Kube-Proxy Version:                                     v1.14.6+888f9c630
+Non-terminated Pods:                                     (46 in total)
+  Namespace                                              Name                                               CPU Requests  CPU Limits  Memory Requests  Memory Limits  AGE
+  ---------                                              ----                                               ------------  ----------  ---------------  -------------  ---
+  default                                                onspecificnode                                               0 (0%)        0 (0%)      0 (0%)           0 (0%)         3m2s
+  openshift-apiserver                                    
+...
 Allocated resources:
-  (Total limits may be over 100 percent, i.e., overcommitted.
-  CPU Requests	CPU Limits	Memory Requests	Memory Limits
-  ------------	----------	---------------	-------------
-  200m (10%)	0 (0%)		512Mi (25%)	0 (0%)
-No events.
+  (Total limits may be over 100 percent, i.e., overcommitted.)
+  Resource           Requests      Limits
+  --------           --------      ------
+  cpu                3010m (54%)   700m (12%)
+  memory             8289Mi (55%)  687Mi (4%)
+  ephemeral-storage  0 (0%)        0 (0%)
 ```
 
 Note that there are more sophisticated methods than shown above, such as using affinity, to [assign pods to nodes](https://kubernetes.io/docs/concepts/configuration/assign-pod-node/) and depending on your use case, you might want to check those out as well.

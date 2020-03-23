@@ -1,28 +1,25 @@
 +++
 title = "DIY"
 subtitle = "Try out for yourself"
-date = "2019-02-28"
+date = "2020-03-23"
 url = "/diy/"
 +++
 
-If you want to try out the examples here yourself, you can use the same setup
-I've got locally running on my machine:
+If you want to try out the examples here yourself, here are a couple of options:
 
-1. Install [Minishift](https://docs.okd.io/latest/minishift/getting-started/installing.html)
-1. Run `minishift start`
-1. Configure OpenShift Client binary (`oc`) by running `eval $(minishift oc-env)`
-1. Log in using `oc login -u system:admin` with password `admin`
-1. Create a symlink from `oc` like so:  `ln -s $(which oc) /usr/local/bin/kubectl`
+## OpenShift Playground
+You can use the OpenShift Playground to get access to a cluster for 60 minutes at a time. This option doesn't require you to install anything. This is the option we used for most of the examples on the site.
 
-All examples have been carried out with Minishift version [v1.32.0](https://github.com/minishift/minishift/releases/tag/v1.32.0):
+[OpenShift Playground](https://learn.openshift.com/playgrounds/openshift42)
 
-```bash
-$ minishift version
-minishift v1.32.0+009893b
+Click the red *START SCENARIO* button, and then you will have access to an OpenShift cluster via a web-based terminal window with `kubectl` available.
 
-$ kubectl version --short
-Client Version: v1.12.2
-Server Version: v1.11.0+d4cacc0
-```
 
-Alternatively, you can try out the Developer Preview of [OpenShift 4](https://try.openshift.com/) using the examples here.
+
+## Minikube
+Another option is to install Minikube, which runs a single-node Kubernetes cluster in a virtual machine on your laptop.
+
+[Minikube installation instructions](https://kubernetes.io/docs/tasks/tools/install-minikube/)
+
+## Other options
+Alternatively, you can head over to [try.openshift.com](https://try.openshift.com) for other ways to access or install an OpenShift cluster.

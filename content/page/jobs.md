@@ -1,7 +1,7 @@
 +++
 title = "Jobs"
 subtitle = "Kubernetes jobs by example"
-date = "2019-02-28"
+date = "2020-03-19"
 url = "/jobs/"
 +++
 
@@ -23,9 +23,9 @@ $ kubectl get jobs
 NAME                      DESIRED   SUCCESSFUL   AGE
 countdown                 1         1            5s
 
-$ kubectl get pods --show-all
-NAME                            READY     STATUS      RESTARTS   AGE
-countdown-lc80g                 0/1       Completed   0          16s
+$ kubectl get pods
+NAME              READY   STATUS      RESTARTS   AGE
+countdown-qkjx8   0/1     Completed   0          2m17s
 ```
 
 To learn more about the status of the job, do:
@@ -34,25 +34,42 @@ To learn more about the status of the job, do:
 $ kubectl describe jobs/countdown
 Name:           countdown
 Namespace:      default
-Image(s):       centos:7
-Selector:       controller-uid=ff585b92-2b43-11e7-b44f-be3e8f4350ff
+Selector:       controller-uid=4960c8be-6a3f-11ea-84fd-0242ac11002a
+Labels:         controller-uid=4960c8be-6a3f-11ea-84fd-0242ac11002a
+                job-name=countdown
+Annotations:    kubectl.kubernetes.io/last-applied-configuration:
+                  {"apiVersion":"batch/v1","kind":"Job","metadata":{"annotations":{},"name":"countdown","namespace":"default"},"spec":{"template":{"metadata...
 Parallelism:    1
 Completions:    1
-Start Time:     Thu, 27 Apr 2017 13:21:10 +0100
-Labels:         controller-uid=ff585b92-2b43-11e7-b44f-be3e8f4350ff
-                job-name=countdown
+Start Time:     Fri, 20 Mar 2020 00:11:03 +0000
+Completed At:   Fri, 20 Mar 2020 00:11:12 +0000
+Duration:       9s
 Pods Statuses:  0 Running / 1 Succeeded / 0 Failed
-No volumes.
+Pod Template:
+  Labels:  controller-uid=4960c8be-6a3f-11ea-84fd-0242ac11002a
+           job-name=countdown
+  Containers:
+   counter:
+    Image:      centos:7
+    Port:       <none>
+    Host Port:  <none>
+    Command:
+      bin/bash
+      -c
+      for i in 9 8 7 6 5 4 3 2 1 ; do echo $i ; done
+    Environment:  <none>
+    Mounts:       <none>
+  Volumes:        <none>
 Events:
-  FirstSeen     LastSeen        Count   From                    SubobjectPath   Type            Reason                  Message
-  ---------     --------        -----   ----                    -------------   --------        ------                  -------
-  2m            2m              1       {job-controller }                       Normal          SuccessfulCreate        Created pod: countdown-lc80g
+  Type    Reason            Age    From            Message
+  ----    ------            ----   ----            -------
+  Normal  SuccessfulCreate  3m18s  job-controller  Created pod: countdown-qkjx8
 ```
 
 And to see the output of the job via the pod it supervised, execute:
 
 ```bash
-kubectl logs countdown-lc80g
+kubectl logs countdown-qkjx8
 9
 8
 7

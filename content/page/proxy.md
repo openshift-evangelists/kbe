@@ -1,7 +1,7 @@
 +++
 title = "API Server access"
 subtitle = "Kubernetes API Server access by example"
-date = "2019-02-13"
+date = "2019-03-23"
 url = "/api/"
 +++
 
@@ -43,7 +43,7 @@ $ curl http://localhost:8080/api/v1
 Alternatively, without proxying, you can use `kubectl` directly as follows to achieve the same:
 
 ```bash
-$ kubectl get --raw=/api/v1
+$ kubectl get --raw /api/v1
 ```
 
 Further, if you want to explore the supported API versions and/or resources, you can use the following commands:
@@ -55,10 +55,11 @@ admissionregistration.k8s.io/v1beta1
 v1
 
 $ kubectl api-resources
-NAME                                  SHORTNAMES     APIGROUP                       NAMESPACED   KIND
-bindings                                                                            true         Binding
+NAME                                  SHORTNAMES       APIGROUP         NAMESPACED   KIND
+bindings         true         Binding
+componentstatuses                     cs         false        ComponentStatus
+configmaps                            cm         true         ConfigMap
 ...
-storageclasses                        sc             storage.k8s.io                 false        StorageClass
 ```
 
 [Previous](/nodes)

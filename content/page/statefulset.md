@@ -1,7 +1,7 @@
 +++
 title = "StatefulSet"
 subtitle = "Kubernetes statefulset by example"
-date = "2019-02-15"
+date = "2020-03-23"
 url = "/statefulset/"
 +++
 
@@ -9,10 +9,10 @@ If you have a stateless app you want to use a deployment. However, for a statefu
 
 In order to see how this all plays together, we will be using an [educational Kubernetes-native NoSQL datastore](https://blog.openshift.com/kubernetes-statefulset-in-action/). 
 
-Let's start with creating the [stateful app](https://raw.githubusercontent.com/mhausenblas/mehdb/master/app.yaml), that is, the `StatefulSet` along with the persistent volumes and the headless service:
+Let's start with creating the [stateful app](https://raw.githubusercontent.com/openshift-evangelists/mehdb/master/app.yaml), that is, the `StatefulSet` along with the persistent volumes and the headless service:
 
 ```bash
-$ kubectl apply -f https://raw.githubusercontent.com/mhausenblas/mehdb/master/app.yaml
+$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/mehdb/master/app.yaml
 ```
 
 After a minute or so, you can have a look at all the resources that have been created:
