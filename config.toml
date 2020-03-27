@@ -14,9 +14,127 @@ googleAnalytics = "UA-34425776-2"
   rss = false
 
 [[menu.main]]
+  identifier = "try-out"
   name = "Try out!"
   url = "diy/"
+  weight = "3"
 
 [[menu.main]]
+  identifier = "contribute"
   name = "Contribute"
   url = "https://github.com/openshift-evangelists/kbe"
+  weight = "2"
+
+[[menu.main]]
+  identifier = "hands-on"
+  name = "Hands-on Examples"
+  url = "/"
+  weight = "1"
+
+[[menu.main]]
+  parent = "hands-on"
+  name = "Pods"
+  url = "pods/"
+  weight = "1"
+
+[[menu.main]]
+  parent = "hands-on"
+  name = "Labels"
+  url = "labels/"
+  weight = "2"
+
+[[menu.main]]
+  parent = "hands-on"
+  name = "Deployments"
+  url = "deployments/"
+  weight = "3"
+
+[[menu.main]]
+  parent = "hands-on"
+  name = "Services"
+  url = "services/"
+  weight = "4"
+
+[[menu.main]]
+  parent = "hands-on"
+  name = "Service Discovery"
+  url = "sd/"
+  weight = "5"
+
+[[menu.main]]
+  parent = "hands-on"
+  name = "Port Forward"
+  url = "pf/"
+  weight = "6"
+
+[[menu.main]]
+  parent = "hands-on"
+  name = "Health Checks"
+  url = "healthz/"
+  weight = "7"
+
+[[menu.main]]
+  parent = "hands-on"
+  name = "Environment Variables"
+  url = "envs/"
+  weight = "8"
+  
+[[menu.main]]
+  parent = "hands-on"
+  name = "Namespaces"
+  url = "ns/"
+  weight = "9"
+
+[[menu.main]]
+  parent = "hands-on"
+  name = "Volumes"
+  url = "volumes/"
+  weight = "10"
+
+[[menu.main]]
+  parent = "hands-on"
+  name = "Persistent Volumes"
+  url = "pv/"
+  weight = "11"
+
+[[menu.main]]
+  parent = "hands-on"
+  name = "Secrets"
+  url = "secrets/"
+  weight = "12"
+
+[[menu.main]]
+  parent = "hands-on"
+  name = "Logging"
+  url = "logging/"
+  weight = "13"
+
+[[menu.main]]
+  parent = "hands-on"
+  name = "Jobs"
+  url = "jobs/"
+  weight = "14"
+
+[[menu.main]]
+  parent = "hands-on"
+  name = "Stateful Sets"
+  url = "statefulset/"
+  weight = "15"
+
+[[menu.main]]
+  parent = "hands-on"
+  name = "Init Containers"
+  url = "ic/"
+  weight = "16"
+
+[[menu.main]]
+  parent = "hands-on"
+  name = "Nodes"
+  url = "nodes/"
+  weight = "17"
+
+[[menu.main]]
+  parent = "hands-on"
+  name = "API Server"
+  url = "api/"
+  weight = "18"
