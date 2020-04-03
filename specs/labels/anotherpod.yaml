@@ -8,6 +8,6 @@ metadata:
 spec:
   containers:
   - name: sise
-    image: mhausenblas/simpleservice:0.5.0
+    image: quay.io/openshiftlabs/simpleservice:0.5.0
     ports:
     - containerPort: 9876
