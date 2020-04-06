@@ -31,10 +31,21 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
   <link rel="stylesheet" href="https://kubernetesbyexample.com/css/pygment_highlights.css" />
   <link rel="stylesheet" href="https://kubernetesbyexample.com/css/highlight.min.css" />
+
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-WNHKJNX');</script>
+  
 </head>
 
   <body>
-    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+    
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WNHKJNX"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  
+<nav class="navbar navbar-default navbar-fixed-top navbar-custom">
   <div class="container-fluid">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
@@ -48,6 +59,51 @@
 
     <div class="collapse navbar-collapse" id="main-navbar">
       <ul class="nav navbar-nav navbar-right">
+        
+          
+            <li class="navlinks-container">
+              <a class="navlinks-parent" href="javascript:void(0)">Hands-on Examples</a>
+              <div class="navlinks-children">
+                
+                  <a href="/pods/">Pods</a>
+                
+                  <a href="/labels/">Labels</a>
+                
+                  <a href="/deployments/">Deployments</a>
+                
+                  <a href="/services/">Services</a>
+                
+                  <a href="/sd/">Service Discovery</a>
+                
+                  <a href="/pf/">Port Forward</a>
+                
+                  <a href="/healthz/">Health Checks</a>
+                
+                  <a href="/envs/">Environment Variables</a>
+                
+                  <a href="/ns/">Namespaces</a>
+                
+                  <a href="/volumes/">Volumes</a>
+                
+                  <a href="/pv/">Persistent Volumes</a>
+                
+                  <a href="/secrets/">Secrets</a>
+                
+                  <a href="/logging/">Logging</a>
+                
+                  <a href="/jobs/">Jobs</a>
+                
+                  <a href="/statefulset/">Stateful Sets</a>
+                
+                  <a href="/ic/">Init Containers</a>
+                
+                  <a href="/nodes/">Nodes</a>
+                
+                  <a href="/api/">API Server</a>
+                
+              </div>
+            </li>
+          
         
           
             <li>
@@ -155,7 +211,7 @@ Events:
   FirstSeen     LastSeen        Count   From                            SubobjectPath           Type            Reason          Message
   ---------     --------        -----   ----                            -------------           --------        ------          -------
   3s            3s              <span style="color:#ae81ff">1</span>       <span style="color:#f92672">{</span>default-scheduler <span style="color:#f92672">}</span>                                    Normal          Scheduled       Successfully assigned hc to 192.168.99.100
-  3s            3s              <span style="color:#ae81ff">1</span>       <span style="color:#f92672">{</span>kubelet 192.168.99.100<span style="color:#f92672">}</span>        spec.containers<span style="color:#f92672">{</span>sise<span style="color:#f92672">}</span>   Normal          Pulled          Container image <span style="color:#e6db74">&#34;mhausenblas/simpleservice:0.5.0&#34;</span>
+  3s            3s              <span style="color:#ae81ff">1</span>       <span style="color:#f92672">{</span>kubelet 192.168.99.100<span style="color:#f92672">}</span>        spec.containers<span style="color:#f92672">{</span>sise<span style="color:#f92672">}</span>   Normal          Pulled          Container image <span style="color:#e6db74">&#34;quay.io/openshiftlabs/simpleservice:0.5.0&#34;</span>
 already present on machine
   3s            3s              <span style="color:#ae81ff">1</span>       <span style="color:#f92672">{</span>kubelet 192.168.99.100<span style="color:#f92672">}</span>        spec.containers<span style="color:#f92672">{</span>sise<span style="color:#f92672">}</span>   Normal          Created         Created container with docker id 8a628578d6ad; Security:<span style="color:#f92672">[</span>seccomp<span style="color:#f92672">=</span>unconfined<span style="color:#f92672">]</span>
   2s            2s              <span style="color:#ae81ff">1</span>       <span style="color:#f92672">{</span>kubelet 192.168.99.100<span style="color:#f92672">}</span>        spec.containers<span style="color:#f92672">{</span>sise<span style="color:#f92672">}</span>   Normal          Started         Started container with docker id 8a628578d6ad
@@ -172,7 +228,7 @@ Events:
   1m            1m              <span style="color:#ae81ff">1</span>       <span style="color:#f92672">{</span>default-scheduler <span style="color:#f92672">}</span>                                    Normal          Scheduled       Successfully assigned badpod to 192.168.99.100
   1m            1m              <span style="color:#ae81ff">1</span>       <span style="color:#f92672">{</span>kubelet 192.168.99.100<span style="color:#f92672">}</span>        spec.containers<span style="color:#f92672">{</span>sise<span style="color:#f92672">}</span>   Normal          Created         Created container with docker id 7dd660f04945; Security:<span style="color:#f92672">[</span>seccomp<span style="color:#f92672">=</span>unconfined<span style="color:#f92672">]</span>
   1m            1m              <span style="color:#ae81ff">1</span>       <span style="color:#f92672">{</span>kubelet 192.168.99.100<span style="color:#f92672">}</span>        spec.containers<span style="color:#f92672">{</span>sise<span style="color:#f92672">}</span>   Normal          Started         Started container with docker id 7dd660f04945
-  1m            23s             <span style="color:#ae81ff">2</span>       <span style="color:#f92672">{</span>kubelet 192.168.99.100<span style="color:#f92672">}</span>        spec.containers<span style="color:#f92672">{</span>sise<span style="color:#f92672">}</span>   Normal          Pulled          Container image <span style="color:#e6db74">&#34;mhausenblas/simpleservice:0.5.0&#34;</span> already present on machine
+  1m            23s             <span style="color:#ae81ff">2</span>       <span style="color:#f92672">{</span>kubelet 192.168.99.100<span style="color:#f92672">}</span>        spec.containers<span style="color:#f92672">{</span>sise<span style="color:#f92672">}</span>   Normal          Pulled          Container image <span style="color:#e6db74">&#34;quay.io/openshiftlabs/simpleservice:0.5.0&#34;</span> already present on machine
   23s           23s             <span style="color:#ae81ff">1</span>       <span style="color:#f92672">{</span>kubelet 192.168.99.100<span style="color:#f92672">}</span>        spec.containers<span style="color:#f92672">{</span>sise<span style="color:#f92672">}</span>   Normal          Killing         Killing container with docker id 7dd660f04945: pod <span style="color:#e6db74">&#34;badpod_default(53e5c06a-29cb-11e7-b44f-be3e8f4350ff)&#34;</span> container <span style="color:#e6db74">&#34;sise&#34;</span> is unhealthy, it will be killed and re-created.
   23s           23s             <span style="color:#ae81ff">1</span>       <span style="color:#f92672">{</span>kubelet 192.168.99.100<span style="color:#f92672">}</span>        spec.containers<span style="color:#f92672">{</span>sise<span style="color:#f92672">}</span>   Normal          Created         Created container with docker id ec63dc3edfaa; Security:<span style="color:#f92672">[</span>seccomp<span style="color:#f92672">=</span>unconfined<span style="color:#f92672">]</span>
   23s           23s             <span style="color:#ae81ff">1</span>       <span style="color:#f92672">{</span>kubelet 192.168.99.100<span style="color:#f92672">}</span>        spec.containers<span style="color:#f92672">{</span>sise<span style="color:#f92672">}</span>   Normal          Started         Started container with docker id ec63dc3edfaa

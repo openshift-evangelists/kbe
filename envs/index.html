@@ -31,10 +31,21 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
   <link rel="stylesheet" href="https://kubernetesbyexample.com/css/pygment_highlights.css" />
   <link rel="stylesheet" href="https://kubernetesbyexample.com/css/highlight.min.css" />
+
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-WNHKJNX');</script>
+  
 </head>
 
   <body>
-    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+    
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WNHKJNX"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  
+<nav class="navbar navbar-default navbar-fixed-top navbar-custom">
   <div class="container-fluid">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
@@ -48,6 +59,51 @@
 
     <div class="collapse navbar-collapse" id="main-navbar">
       <ul class="nav navbar-nav navbar-right">
+        
+          
+            <li class="navlinks-container">
+              <a class="navlinks-parent" href="javascript:void(0)">Hands-on Examples</a>
+              <div class="navlinks-children">
+                
+                  <a href="/pods/">Pods</a>
+                
+                  <a href="/labels/">Labels</a>
+                
+                  <a href="/deployments/">Deployments</a>
+                
+                  <a href="/services/">Services</a>
+                
+                  <a href="/sd/">Service Discovery</a>
+                
+                  <a href="/pf/">Port Forward</a>
+                
+                  <a href="/healthz/">Health Checks</a>
+                
+                  <a href="/envs/">Environment Variables</a>
+                
+                  <a href="/ns/">Namespaces</a>
+                
+                  <a href="/volumes/">Volumes</a>
+                
+                  <a href="/pv/">Persistent Volumes</a>
+                
+                  <a href="/secrets/">Secrets</a>
+                
+                  <a href="/logging/">Logging</a>
+                
+                  <a href="/jobs/">Jobs</a>
+                
+                  <a href="/statefulset/">Stateful Sets</a>
+                
+                  <a href="/ic/">Init Containers</a>
+                
+                  <a href="/nodes/">Nodes</a>
+                
+                  <a href="/api/">API Server</a>
+                
+              </div>
+            </li>
+          
         
           
             <li>
@@ -137,7 +193,7 @@ has picked up the environment variable <code>SIMPLE_SERVICE_VERSION</code>:</p>
 <span style="color:#f92672">{</span><span style="color:#e6db74">&#34;host&#34;</span>: <span style="color:#e6db74">&#34;172.17.0.3:9876&#34;</span>, <span style="color:#e6db74">&#34;version&#34;</span>: <span style="color:#e6db74">&#34;1.0&#34;</span>, <span style="color:#e6db74">&#34;from&#34;</span>: <span style="color:#e6db74">&#34;172.17.0.1&#34;</span><span style="color:#f92672">}</span>
 </code></pre></div><p>And indeed it has picked up the user-provided environment variable since the default response would be <code>&quot;version&quot;: &quot;0.5.0&quot;</code>.</p>
 <p>You can check what environment variables Kubernetes itself provides automatically
-(from within the cluster, using a dedicated endpoint that the <a href="https://github.com/mhausenblas/simpleservice">app</a>
+(from within the cluster, using a dedicated endpoint that the <a href="https://github.com/openshift-labs/simpleservice">app</a>
 exposes):</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#f92672">[</span>cluster<span style="color:#f92672">]</span> $ curl 172.17.0.3:9876/env
 <span style="color:#f92672">{</span><span style="color:#e6db74">&#34;version&#34;</span>: <span style="color:#e6db74">&#34;1.0&#34;</span>, <span style="color:#e6db74">&#34;env&#34;</span>: <span style="color:#e6db74">&#34;{&#39;HOSTNAME&#39;: &#39;envs&#39;, &#39;DOCKER_REGISTRY_SERVICE_PORT&#39;: &#39;5000&#39;, &#39;KUBERNETES_PORT_443_TCP_ADDR&#39;: &#39;172.30.0.1&#39;, &#39;ROUTER_PORT_80_TCP_PROTO&#39;: &#39;tcp&#39;, &#39;KUBERNETES_PORT_53_UDP_PROTO&#39;: &#39;udp&#39;, &#39;ROUTER_SERVICE_HOST&#39;: &#39;172.30.246.127&#39;, &#39;ROUTER_PORT_1936_TCP_PROTO&#39;: &#39;tcp&#39;, &#39;KUBERNETES_SERVICE_PORT_DNS&#39;: &#39;53&#39;, &#39;DOCKER_REGISTRY_PORT_5000_TCP_PORT&#39;: &#39;5000&#39;, &#39;PATH&#39;: &#39;/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin&#39;, &#39;ROUTER_SERVICE_PORT_443_TCP&#39;: &#39;443&#39;, &#39;KUBERNETES_PORT_53_TCP&#39;: &#39;tcp://172.30.0.1:53&#39;, &#39;KUBERNETES_SERVICE_PORT&#39;: &#39;443&#39;, &#39;ROUTER_PORT_80_TCP_ADDR&#39;: &#39;172.30.246.127&#39;, &#39;LANG&#39;: &#39;C.UTF-8&#39;, &#39;KUBERNETES_PORT_53_TCP_ADDR&#39;: &#39;172.30.0.1&#39;, &#39;PYTHON_VERSION&#39;: &#39;2.7.13&#39;, &#39;KUBERNETES_SERVICE_HOST&#39;: &#39;172.30.0.1&#39;, &#39;PYTHON_PIP_VERSION&#39;: &#39;9.0.1&#39;, &#39;DOCKER_REGISTRY_PORT_5000_TCP_PROTO&#39;: &#39;tcp&#39;, &#39;REFRESHED_AT&#39;: &#39;2017-04-24T13:50&#39;, &#39;ROUTER_PORT_1936_TCP&#39;: &#39;tcp://172.30.246.127:1936&#39;, &#39;KUBERNETES_PORT_53_TCP_PROTO&#39;: &#39;tcp&#39;, &#39;KUBERNETES_PORT_53_TCP_PORT&#39;: &#39;53&#39;, &#39;HOME&#39;: &#39;/root&#39;, &#39;DOCKER_REGISTRY_SERVICE_HOST&#39;: &#39;172.30.1.1&#39;, &#39;GPG_KEY&#39;: &#39;C01E1CAD5EA2C4F0B8E3571504C367C218ADD4FF&#39;, &#39;ROUTER_SERVICE_PORT_80_TCP&#39;: &#39;80&#39;, &#39;ROUTER_PORT_443_TCP_ADDR&#39;: &#39;172.30.246.127&#39;, &#39;ROUTER_PORT_1936_TCP_ADDR&#39;: &#39;172.30.246.127&#39;, &#39;ROUTER_SERVICE_PORT&#39;: &#39;80&#39;, &#39;ROUTER_PORT_443_TCP_PORT&#39;: &#39;443&#39;, &#39;KUBERNETES_SERVICE_PORT_DNS_TCP&#39;: &#39;53&#39;, &#39;KUBERNETES_PORT_53_UDP_ADDR&#39;: &#39;172.30.0.1&#39;, &#39;KUBERNETES_PORT_53_UDP&#39;: &#39;udp://172.30.0.1:53&#39;, &#39;KUBERNETES_PORT&#39;: &#39;tcp://172.30.0.1:443&#39;, &#39;ROUTER_PORT_1936_TCP_PORT&#39;: &#39;1936&#39;, &#39;ROUTER_PORT_80_TCP&#39;: &#39;tcp://172.30.246.127:80&#39;, &#39;KUBERNETES_SERVICE_PORT_HTTPS&#39;: &#39;443&#39;, &#39;KUBERNETES_PORT_53_UDP_PORT&#39;: &#39;53&#39;, &#39;ROUTER_PORT_80_TCP_PORT&#39;: &#39;80&#39;, &#39;ROUTER_PORT&#39;: &#39;tcp://172.30.246.127:80&#39;, &#39;ROUTER_PORT_443_TCP&#39;: &#39;tcp://172.30.246.127:443&#39;, &#39;SIMPLE_SERVICE_VERSION&#39;: &#39;1.0&#39;, &#39;ROUTER_PORT_443_TCP_PROTO&#39;: &#39;tcp&#39;, &#39;KUBERNETES_PORT_443_TCP&#39;: &#39;tcp://172.30.0.1:443&#39;, &#39;DOCKER_REGISTRY_PORT_5000_TCP&#39;: &#39;tcp://172.30.1.1:5000&#39;, &#39;DOCKER_REGISTRY_PORT&#39;: &#39;tcp://172.30.1.1:5000&#39;, &#39;KUBERNETES_PORT_443_TCP_PORT&#39;: &#39;443&#39;, &#39;ROUTER_SERVICE_PORT_1936_TCP&#39;: &#39;1936&#39;, &#39;DOCKER_REGISTRY_PORT_5000_TCP_ADDR&#39;: &#39;172.30.1.1&#39;, &#39;DOCKER_REGISTRY_SERVICE_PORT_5000_TCP&#39;: &#39;5000&#39;, &#39;KUBERNETES_PORT_443_TCP_PROTO&#39;: &#39;tcp&#39;}&#34;</span><span style="color:#f92672">}</span>

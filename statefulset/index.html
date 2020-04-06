@@ -31,10 +31,21 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
   <link rel="stylesheet" href="https://kubernetesbyexample.com/css/pygment_highlights.css" />
   <link rel="stylesheet" href="https://kubernetesbyexample.com/css/highlight.min.css" />
+
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-WNHKJNX');</script>
+  
 </head>
 
   <body>
-    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+    
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WNHKJNX"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  
+<nav class="navbar navbar-default navbar-fixed-top navbar-custom">
   <div class="container-fluid">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
@@ -48,6 +59,51 @@
 
     <div class="collapse navbar-collapse" id="main-navbar">
       <ul class="nav navbar-nav navbar-right">
+        
+          
+            <li class="navlinks-container">
+              <a class="navlinks-parent" href="javascript:void(0)">Hands-on Examples</a>
+              <div class="navlinks-children">
+                
+                  <a href="/pods/">Pods</a>
+                
+                  <a href="/labels/">Labels</a>
+                
+                  <a href="/deployments/">Deployments</a>
+                
+                  <a href="/services/">Services</a>
+                
+                  <a href="/sd/">Service Discovery</a>
+                
+                  <a href="/pf/">Port Forward</a>
+                
+                  <a href="/healthz/">Health Checks</a>
+                
+                  <a href="/envs/">Environment Variables</a>
+                
+                  <a href="/ns/">Namespaces</a>
+                
+                  <a href="/volumes/">Volumes</a>
+                
+                  <a href="/pv/">Persistent Volumes</a>
+                
+                  <a href="/secrets/">Secrets</a>
+                
+                  <a href="/logging/">Logging</a>
+                
+                  <a href="/jobs/">Jobs</a>
+                
+                  <a href="/statefulset/">Stateful Sets</a>
+                
+                  <a href="/ic/">Init Containers</a>
+                
+                  <a href="/nodes/">Nodes</a>
+                
+                  <a href="/api/">API Server</a>
+                
+              </div>
+            </li>
+          
         
           
             <li>
@@ -142,7 +198,7 @@ persistentvolumeclaim/data-mehdb-1   Bound    pvc-d4b7620f-310d-11e9-aeff-123713
 NAME            TYPE        CLUSTER-IP   EXTERNAL-IP   PORT<span style="color:#f92672">(</span>S<span style="color:#f92672">)</span>    AGE
 service/mehdb   ClusterIP   None         &lt;none&gt;        9876/TCP   1m
 </code></pre></div><p>Now we can check if the stateful app is working properly. To do this, we use the <code>/status</code> endpoint of the headless service <code>mehdb:9876</code> and since we haven&rsquo;t put any data yet into the datastore, we&rsquo;d expect that <code>0</code> keys are reported:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kubectl run -it --rm jumpod --restart<span style="color:#f92672">=</span>Never --image<span style="color:#f92672">=</span>quay.io/mhausenblas/jump:0.2 -- curl mehdb:9876/status?level<span style="color:#f92672">=</span>full
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kubectl run -it --rm jumpod --restart<span style="color:#f92672">=</span>Never --image<span style="color:#f92672">=</span>quay.io/openshiftlabs/jump:0.2 -- curl mehdb:9876/status?level<span style="color:#f92672">=</span>full
 If you don<span style="color:#960050;background-color:#1e0010">&#39;</span>t see a command prompt, try pressing enter.
 <span style="color:#ae81ff">0</span>
 pod <span style="color:#e6db74">&#34;jumpod&#34;</span> deleted

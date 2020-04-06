@@ -92,8 +92,8 @@ $ curl http://localhost:8080/api/v1 { &amp;#34;kind&amp;#34;: &amp;#34;APIResour
       
       <guid>https://kubernetesbyexample.com/pods/</guid>
       <description>A pod is a collection of containers sharing a network and mount namespace and is the basic unit of deployment in Kubernetes. All containers in a pod are scheduled on the same node.
-To launch a pod using the container image mhausenblas/simpleservice:0.5.0 and exposing a HTTP API on port 9876, execute:
-$ kubectl run sise --image=mhausenblas/simpleservice:0.5.0 --port=9876 We can now see that the pod is running:
+To launch a pod using the container image quay.io/openshiftlabs/simpleservice:0.5.0 and exposing a HTTP API on port 9876, execute:
+$ kubectl run sise --image=quay.io/openshiftlabs/simpleservice:0.5.0 --port=9876 We can now see that the pod is running:
 $ kubectl get pods NAME READY STATUS RESTARTS AGE sise-3210265840-k705b 1/1 Running 0 1m $ kubectl describe pod sise-3210265840-k705b | grep IP: IP: 172.</description>
     </item>
     

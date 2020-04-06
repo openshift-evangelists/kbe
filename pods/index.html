@@ -31,10 +31,21 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
   <link rel="stylesheet" href="https://kubernetesbyexample.com/css/pygment_highlights.css" />
   <link rel="stylesheet" href="https://kubernetesbyexample.com/css/highlight.min.css" />
+
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-WNHKJNX');</script>
+  
 </head>
 
   <body>
-    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+    
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WNHKJNX"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  
+<nav class="navbar navbar-default navbar-fixed-top navbar-custom">
   <div class="container-fluid">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
@@ -48,6 +59,51 @@
 
     <div class="collapse navbar-collapse" id="main-navbar">
       <ul class="nav navbar-nav navbar-right">
+        
+          
+            <li class="navlinks-container">
+              <a class="navlinks-parent" href="javascript:void(0)">Hands-on Examples</a>
+              <div class="navlinks-children">
+                
+                  <a href="/pods/">Pods</a>
+                
+                  <a href="/labels/">Labels</a>
+                
+                  <a href="/deployments/">Deployments</a>
+                
+                  <a href="/services/">Services</a>
+                
+                  <a href="/sd/">Service Discovery</a>
+                
+                  <a href="/pf/">Port Forward</a>
+                
+                  <a href="/healthz/">Health Checks</a>
+                
+                  <a href="/envs/">Environment Variables</a>
+                
+                  <a href="/ns/">Namespaces</a>
+                
+                  <a href="/volumes/">Volumes</a>
+                
+                  <a href="/pv/">Persistent Volumes</a>
+                
+                  <a href="/secrets/">Secrets</a>
+                
+                  <a href="/logging/">Logging</a>
+                
+                  <a href="/jobs/">Jobs</a>
+                
+                  <a href="/statefulset/">Stateful Sets</a>
+                
+                  <a href="/ic/">Init Containers</a>
+                
+                  <a href="/nodes/">Nodes</a>
+                
+                  <a href="/api/">API Server</a>
+                
+              </div>
+            </li>
+          
         
           
             <li>
@@ -125,9 +181,9 @@
         <p>A pod is a collection of containers sharing a network and mount namespace
 and is the basic unit of deployment in Kubernetes. All containers in a pod
 are scheduled on the same node.</p>
-<p>To launch a pod using the container <a href="https://hub.docker.com/r/mhausenblas/simpleservice/">image</a>
-<code>mhausenblas/simpleservice:0.5.0</code> and exposing a HTTP API on port <code>9876</code>, execute:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kubectl run sise --image<span style="color:#f92672">=</span>mhausenblas/simpleservice:0.5.0 --port<span style="color:#f92672">=</span><span style="color:#ae81ff">9876</span>
+<p>To launch a pod using the container <a href="https://quay.io/repository/openshiftlabs/simpleservice/">image</a>
+<code>quay.io/openshiftlabs/simpleservice:0.5.0</code> and exposing a HTTP API on port <code>9876</code>, execute:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kubectl run sise --image<span style="color:#f92672">=</span>quay.io/openshiftlabs/simpleservice:0.5.0 --port<span style="color:#f92672">=</span><span style="color:#ae81ff">9876</span>
 </code></pre></div><p>We can now see that the pod is running:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kubectl get pods
 NAME                      READY     STATUS    RESTARTS   AGE
