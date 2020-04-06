@@ -9,11 +9,11 @@ A pod is a collection of containers sharing a network and mount namespace
 and is the basic unit of deployment in Kubernetes. All containers in a pod
 are scheduled on the same node.
 
-To launch a pod using the container [image](https://hub.docker.com/r/mhausenblas/simpleservice/)
-`mhausenblas/simpleservice:0.5.0` and exposing a HTTP API on port `9876`, execute:
+To launch a pod using the container [image](https://quay.io/repository/openshiftlabs/simpleservice/)
+`quay.io/openshiftlabs/simpleservice:0.5.0` and exposing a HTTP API on port `9876`, execute:
 
 ```bash
-$ kubectl run sise --image=mhausenblas/simpleservice:0.5.0 --port=9876
+$ kubectl run sise --image=quay.io/openshiftlabs/simpleservice:0.5.0 --port=9876
 ```
 
 We can now see that the pod is running:

@@ -30,7 +30,7 @@ has picked up the environment variable `SIMPLE_SERVICE_VERSION`:
 And indeed it has picked up the user-provided environment variable since the default response would be `"version": "0.5.0"`.
 
 You can check what environment variables Kubernetes itself provides automatically
-(from within the cluster, using a dedicated endpoint that the [app](https://github.com/mhausenblas/simpleservice)
+(from within the cluster, using a dedicated endpoint that the [app](https://github.com/openshift-labs/simpleservice)
 exposes):
 
 ```bash
