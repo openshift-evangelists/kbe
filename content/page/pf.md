@@ -30,6 +30,13 @@ $ curl localhost:8080/info
 {"host": "localhost:8080", "version": "0.5.0", "from": "127.0.0.1"}
 ```
 
-Remember that port forwarding is not meant for production traffic but for development and experimentation.
+Remember that port forwarding is not meant for production traffic but for development and experimentation. 
+
+You can remove the `simpleservice` with 
+
+```bash
+$ kubectl delete service/simpleservice 
+$ kubectl delete deployment sise-deploy
+```
 
 [Previous](/sd) | [Next](/healthz)
