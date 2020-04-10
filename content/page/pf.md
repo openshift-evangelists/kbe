@@ -13,7 +13,7 @@ Let's create an [app](https://github.com/openshift-evangelists/kbe/blob/master/s
 $ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/master/specs/pf/app.yaml
 ```
 
-Let's say want to access the `simpleservice` service from the local environment, say, your laptop, on port `8080`. So we forward the traffic as follows:
+Let's say we want to access the `simpleservice` service from the local environment, say, your laptop, on port `8080`. So we forward the traffic as follows:
 
 ```bash
 $ kubectl port-forward service/simpleservice 8080:80
