@@ -5,7 +5,7 @@ date = "2020-03-23"
 url = "/ns/"
 +++
 
-Namespaces provide a scope for Kubernetes resource, carving up your cluster in smaller units. You can think of it
+Namespaces provide a scope for Kubernetes resources, carving up your cluster in smaller units. You can think of it
 as a workspace you're sharing with other users. Many resources such as pods and
 services are namespaced, while some, for example, nodes are not namespaced (but cluster-wide). As a developer you'd usually use an assigned namespace, however admins may wish to manage them, for example to set up access control or resource quotas.
 
