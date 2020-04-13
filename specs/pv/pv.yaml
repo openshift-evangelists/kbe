@@ -1,0 +1,32 @@
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  annotations:
+    pv.kubernetes.io/bound-by-controller: "yes"
+  finalizers:
+  - kubernetes.io/pv-protection
+  labels:
+    volume: pv0001
+  name: pv0001
+  resourceVersion: "227035"
+  selfLink: /api/v1/persistentvolumes/pv0001
+spec:
+  accessModes:
+  - ReadWriteOnce
+  capacity:
+    storage: 5Gi
+  claimRef:
+    apiVersion: v1
+    kind: PersistentVolumeClaim
+    name: myclaim
+    namespace: default
+    resourceVersion: "227033"
+  hostPath:
+    path: /mnt/pv-data/pv0001
+    type: ""
+  persistentVolumeReclaimPolicy: Recycle
+  volumeMode: Filesystem
+status:
+  phase: Bound
+

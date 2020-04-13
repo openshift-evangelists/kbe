@@ -7,6 +7,13 @@ url = "/pv/"
 
 A [persistent volume](https://kubernetes.io/docs/concepts/storage/persistent-volumes/) (PV) is a cluster-wide resource that you can use to store data in a way that it persists beyond the lifetime of a pod. The PV is not backed by locally-attached storage on a worker node but by networked storage system such as EBS or NFS or a distributed filesystem like Ceph.
 
+If you are using
+[OpenShift Playground](https://learn.openshift.com/playgrounds/openshift42) like us there already exist a few persistent volumes on your cluster.  If not, you'll need to create one first using:
+
+```bash
+$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/master/specs/pv/pv.yaml
+```
+
 In order to use a PV you need to claim it first, using a persistent volume claim (PVC). The PVC requests a PV with your desired specification (size, speed, etc.) from Kubernetes and binds it then to a pod where you can mount it as a volume. So let's create such a [PVC](https://github.com/openshift-evangelists/kbe/blob/master/specs/pv/pvc.yaml), asking Kubernetes for 1 GB of storage using the default [storage class](https://kubernetes.io/docs/concepts/storage/storage-classes/):
 
 ```bash
