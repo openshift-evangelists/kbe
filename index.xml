@@ -28,7 +28,7 @@ Click the red START SCENARIO button, and then you will have access to an OpenShi
       <pubDate>Mon, 23 Mar 2020 00:00:00 +0000</pubDate>
       
       <guid>https://kubernetesbyexample.com/ns/</guid>
-      <description>Namespaces provide for a scope of Kubernetes resource, carving up your cluster in smaller units. You can think of it as a workspace you&amp;rsquo;re sharing with other users. Many resources such as pods and services are namespaced, while some, for example, nodes are not namespaced (but cluster-wide). As a developer you&amp;rsquo;d usually use an assigned namespace, however admins may wish to manage them, for example to set up access control or resource quotas.</description>
+      <description>Namespaces provide a scope for Kubernetes resources, carving up your cluster in smaller units. You can think of it as a workspace you&amp;rsquo;re sharing with other users. Many resources such as pods and services are namespaced, while some, for example, nodes are not namespaced (but cluster-wide). As a developer you&amp;rsquo;d usually use an assigned namespace, however admins may wish to manage them, for example to set up access control or resource quotas.</description>
     </item>
     
     <item>
@@ -166,7 +166,7 @@ Let&amp;rsquo;s create a pod that initially has one label (env=development):</de
       
       <guid>https://kubernetesbyexample.com/pv/</guid>
       <description>A persistent volume (PV) is a cluster-wide resource that you can use to store data in a way that it persists beyond the lifetime of a pod. The PV is not backed by locally-attached storage on a worker node but by networked storage system such as EBS or NFS or a distributed filesystem like Ceph.
-In order to use a PV you need to claim it first, using a persistent volume claim (PVC).</description>
+If you are using OpenShift Playground like us there already exist a few persistent volumes on your cluster.</description>
     </item>
     
     <item>
@@ -218,7 +218,7 @@ So let&amp;rsquo;s create an deployment consisting of an init container that wri
       <guid>https://kubernetesbyexample.com/pf/</guid>
       <description>In the context of developing apps on Kubernetes it is often useful to quickly access a service from your local environment without exposing it using, for example, a load balancer or an ingress resource. In this case you can use port forwarding.
 Let&amp;rsquo;s create an app consisting of a deployment and a service called simpleservice, serving on port 80:
-$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/master/specs/pf/app.yaml Let&amp;rsquo;s say want to access the simpleservice service from the local environment, say, your laptop, on port 8080.</description>
+$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/master/specs/pf/app.yaml Let&amp;rsquo;s say we want to access the simpleservice service from the local environment, say, your laptop, on port 8080.</description>
     </item>
     
   </channel>

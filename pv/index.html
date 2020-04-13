@@ -179,7 +179,10 @@
     <div class="row">
       <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
         <p>A <a href="https://kubernetes.io/docs/concepts/storage/persistent-volumes/">persistent volume</a> (PV) is a cluster-wide resource that you can use to store data in a way that it persists beyond the lifetime of a pod. The PV is not backed by locally-attached storage on a worker node but by networked storage system such as EBS or NFS or a distributed filesystem like Ceph.</p>
-<p>In order to use a PV you need to claim it first, using a persistent volume claim (PVC). The PVC requests a PV with your desired specification (size, speed, etc.) from Kubernetes and binds it then to a pod where you can mount it as a volume. So let&rsquo;s create such a <a href="https://github.com/openshift-evangelists/kbe/blob/master/specs/pv/pvc.yaml">PVC</a>, asking Kubernetes for 1 GB of storage using the default <a href="https://kubernetes.io/docs/concepts/storage/storage-classes/">storage class</a>:</p>
+<p>If you are using
+<a href="https://learn.openshift.com/playgrounds/openshift42">OpenShift Playground</a> like us there already exist a few persistent volumes on your cluster.  If not, you&rsquo;ll need to create one first using:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/master/specs/pv/pv.yaml
+</code></pre></div><p>In order to use a PV you need to claim it first, using a persistent volume claim (PVC). The PVC requests a PV with your desired specification (size, speed, etc.) from Kubernetes and binds it then to a pod where you can mount it as a volume. So let&rsquo;s create such a <a href="https://github.com/openshift-evangelists/kbe/blob/master/specs/pv/pvc.yaml">PVC</a>, asking Kubernetes for 1 GB of storage using the default <a href="https://kubernetes.io/docs/concepts/storage/storage-classes/">storage class</a>:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/master/specs/pv/pvc.yaml
 
 $ kubectl get pvc

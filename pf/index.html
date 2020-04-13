@@ -181,7 +181,7 @@
         <p>In the context of developing apps on Kubernetes it is often useful to quickly access a service from your local environment without exposing it using, for example, a load balancer or an ingress resource. In this case you can use <a href="https://kubernetes.io/docs/tasks/access-application-cluster/port-forward-access-application-cluster/">port forwarding</a>.</p>
 <p>Let&rsquo;s create an <a href="https://github.com/openshift-evangelists/kbe/blob/master/specs/pf/app.yaml">app</a> consisting of a deployment and a service called <code>simpleservice</code>, serving on port <code>80</code>:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/master/specs/pf/app.yaml
-</code></pre></div><p>Let&rsquo;s say want to access the <code>simpleservice</code> service from the local environment, say, your laptop, on port <code>8080</code>. So we forward the traffic as follows:</p>
+</code></pre></div><p>Let&rsquo;s say we want to access the <code>simpleservice</code> service from the local environment, say, your laptop, on port <code>8080</code>. So we forward the traffic as follows:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kubectl port-forward service/simpleservice 8080:80
 Forwarding from 127.0.0.1:8080 -&gt; <span style="color:#ae81ff">9876</span>
 Forwarding from <span style="color:#f92672">[</span>::1<span style="color:#f92672">]</span>:8080 -&gt; <span style="color:#ae81ff">9876</span>
@@ -190,7 +190,10 @@ Forwarding from <span style="color:#f92672">[</span>::1<span style="color:#f9267
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ curl localhost:8080/info
 <span style="color:#f92672">{</span><span style="color:#e6db74">&#34;host&#34;</span>: <span style="color:#e6db74">&#34;localhost:8080&#34;</span>, <span style="color:#e6db74">&#34;version&#34;</span>: <span style="color:#e6db74">&#34;0.5.0&#34;</span>, <span style="color:#e6db74">&#34;from&#34;</span>: <span style="color:#e6db74">&#34;127.0.0.1&#34;</span><span style="color:#f92672">}</span>
 </code></pre></div><p>Remember that port forwarding is not meant for production traffic but for development and experimentation.</p>
-<p><a href="/sd">Previous</a> | <a href="/healthz">Next</a></p>
+<p>You can remove the <code>simpleservice</code> with</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kubectl delete service/simpleservice 
+$ kubectl delete deployment sise-deploy
+</code></pre></div><p><a href="/sd">Previous</a> | <a href="/healthz">Next</a></p>
 
         
       </div>
