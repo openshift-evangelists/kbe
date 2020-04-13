@@ -8,7 +8,7 @@ url = "/logging/"
 Logging is one option to understand what is going on inside your applications
 and the cluster at large. Basic logging in Kubernetes makes the output a
 container produces available, which is a good use case for debugging. More advanced
-[setups](http://some.ops4devs.info/logging/) consider logs across nodes and store
+[setups](https://kubernetes.io/docs/concepts/cluster-administration/logging/) consider logs across nodes and store
 them in a central place, either within the cluster or via a dedicated (cloud-based) service.
 
 Let's create a [pod](https://github.com/openshift-evangelists/kbe/blob/master/specs/logging/pod.yaml)
