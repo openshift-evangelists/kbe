@@ -90,7 +90,7 @@ and [here](https://kubernetes.io/docs/concepts/configuration/manage-compute-reso
 To remove all the pods created, just run:
 
 ```bash
-$ kubectl delete {pod,deployment} sise
+$ kubectl delete pod,deployment sise
 
 $ kubectl delete pod twocontainers
 
