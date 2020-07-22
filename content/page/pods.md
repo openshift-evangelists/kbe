@@ -35,9 +35,8 @@ which we've learned from the `kubectl describe` command above:
 {"host": "172.17.0.3:9876", "version": "0.5.0", "from": "172.17.0.1"}
 ```
 
-Note that `kubectl run` creates a [deployment](/deployments/), so in order to
-get rid of the pod you have to execute `kubectl delete deployment sise`.
-
+***Tip: Deprecation Warning!***
+Note that older releases of `kubectl` will produce a [deployment](/deployments/) resource as the result of the provided `kubectl run` example, while newer releases produce a single `pod` resource.  If you are using an old release of `kubectl`, you may need to run `kubectl delete deployment sise` to clean up at the end of this section.
 
 #### Using configuration file
 
