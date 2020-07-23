@@ -15,11 +15,11 @@ We will focus on HTTP health checks in the following. Note that it is the respon
 of the application developer to expose a URL that the kubelet can
 use to determine if the container is healthy (and potentially ready).
 
-Let's create a [pod](https://github.com/openshift-evangelists/kbe/blob/master/specs/healthz/pod.yaml)
+Let's create a [pod](https://github.com/openshift-evangelists/kbe/blob/main/specs/healthz/pod.yaml)
 that exposes an endpoint `/health`, responding with a HTTP `200` status code:
 
 ```bash
-$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/master/specs/healthz/pod.yaml
+$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/main/specs/healthz/pod.yaml
 ```
 
 In the pod specification we've defined the following:
@@ -57,12 +57,12 @@ already present on machine
   2s            2s              1       {kubelet 192.168.99.100}        spec.containers{sise}   Normal          Started         Started container with docker id 8a628578d6ad
 ```
 
-Now we launch a [bad pod](https://github.com/openshift-evangelists/kbe/blob/master/specs/healthz/badpod.yaml),
+Now we launch a [bad pod](https://github.com/openshift-evangelists/kbe/blob/main/specs/healthz/badpod.yaml),
 that is, a pod that has a container that randomly (in the time range 1 to 4 sec)
 does not return a 200 code:
 
 ```bash
-$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/master/specs/healthz/badpod.yaml
+$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/main/specs/healthz/badpod.yaml
 ```
 
 Looking at the events of the bad pod, we can see that the health check failed:
@@ -102,11 +102,11 @@ that loads some data from external storage such as S3 or a database that needs
 to initialize some tables. In this case you want to signal when the container is
 ready to serve traffic.
 
-Let's create a [pod](https://github.com/openshift-evangelists/kbe/blob/master/specs/healthz/ready.yaml)
+Let's create a [pod](https://github.com/openshift-evangelists/kbe/blob/main/specs/healthz/ready.yaml)
 with a `readinessProbe` that kicks in after 10 seconds:
 
 ```bash
-$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/master/specs/healthz/ready.yaml
+$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/main/specs/healthz/ready.yaml
 ```
 
 Looking at the events of the pod, we can see that, eventually, the pod is ready

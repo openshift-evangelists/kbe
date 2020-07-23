@@ -16,11 +16,11 @@ running in a pod. In contrast to the container-local filesystem, the data in vol
 
 A special type of volume is `PersistentVolume`, which we will cover elsewhere.
 
-Let's create a [pod](https://github.com/openshift-evangelists/kbe/blob/master/specs/volumes/pod.yaml)
+Let's create a [pod](https://github.com/openshift-evangelists/kbe/blob/main/specs/volumes/pod.yaml)
 with two containers that use an `emptyDir` volume to exchange data:
 
 ```bash
-$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/master/specs/volumes/pod.yaml
+$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/main/specs/volumes/pod.yaml
 
 $ kubectl describe pod sharevol
 Name:                   sharevol

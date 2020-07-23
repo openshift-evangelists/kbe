@@ -7,10 +7,10 @@ url = "/ic/"
 
 It's sometimes necessary to prepare a container running in a pod. For example, you might want to wait for a service being available, want to configure things at runtime, or init some data in a database. In all of these cases, [init containers](https://kubernetes.io/docs/concepts/workloads/pods/init-containers/) are useful. Note that Kubernetes will execute all init containers (and they must all exit successfully) before the main container(s) are executed. 
 
-So let's create an [deployment](https://github.com/openshift-evangelists/kbe/blob/master/specs/ic/deploy.yaml) consisting of an init container that writes a message into a file at `/ic/this` and the main (long-running) container reading out this file, then:
+So let's create an [deployment](https://github.com/openshift-evangelists/kbe/blob/main/specs/ic/deploy.yaml) consisting of an init container that writes a message into a file at `/ic/this` and the main (long-running) container reading out this file, then:
 
 ```bash
-$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/master/specs/ic/deploy.yaml
+$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/main/specs/ic/deploy.yaml
 ```
 
 Now we can check the output of the main container:

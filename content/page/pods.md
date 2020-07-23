@@ -41,12 +41,12 @@ Note that older releases of `kubectl` will produce a [deployment](/deployments/)
 #### Using configuration file
 
 You can also create a pod from a configuration file.
-In this case the [pod](https://github.com/openshift-evangelists/kbe/blob/master/specs/pods/pod.yaml) is
+In this case the [pod](https://github.com/openshift-evangelists/kbe/blob/main/specs/pods/pod.yaml) is
 running the already known `simpleservice` image from above along with
 a generic `CentOS` container:
 
 ```bash
-$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/master/specs/pods/pod.yaml
+$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/main/specs/pods/pod.yaml
 
 $ kubectl get pods
 NAME                      READY     STATUS    RESTARTS   AGE
@@ -63,11 +63,11 @@ $ kubectl exec twocontainers -c shell -i -t -- bash
 ```
 
 Specify the `resources` field in the pod to influence how much CPU and/or RAM a
-container in a [pod](https://github.com/openshift-evangelists/kbe/blob/master/specs/pods/constraint-pod.yaml)
+container in a [pod](https://github.com/openshift-evangelists/kbe/blob/main/specs/pods/constraint-pod.yaml)
 can use (here: `64MB` of RAM and `0.5` CPUs):
 
 ```bash
-$ kubectl create -f https://raw.githubusercontent.com/openshift-evangelists/kbe/master/specs/pods/constraint-pod.yaml
+$ kubectl create -f https://raw.githubusercontent.com/openshift-evangelists/kbe/main/specs/pods/constraint-pod.yaml
 
 $ kubectl describe pod constraintpod
 ...

@@ -7,11 +7,11 @@ url = "/deployments/"
 
 A deployment is a supervisor for [pods](/pods/), giving you fine-grained control over how and when a new pod version is rolled out as well as rolled back to a previous state.
 
-Let's create a [deployment](https://github.com/openshift-evangelists/kbe/blob/master/specs/deployments/d09.yaml)
+Let's create a [deployment](https://github.com/openshift-evangelists/kbe/blob/main/specs/deployments/d09.yaml)
 called `sise-deploy` that supervises two replicas of a pod as well as a replica set:
 
 ```bash
-$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/master/specs/deployments/d09.yaml
+$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/main/specs/deployments/d09.yaml
 ```
 
 You can have a look at the deployment, as well as the the replica set and the pods the deployment looks after like so:
@@ -43,10 +43,10 @@ first to get the IP of one of the pods):
 ```
 
 Let's now see what happens if we change that version to `1.0` in an updated
-[deployment](https://github.com/openshift-evangelists/kbe/blob/master/specs/deployments/d10.yaml):
+[deployment](https://github.com/openshift-evangelists/kbe/blob/main/specs/deployments/d10.yaml):
 
 ```bash
-$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/master/specs/deployments/d10.yaml
+$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/main/specs/deployments/d10.yaml
 deployment "sise-deploy" configured
 ```
 

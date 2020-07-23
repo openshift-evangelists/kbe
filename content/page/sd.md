@@ -9,22 +9,22 @@ Service discovery is the process of figuring out how to connect to a [service](/
 While there is a service discovery option based on [environment variables](https://kubernetes.io/docs/concepts/services-networking/connect-applications-service/#environment-variables) available,
 the DNS-based service discovery is preferable. Note that DNS is a [cluster add-on](https://github.com/kubernetes/kubernetes/blob/master/cluster/addons/dns/README.md) so make sure your Kubernetes distribution provides for one or install it yourself.
 
-Let's create a [service](https://github.com/openshift-evangelists/kbe/blob/master/specs/sd/svc.yaml) named
-`thesvc` and an [RC](https://github.com/openshift-evangelists/kbe/blob/master/specs/sd/rc.yaml) supervising
+Let's create a [service](https://github.com/openshift-evangelists/kbe/blob/main/specs/sd/svc.yaml) named
+`thesvc` and an [RC](https://github.com/openshift-evangelists/kbe/blob/main/specs/sd/rc.yaml) supervising
 some pods along with it:
 
 ```bash
-$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/master/specs/sd/rc.yaml
+$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/main/specs/sd/rc.yaml
 
-$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/master/specs/sd/svc.yaml
+$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/main/specs/sd/svc.yaml
 ```
 
 Now we want to connect to the `thesvc` service from within the cluster, say, from another service.
-To simulate this, we create a [jump pod](https://github.com/openshift-evangelists/kbe/blob/master/specs/sd/jumpod.yaml)
+To simulate this, we create a [jump pod](https://github.com/openshift-evangelists/kbe/blob/main/specs/sd/jumpod.yaml)
 in the same namespace (`default`, since we didn't specify anything else):
 
 ```bash
-$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/master/specs/sd/jumpod.yaml
+$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/main/specs/sd/jumpod.yaml
 ```
 
 The DNS add-on will make sure that our service `thesvc` is available via the FQDN
@@ -52,18 +52,18 @@ accessing it from, use a FQDN in the form `$SVC.$NAMESPACE.svc.cluster.local`.
 
 Let's see how that works by creating:
 
-1. a [namespace](https://github.com/openshift-evangelists/kbe/blob/master/specs/sd/other-ns.yaml) `other`
-1. a [service](https://github.com/openshift-evangelists/kbe/blob/master/specs/sd/other-svc.yaml) `thesvc` in namespace `other`
-1. an [RC](https://github.com/openshift-evangelists/kbe/blob/master/specs/sd/other-rc.yaml) supervising the pods, also in namespace `other`
+1. a [namespace](https://github.com/openshift-evangelists/kbe/blob/main/specs/sd/other-ns.yaml) `other`
+1. a [service](https://github.com/openshift-evangelists/kbe/blob/main/specs/sd/other-svc.yaml) `thesvc` in namespace `other`
+1. an [RC](https://github.com/openshift-evangelists/kbe/blob/main/specs/sd/other-rc.yaml) supervising the pods, also in namespace `other`
 
 If you're not familiar with namespaces, check out the [namespace examples](/ns/) first.
 
 ```bash
-$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/master/specs/sd/other-ns.yaml
+$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/main/specs/sd/other-ns.yaml
 
-$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/master/specs/sd/other-rc.yaml
+$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/main/specs/sd/other-rc.yaml
 
-$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/master/specs/sd/other-svc.yaml
+$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/main/specs/sd/other-svc.yaml
 ```
 
 We're now in the position to consume the service `thesvc` in namespace `other` from the

@@ -12,11 +12,11 @@ So you're free to choose labels as you see fit, for example, to express
 environments such as 'this pod is running in production' or ownership,
 like 'department X owns that pod'.
 
-Let's create a [pod](https://github.com/openshift-evangelists/kbe/blob/master/specs/labels/pod.yaml) that initially has one label (`env=development`):
+Let's create a [pod](https://github.com/openshift-evangelists/kbe/blob/main/specs/labels/pod.yaml) that initially has one label (`env=development`):
 
 
 ```bash
-$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/master/specs/labels/pod.yaml
+$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/main/specs/labels/pod.yaml
 
 $ kubectl get pods --show-labels
 NAME       READY     STATUS    RESTARTS   AGE    LABELS
@@ -54,11 +54,11 @@ labelex   1/1       Running   0          27m
 ```
 
 Oftentimes, Kubernetes objects also support set-based selectors.
-Let's launch [another pod](https://github.com/openshift-evangelists/kbe/blob/master/specs/labels/anotherpod.yaml)
+Let's launch [another pod](https://github.com/openshift-evangelists/kbe/blob/main/specs/labels/anotherpod.yaml)
 that has two labels (`env=production` and `owner=michael`):
 
 ```bash
-$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/master/specs/labels/anotherpod.yaml
+$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/main/specs/labels/anotherpod.yaml
 ```
 
 Now, let's list all pods that are either labelled with `env=development` or with

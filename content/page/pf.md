@@ -7,10 +7,10 @@ url = "/pf/"
 
 In the context of developing apps on Kubernetes it is often useful to quickly access a service from your local environment without exposing it using, for example, a load balancer or an ingress resource. In this case you can use [port forwarding](https://kubernetes.io/docs/tasks/access-application-cluster/port-forward-access-application-cluster/).
 
-Let's create an [app](https://github.com/openshift-evangelists/kbe/blob/master/specs/pf/app.yaml) consisting of a deployment and a service called `simpleservice`, serving on port `80`:
+Let's create an [app](https://github.com/openshift-evangelists/kbe/blob/main/specs/pf/app.yaml) consisting of a deployment and a service called `simpleservice`, serving on port `80`:
 
 ```bash
-$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/master/specs/pf/app.yaml
+$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/main/specs/pf/app.yaml
 ```
 
 Let's say we want to access the `simpleservice` service from the local environment, say, your laptop, on port `8080`. So we forward the traffic as follows:

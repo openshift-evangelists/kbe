@@ -11,23 +11,23 @@ If you are using
 [OpenShift Playground](https://learn.openshift.com/playgrounds/openshift42) like us there already exist a few persistent volumes on your cluster.  If not, you'll need to create one first using:
 
 ```bash
-$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/master/specs/pv/pv.yaml
+$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/main/specs/pv/pv.yaml
 ```
 
-In order to use a PV you need to claim it first, using a persistent volume claim (PVC). The PVC requests a PV with your desired specification (size, speed, etc.) from Kubernetes and binds it then to a pod where you can mount it as a volume. So let's create such a [PVC](https://github.com/openshift-evangelists/kbe/blob/master/specs/pv/pvc.yaml), asking Kubernetes for 1 GB of storage using the default [storage class](https://kubernetes.io/docs/concepts/storage/storage-classes/):
+In order to use a PV you need to claim it first, using a persistent volume claim (PVC). The PVC requests a PV with your desired specification (size, speed, etc.) from Kubernetes and binds it then to a pod where you can mount it as a volume. So let's create such a [PVC](https://github.com/openshift-evangelists/kbe/blob/main/specs/pv/pvc.yaml), asking Kubernetes for 1 GB of storage using the default [storage class](https://kubernetes.io/docs/concepts/storage/storage-classes/):
 
 ```bash
-$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/master/specs/pv/pvc.yaml
+$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/main/specs/pv/pvc.yaml
 
 $ kubectl get pvc
 NAME      STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS    AGE
 myclaim   Bound    pvc-27fed6b6-3047-11e9-84bb-12b5519f9b58   1Gi        RWO            gp2-encrypted   18m
 ```
 
-To understand how the persistency plays out, let's create a [deployment](https://github.com/openshift-evangelists/kbe/blob/master/specs/pv/deploy.yaml) that uses above PVC to mount it as a volume into `/tmp/persistent`:
+To understand how the persistency plays out, let's create a [deployment](https://github.com/openshift-evangelists/kbe/blob/main/specs/pv/deploy.yaml) that uses above PVC to mount it as a volume into `/tmp/persistent`:
 
 ```bash
-$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/master/specs/pv/deploy.yaml
+$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/main/specs/pv/deploy.yaml
 ```
 
 Now we want to test if data in the volume actually persists. For this we find the pod managed by above deployment, exec into its main container and create a file called `data` in the `/tmp/persistent` directory (where we decided to mount the PV):

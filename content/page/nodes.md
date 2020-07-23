@@ -26,11 +26,11 @@ $ kubectl label nodes crc-rk2fc-master-0 shouldrun=here
 node/crc-rk2fc-master-0 labeled
 ```
 
-Now we can create a [pod](https://github.com/openshift-evangelists/kbe/blob/master/specs/nodes/pod.yaml)
+Now we can create a [pod](https://github.com/openshift-evangelists/kbe/blob/main/specs/nodes/pod.yaml)
 that gets scheduled on the node with the label `shouldrun=here`:
 
 ```bash
-$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/master/specs/nodes/pod.yaml
+$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/main/specs/nodes/pod.yaml
 
 $ kubectl get pods --output=wide
 NAME             READY   STATUS    RESTARTS   AGE     IP            NODE            NOMINATED NODE   READINESS GATES

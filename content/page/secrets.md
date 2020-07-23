@@ -36,12 +36,12 @@ Data
 apikey.txt:     12 bytes
 ```
 
-Now let's use the secret in a [pod](https://github.com/openshift-evangelists/kbe/blob/master/specs/secrets/pod.yaml)
+Now let's use the secret in a [pod](https://github.com/openshift-evangelists/kbe/blob/main/specs/secrets/pod.yaml)
 via a [volume](/volumes/):
 
 
 ```bash
-$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/master/specs/secrets/pod.yaml
+$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/main/specs/secrets/pod.yaml
 ```
 
 If we now exec into the container we see the secret mounted at `/tmp/apikey`:

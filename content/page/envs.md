@@ -9,11 +9,11 @@ You can set environment variables for containers running in a pod and in
 addition, Kubernetes exposes certain runtime infos via environment variables
 automatically.
 
-Let's launch a [pod](https://github.com/openshift-evangelists/kbe/blob/master/specs/envs/pod.yaml)
+Let's launch a [pod](https://github.com/openshift-evangelists/kbe/blob/main/specs/envs/pod.yaml)
 that we pass an environment variable `SIMPLE_SERVICE_VERSION` with the value `1.0`:
 
 ```bash
-$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/master/specs/envs/pod.yaml
+$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/main/specs/envs/pod.yaml
 
 $ kubectl describe pod envs | grep IP:
 IP:                     172.17.0.3
