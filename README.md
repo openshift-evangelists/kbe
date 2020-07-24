@@ -22,13 +22,11 @@ $ hugo server --theme=beautifulhugo --buildDrafts
 
 For site admins only, requires push access to this repo.
 
-### Init
+### Setup
 
-Initially, that is, the first time when you git clone this repo you will have to
-carry out the following steps to set up the publishing workflow:
+Carry out the following steps to set up the publishing workflow:
 
 - in `public/` do:
-  - `git init` followed by a
   - `git remote add origin https://github.com/openshift-evangelists/kbe.git` and finally a
   - `git checkout -b gh-pages`
 - in `public/` create a file `CNAME` with the content `kubernetesbyexample.com`
