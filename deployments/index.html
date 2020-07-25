@@ -20,7 +20,7 @@
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Kubernetes By Example" />
 
-  <meta name="generator" content="Hugo 0.66.0" />
+  <meta name="generator" content="Hugo 0.69.0" />
   <link rel="canonical" href="https://kubernetesbyexample.com/deployments/" />
   <link rel="alternate" href="https://kubernetesbyexample.com/index.xml" type="application/rss+xml" title="Kubernetes By Example">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css" integrity="sha384-wITovz90syo1dJWVh32uuETPVEtGigN07tkttEqPv+uR2SE/mbQcG7ATL28aI9H0" crossorigin="anonymous">
@@ -179,9 +179,9 @@
     <div class="row">
       <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
         <p>A deployment is a supervisor for <a href="/pods/">pods</a>, giving you fine-grained control over how and when a new pod version is rolled out as well as rolled back to a previous state.</p>
-<p>Let&rsquo;s create a <a href="https://github.com/openshift-evangelists/kbe/blob/master/specs/deployments/d09.yaml">deployment</a>
+<p>Let&rsquo;s create a <a href="https://github.com/openshift-evangelists/kbe/blob/main/specs/deployments/d09.yaml">deployment</a>
 called <code>sise-deploy</code> that supervises two replicas of a pod as well as a replica set:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/master/specs/deployments/d09.yaml
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/main/specs/deployments/d09.yaml
 </code></pre></div><p>You can have a look at the deployment, as well as the the replica set and the pods the deployment looks after like so:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kubectl get deploy
 NAME          DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
@@ -202,8 +202,8 @@ first to get the IP of one of the pods):</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#f92672">[</span>cluster<span style="color:#f92672">]</span> $ curl 172.17.0.3:9876/info
 <span style="color:#f92672">{</span><span style="color:#e6db74">&#34;host&#34;</span>: <span style="color:#e6db74">&#34;172.17.0.3:9876&#34;</span>, <span style="color:#e6db74">&#34;version&#34;</span>: <span style="color:#e6db74">&#34;0.9&#34;</span>, <span style="color:#e6db74">&#34;from&#34;</span>: <span style="color:#e6db74">&#34;172.17.0.1&#34;</span><span style="color:#f92672">}</span>
 </code></pre></div><p>Let&rsquo;s now see what happens if we change that version to <code>1.0</code> in an updated
-<a href="https://github.com/openshift-evangelists/kbe/blob/master/specs/deployments/d10.yaml">deployment</a>:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/master/specs/deployments/d10.yaml
+<a href="https://github.com/openshift-evangelists/kbe/blob/main/specs/deployments/d10.yaml">deployment</a>:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/main/specs/deployments/d10.yaml
 deployment <span style="color:#e6db74">&#34;sise-deploy&#34;</span> configured
 </code></pre></div><p>Note that you could have used <code>kubectl edit deploy/sise-deploy</code> alternatively to
 achieve the same by manually editing the deployment.</p>
@@ -282,7 +282,7 @@ for more options on deployments and when they are triggered.</p>
         </p>
         
         <p class="credits theme-by text-muted">
-          <a href="http://gohugo.io">Hugo v0.66.0</a> powered &nbsp;&bull;&nbsp; Theme by <a href="http://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a> adapted to <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a>
+          <a href="http://gohugo.io">Hugo v0.69.0</a> powered &nbsp;&bull;&nbsp; Theme by <a href="http://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a> adapted to <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a>
           
         </p>
       </div>

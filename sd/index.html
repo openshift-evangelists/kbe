@@ -20,7 +20,7 @@
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Kubernetes By Example" />
 
-  <meta name="generator" content="Hugo 0.66.0" />
+  <meta name="generator" content="Hugo 0.69.0" />
   <link rel="canonical" href="https://kubernetesbyexample.com/sd/" />
   <link rel="alternate" href="https://kubernetesbyexample.com/index.xml" type="application/rss+xml" title="Kubernetes By Example">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css" integrity="sha384-wITovz90syo1dJWVh32uuETPVEtGigN07tkttEqPv+uR2SE/mbQcG7ATL28aI9H0" crossorigin="anonymous">
@@ -181,16 +181,16 @@
         <p>Service discovery is the process of figuring out how to connect to a <a href="/service/">service</a>.
 While there is a service discovery option based on <a href="https://kubernetes.io/docs/concepts/services-networking/connect-applications-service/#environment-variables">environment variables</a> available,
 the DNS-based service discovery is preferable. Note that DNS is a <a href="https://github.com/kubernetes/kubernetes/blob/master/cluster/addons/dns/README.md">cluster add-on</a> so make sure your Kubernetes distribution provides for one or install it yourself.</p>
-<p>Let&rsquo;s create a <a href="https://github.com/openshift-evangelists/kbe/blob/master/specs/sd/svc.yaml">service</a> named
-<code>thesvc</code> and an <a href="https://github.com/openshift-evangelists/kbe/blob/master/specs/sd/rc.yaml">RC</a> supervising
+<p>Let&rsquo;s create a <a href="https://github.com/openshift-evangelists/kbe/blob/main/specs/sd/svc.yaml">service</a> named
+<code>thesvc</code> and an <a href="https://github.com/openshift-evangelists/kbe/blob/main/specs/sd/rc.yaml">RC</a> supervising
 some pods along with it:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/master/specs/sd/rc.yaml
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/main/specs/sd/rc.yaml
 
-$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/master/specs/sd/svc.yaml
+$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/main/specs/sd/svc.yaml
 </code></pre></div><p>Now we want to connect to the <code>thesvc</code> service from within the cluster, say, from another service.
-To simulate this, we create a <a href="https://github.com/openshift-evangelists/kbe/blob/master/specs/sd/jumpod.yaml">jump pod</a>
+To simulate this, we create a <a href="https://github.com/openshift-evangelists/kbe/blob/main/specs/sd/jumpod.yaml">jump pod</a>
 in the same namespace (<code>default</code>, since we didn&rsquo;t specify anything else):</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/master/specs/sd/jumpod.yaml
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/main/specs/sd/jumpod.yaml
 </code></pre></div><p>The DNS add-on will make sure that our service <code>thesvc</code> is available via the FQDN
 <code>thesvc.default.svc.cluster.local</code> from other pods in the cluster. Let&rsquo;s try it out:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kubectl exec -it jumpod -c shell -- ping thesvc.default.svc.cluster.local
@@ -206,16 +206,16 @@ of the jump pod.</p>
 accessing it from, use a FQDN in the form <code>$SVC.$NAMESPACE.svc.cluster.local</code>.</p>
 <p>Let&rsquo;s see how that works by creating:</p>
 <ol>
-<li>a <a href="https://github.com/openshift-evangelists/kbe/blob/master/specs/sd/other-ns.yaml">namespace</a> <code>other</code></li>
-<li>a <a href="https://github.com/openshift-evangelists/kbe/blob/master/specs/sd/other-svc.yaml">service</a> <code>thesvc</code> in namespace <code>other</code></li>
-<li>an <a href="https://github.com/openshift-evangelists/kbe/blob/master/specs/sd/other-rc.yaml">RC</a> supervising the pods, also in namespace <code>other</code></li>
+<li>a <a href="https://github.com/openshift-evangelists/kbe/blob/main/specs/sd/other-ns.yaml">namespace</a> <code>other</code></li>
+<li>a <a href="https://github.com/openshift-evangelists/kbe/blob/main/specs/sd/other-svc.yaml">service</a> <code>thesvc</code> in namespace <code>other</code></li>
+<li>an <a href="https://github.com/openshift-evangelists/kbe/blob/main/specs/sd/other-rc.yaml">RC</a> supervising the pods, also in namespace <code>other</code></li>
 </ol>
 <p>If you&rsquo;re not familiar with namespaces, check out the <a href="/ns/">namespace examples</a> first.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/master/specs/sd/other-ns.yaml
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/main/specs/sd/other-ns.yaml
 
-$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/master/specs/sd/other-rc.yaml
+$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/main/specs/sd/other-rc.yaml
 
-$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/master/specs/sd/other-svc.yaml
+$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/main/specs/sd/other-svc.yaml
 </code></pre></div><p>We&rsquo;re now in the position to consume the service <code>thesvc</code> in namespace <code>other</code> from the
 <code>default</code> namespace (again via the jump pod):</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kubectl exec -it jumpod -c shell -- curl http://thesvc.other/info
@@ -258,7 +258,7 @@ $ kubectl delete ns other
         </p>
         
         <p class="credits theme-by text-muted">
-          <a href="http://gohugo.io">Hugo v0.66.0</a> powered &nbsp;&bull;&nbsp; Theme by <a href="http://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a> adapted to <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a>
+          <a href="http://gohugo.io">Hugo v0.69.0</a> powered &nbsp;&bull;&nbsp; Theme by <a href="http://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a> adapted to <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a>
           
         </p>
       </div>

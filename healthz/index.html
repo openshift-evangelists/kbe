@@ -20,7 +20,7 @@
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Kubernetes By Example" />
 
-  <meta name="generator" content="Hugo 0.66.0" />
+  <meta name="generator" content="Hugo 0.69.0" />
   <link rel="canonical" href="https://kubernetesbyexample.com/healthz/" />
   <link rel="alternate" href="https://kubernetesbyexample.com/index.xml" type="application/rss+xml" title="Kubernetes By Example">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css" integrity="sha384-wITovz90syo1dJWVh32uuETPVEtGigN07tkttEqPv+uR2SE/mbQcG7ATL28aI9H0" crossorigin="anonymous">
@@ -186,9 +186,9 @@ restart a container (for <code>livenessProbe</code>) and used by services and de
 <p>We will focus on HTTP health checks in the following. Note that it is the responsibility
 of the application developer to expose a URL that the kubelet can
 use to determine if the container is healthy (and potentially ready).</p>
-<p>Let&rsquo;s create a <a href="https://github.com/openshift-evangelists/kbe/blob/master/specs/healthz/pod.yaml">pod</a>
+<p>Let&rsquo;s create a <a href="https://github.com/openshift-evangelists/kbe/blob/main/specs/healthz/pod.yaml">pod</a>
 that exposes an endpoint <code>/health</code>, responding with a HTTP <code>200</code> status code:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/master/specs/healthz/pod.yaml
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/main/specs/healthz/pod.yaml
 </code></pre></div><p>In the pod specification we&rsquo;ve defined the following:</p>
 <pre><code>livenessProbe:
   initialDelaySeconds: 2
@@ -215,10 +215,10 @@ Events:
 already present on machine
   3s            3s              <span style="color:#ae81ff">1</span>       <span style="color:#f92672">{</span>kubelet 192.168.99.100<span style="color:#f92672">}</span>        spec.containers<span style="color:#f92672">{</span>sise<span style="color:#f92672">}</span>   Normal          Created         Created container with docker id 8a628578d6ad; Security:<span style="color:#f92672">[</span>seccomp<span style="color:#f92672">=</span>unconfined<span style="color:#f92672">]</span>
   2s            2s              <span style="color:#ae81ff">1</span>       <span style="color:#f92672">{</span>kubelet 192.168.99.100<span style="color:#f92672">}</span>        spec.containers<span style="color:#f92672">{</span>sise<span style="color:#f92672">}</span>   Normal          Started         Started container with docker id 8a628578d6ad
-</code></pre></div><p>Now we launch a <a href="https://github.com/openshift-evangelists/kbe/blob/master/specs/healthz/badpod.yaml">bad pod</a>,
+</code></pre></div><p>Now we launch a <a href="https://github.com/openshift-evangelists/kbe/blob/main/specs/healthz/badpod.yaml">bad pod</a>,
 that is, a pod that has a container that randomly (in the time range 1 to 4 sec)
 does not return a 200 code:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/master/specs/healthz/badpod.yaml
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/main/specs/healthz/badpod.yaml
 </code></pre></div><p>Looking at the events of the bad pod, we can see that the health check failed:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kubectl describe pod badpod
 ...
@@ -246,9 +246,9 @@ it&rsquo;s used to check the start-up phase of a container in the pod. Imagine a
 that loads some data from external storage such as S3 or a database that needs
 to initialize some tables. In this case you want to signal when the container is
 ready to serve traffic.</p>
-<p>Let&rsquo;s create a <a href="https://github.com/openshift-evangelists/kbe/blob/master/specs/healthz/ready.yaml">pod</a>
+<p>Let&rsquo;s create a <a href="https://github.com/openshift-evangelists/kbe/blob/main/specs/healthz/ready.yaml">pod</a>
 with a <code>readinessProbe</code> that kicks in after 10 seconds:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/master/specs/healthz/ready.yaml
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/main/specs/healthz/ready.yaml
 </code></pre></div><p>Looking at the events of the pod, we can see that, eventually, the pod is ready
 to serve traffic:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kubectl describe pod ready
@@ -290,7 +290,7 @@ Conditions:                                                                     
         </p>
         
         <p class="credits theme-by text-muted">
-          <a href="http://gohugo.io">Hugo v0.66.0</a> powered &nbsp;&bull;&nbsp; Theme by <a href="http://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a> adapted to <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a>
+          <a href="http://gohugo.io">Hugo v0.69.0</a> powered &nbsp;&bull;&nbsp; Theme by <a href="http://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a> adapted to <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a>
           
         </p>
       </div>

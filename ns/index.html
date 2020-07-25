@@ -20,7 +20,7 @@
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Kubernetes By Example" />
 
-  <meta name="generator" content="Hugo 0.66.0" />
+  <meta name="generator" content="Hugo 0.69.0" />
   <link rel="canonical" href="https://kubernetesbyexample.com/ns/" />
   <link rel="alternate" href="https://kubernetesbyexample.com/index.xml" type="application/rss+xml" title="Kubernetes By Example">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css" integrity="sha384-wITovz90syo1dJWVh32uuETPVEtGigN07tkttEqPv+uR2SE/mbQcG7ATL28aI9H0" crossorigin="anonymous">
@@ -201,9 +201,9 @@ Status: Active
 No resource quota.
 
 No resource limits.
-</code></pre></div><p>Let&rsquo;s now create a new <a href="https://github.com/openshift-evangelists/kbe/blob/master/specs/ns/ns.yaml">namespace</a>
+</code></pre></div><p>Let&rsquo;s now create a new <a href="https://github.com/openshift-evangelists/kbe/blob/main/specs/ns/ns.yaml">namespace</a>
 called <code>test</code> now:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/master/specs/ns/ns.yaml
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/main/specs/ns/ns.yaml
 namespace <span style="color:#e6db74">&#34;test&#34;</span> created
 
  kubectl get ns
@@ -217,9 +217,9 @@ openshift-apiserver                                     Active   98d
 ...
 test                                                    Active   16s
 </code></pre></div><p>Alternatively, we could have created the namespace using the <code>kubectl create namespace test</code> command.</p>
-<p>To launch a <a href="https://github.com/openshift-evangelists/kbe/blob/master/specs/ns/pod.yaml">pod</a> in
+<p>To launch a <a href="https://github.com/openshift-evangelists/kbe/blob/main/specs/ns/pod.yaml">pod</a> in
 the newly created namespace <code>test</code>, do:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kubectl apply --namespace<span style="color:#f92672">=</span>test -f https://raw.githubusercontent.com/openshift-evangelists/kbe/master/specs/ns/pod.yaml
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kubectl apply --namespace<span style="color:#f92672">=</span>test -f https://raw.githubusercontent.com/openshift-evangelists/kbe/main/specs/ns/pod.yaml
 </code></pre></div><p>Note that using above method the namespace becomes a runtime property, that is,
 you can deploy the same pod or service, etc. into multiple
 namespaces (for example: <code>dev</code> and <code>prod</code>). Hard-coding the
@@ -264,7 +264,7 @@ for more info how to handle namespaces.</p>
         </p>
         
         <p class="credits theme-by text-muted">
-          <a href="http://gohugo.io">Hugo v0.66.0</a> powered &nbsp;&bull;&nbsp; Theme by <a href="http://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a> adapted to <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a>
+          <a href="http://gohugo.io">Hugo v0.69.0</a> powered &nbsp;&bull;&nbsp; Theme by <a href="http://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a> adapted to <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a>
           
         </p>
       </div>

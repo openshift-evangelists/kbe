@@ -20,7 +20,7 @@
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Kubernetes By Example" />
 
-  <meta name="generator" content="Hugo 0.66.0" />
+  <meta name="generator" content="Hugo 0.69.0" />
   <link rel="canonical" href="https://kubernetesbyexample.com/pods/" />
   <link rel="alternate" href="https://kubernetesbyexample.com/index.xml" type="application/rss+xml" title="Kubernetes By Example">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css" integrity="sha384-wITovz90syo1dJWVh32uuETPVEtGigN07tkttEqPv+uR2SE/mbQcG7ATL28aI9H0" crossorigin="anonymous">
@@ -195,14 +195,14 @@ IP:                     172.17.0.3
 which we&rsquo;ve learned from the <code>kubectl describe</code> command above:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#f92672">[</span>cluster<span style="color:#f92672">]</span> $ curl 172.17.0.3:9876/info
 <span style="color:#f92672">{</span><span style="color:#e6db74">&#34;host&#34;</span>: <span style="color:#e6db74">&#34;172.17.0.3:9876&#34;</span>, <span style="color:#e6db74">&#34;version&#34;</span>: <span style="color:#e6db74">&#34;0.5.0&#34;</span>, <span style="color:#e6db74">&#34;from&#34;</span>: <span style="color:#e6db74">&#34;172.17.0.1&#34;</span><span style="color:#f92672">}</span>
-</code></pre></div><p>Note that <code>kubectl run</code> creates a <a href="/deployments/">deployment</a>, so in order to
-get rid of the pod you have to execute <code>kubectl delete deployment sise</code>.</p>
+</code></pre></div><p><em><strong>Tip: Deprecation Warning!</strong></em>
+Note that older releases of <code>kubectl</code> will produce a <a href="/deployments/">deployment</a> resource as the result of the provided <code>kubectl run</code> example, while newer releases produce a single <code>pod</code> resource.  If you are using an old release of <code>kubectl</code>, you may need to run <code>kubectl delete deployment sise</code> to clean up at the end of this section.</p>
 <h4 id="using-configuration-file">Using configuration file</h4>
 <p>You can also create a pod from a configuration file.
-In this case the <a href="https://github.com/openshift-evangelists/kbe/blob/master/specs/pods/pod.yaml">pod</a> is
+In this case the <a href="https://github.com/openshift-evangelists/kbe/blob/main/specs/pods/pod.yaml">pod</a> is
 running the already known <code>simpleservice</code> image from above along with
 a generic <code>CentOS</code> container:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/master/specs/pods/pod.yaml
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/main/specs/pods/pod.yaml
 
 $ kubectl get pods
 NAME                      READY     STATUS    RESTARTS   AGE
@@ -213,9 +213,9 @@ on localhost:</p>
 <span style="color:#f92672">[</span>root@twocontainers /<span style="color:#f92672">]</span><span style="color:#75715e"># curl -s localhost:9876/info</span>
 <span style="color:#f92672">{</span><span style="color:#e6db74">&#34;host&#34;</span>: <span style="color:#e6db74">&#34;localhost:9876&#34;</span>, <span style="color:#e6db74">&#34;version&#34;</span>: <span style="color:#e6db74">&#34;0.5.0&#34;</span>, <span style="color:#e6db74">&#34;from&#34;</span>: <span style="color:#e6db74">&#34;127.0.0.1&#34;</span><span style="color:#f92672">}</span>
 </code></pre></div><p>Specify the <code>resources</code> field in the pod to influence how much CPU and/or RAM a
-container in a <a href="https://github.com/openshift-evangelists/kbe/blob/master/specs/pods/constraint-pod.yaml">pod</a>
+container in a <a href="https://github.com/openshift-evangelists/kbe/blob/main/specs/pods/constraint-pod.yaml">pod</a>
 can use (here: <code>64MB</code> of RAM and <code>0.5</code> CPUs):</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kubectl create -f https://raw.githubusercontent.com/openshift-evangelists/kbe/master/specs/pods/constraint-pod.yaml
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kubectl create -f https://raw.githubusercontent.com/openshift-evangelists/kbe/main/specs/pods/constraint-pod.yaml
 
 $ kubectl describe pod constraintpod
 ...
@@ -232,7 +232,9 @@ Containers:
 </code></pre></div><p>Learn more about resource constraints in Kubernetes via the docs <a href="https://kubernetes.io/docs/tasks/configure-pod-container/assign-cpu-ram-container/">here</a>
 and <a href="https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/">here</a>.</p>
 <p>To remove all the pods created, just run:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kubectl delete pod twocontainers
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kubectl delete pod,deployment sise
+
+$ kubectl delete pod twocontainers
 
 $ kubectl delete pod constraintpod
 </code></pre></div><p>To sum up, launching one or more containers (together) in Kubernetes is simple,
@@ -266,7 +268,7 @@ to supervise pods is to use <a href="/deployments">deployments</a>, giving you m
         </p>
         
         <p class="credits theme-by text-muted">
-          <a href="http://gohugo.io">Hugo v0.66.0</a> powered &nbsp;&bull;&nbsp; Theme by <a href="http://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a> adapted to <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a>
+          <a href="http://gohugo.io">Hugo v0.69.0</a> powered &nbsp;&bull;&nbsp; Theme by <a href="http://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a> adapted to <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a>
           
         </p>
       </div>
