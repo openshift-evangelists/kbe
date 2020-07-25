@@ -24,13 +24,11 @@ For site admins only, requires push access to this repo.
 
 ### Setup
 
-Carry out the following steps to set up the publishing workflow:
+After cloning the repo, add the `gh-pages` branch as a submodule under the `public` folder:
 
-- in `public/` do:
-  - `git remote add origin https://github.com/openshift-evangelists/kbe.git` and finally a
-  - `git checkout -b gh-pages`
-- in `public/` create a file `CNAME` with the content `kubernetesbyexample.com`
-- from this moment on the publish workflow is the same as described below
+```bash
+git submodule add -f -b gh-pages git@github.com:openshift-evangelists/kbe.git public
+```
 
 ### Updates
 
@@ -42,7 +40,7 @@ $ hugo --theme=beautifulhugo
 # add generated content (which lives in the gh-pages branch):
 $ cd public/
 $ git add --all
-$ git commit -m "publishes site"
+$ git commit -m "release notes"
 $ git push -f origin gh-pages
 ```
 

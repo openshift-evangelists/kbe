@@ -1,0 +1,4 @@
+[submodule "public"]
+	path = public
+	url = git@github.com:openshift-evangelists/kbe.git
+	branch = gh-pages
