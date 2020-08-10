@@ -4,13 +4,18 @@
   
   <url>
     <loc>https://kubernetesbyexample.com/</loc>
-    <lastmod>2020-03-23T00:00:00+00:00</lastmod>
+    <lastmod>2020-08-10T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://kubernetesbyexample.com/diy/</loc>
-    <lastmod>2020-03-23T00:00:00+00:00</lastmod>
+    <lastmod>2020-08-10T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://kubernetesbyexample.com/page/</loc>
+    <lastmod>2020-08-10T00:00:00+00:00</lastmod>
   </url>
   
   <url>
@@ -20,11 +25,6 @@
   
   <url>
     <loc>https://kubernetesbyexample.com/nodes/</loc>
-    <lastmod>2020-03-23T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://kubernetesbyexample.com/page/</loc>
     <lastmod>2020-03-23T00:00:00+00:00</lastmod>
   </url>
   

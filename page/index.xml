@@ -5,7 +5,7 @@
     <link>https://kubernetesbyexample.com/page/</link>
     <description>Recent content in Pages on Kubernetes By Example</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Mon, 23 Mar 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 10 Aug 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://kubernetesbyexample.com/page/index.xml" rel="self" type="application/rss+xml" />
     
@@ -13,7 +13,7 @@
     <item>
       <title>DIY</title>
       <link>https://kubernetesbyexample.com/diy/</link>
-      <pubDate>Mon, 23 Mar 2020 00:00:00 +0000</pubDate>
+      <pubDate>Mon, 10 Aug 2020 00:00:00 +0000</pubDate>
       
       <guid>https://kubernetesbyexample.com/diy/</guid>
       <description>If you want to try out the examples here yourself, here are a couple of options:
