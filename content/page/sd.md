@@ -7,7 +7,7 @@ url = "/sd/"
 
 Service discovery is the process of figuring out how to connect to a [service](/service/).
 While there is a service discovery option based on [environment variables](https://kubernetes.io/docs/concepts/services-networking/connect-applications-service/#environment-variables) available,
-the DNS-based service discovery is preferable. Note that DNS is a [cluster add-on](https://github.com/kubernetes/kubernetes/blob/master/cluster/addons/dns/README.md) so make sure your Kubernetes distribution provides for one or install it yourself.
+the DNS-based service discovery is preferable. Note that [Kube DNS is a cluster add-on](https://github.com/kubernetes/kubernetes/blob/master/cluster/addons/dns/kube-dns/README.md), which means that it may need to installed, configured, or enabled in order to function correctly.
 
 Let's create a [service](https://github.com/openshift-evangelists/kbe/blob/main/specs/sd/svc.yaml) named
 `thesvc` and an [RC](https://github.com/openshift-evangelists/kbe/blob/main/specs/sd/rc.yaml) supervising
