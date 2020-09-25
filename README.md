@@ -15,7 +15,7 @@ for the content in Markdown and [specs/](specs/) for respective YAML specificati
 1. Get your local preview by running following command in the top-level dir:
 
 ```bash
-$ hugo server --theme=beautifulhugo --buildDrafts
+hugo server --theme=beautifulhugo --buildDrafts
 ```
 
 ## Publish
@@ -36,12 +36,12 @@ To update the live site with new content:
 
 ```bash
 # still in top-level dir build the content in public/ dir:
-$ hugo --theme=beautifulhugo
+hugo --theme=beautifulhugo
 # add generated content (which lives in the gh-pages branch):
-$ cd public/
-$ git add --all
-$ git commit -m "release notes"
-$ git push -f origin gh-pages
+cd public/
+git add --all
+git commit -m "release notes go here..."
+git push -f origin gh-pages
 ```
 
 ## References
