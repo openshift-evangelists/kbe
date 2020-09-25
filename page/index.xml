@@ -186,9 +186,8 @@ $ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/m
       <pubDate>Wed, 27 Feb 2019 00:00:00 +0000</pubDate>
       
       <guid>https://kubernetesbyexample.com/sd/</guid>
-      <description>Service discovery is the process of figuring out how to connect to a service. While there is a service discovery option based on environment variables available, the DNS-based service discovery is preferable. Note that DNS is a cluster add-on so make sure your Kubernetes distribution provides for one or install it yourself.
-Let&amp;rsquo;s create a service named thesvc and an RC supervising some pods along with it:
-$ kubectl apply -f https://raw.</description>
+      <description>Service discovery is the process of figuring out how to connect to a service. While there is a service discovery option based on environment variables available, the DNS-based service discovery is preferable. Note that Kube DNS is a cluster add-on, which means that it may need to installed, configured, or enabled in order to function correctly.
+Let&amp;rsquo;s create a service named thesvc and an RC supervising some pods along with it:</description>
     </item>
     
     <item>

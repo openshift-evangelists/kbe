@@ -180,7 +180,7 @@
       <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
         <p>Service discovery is the process of figuring out how to connect to a <a href="/service/">service</a>.
 While there is a service discovery option based on <a href="https://kubernetes.io/docs/concepts/services-networking/connect-applications-service/#environment-variables">environment variables</a> available,
-the DNS-based service discovery is preferable. Note that DNS is a <a href="https://github.com/kubernetes/kubernetes/blob/master/cluster/addons/dns/README.md">cluster add-on</a> so make sure your Kubernetes distribution provides for one or install it yourself.</p>
+the DNS-based service discovery is preferable. Note that <a href="https://github.com/kubernetes/kubernetes/blob/master/cluster/addons/dns/kube-dns/README.md">Kube DNS is a cluster add-on</a>, which means that it may need to installed, configured, or enabled in order to function correctly.</p>
 <p>Let&rsquo;s create a <a href="https://github.com/openshift-evangelists/kbe/blob/main/specs/sd/svc.yaml">service</a> named
 <code>thesvc</code> and an <a href="https://github.com/openshift-evangelists/kbe/blob/main/specs/sd/rc.yaml">RC</a> supervising
 some pods along with it:</p>
