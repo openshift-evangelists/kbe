@@ -13,7 +13,9 @@ Let's list all namespaces (note that the output will depend on the environment
 you're using, we're using the [OpenShift Playground](/diy/) here):
 
 ```bash
-$ kubectl get ns
+kubectl get ns
+```
+```cat
 NAME                                                    STATUS   AGE
 default                                                 Active   98d
 kube-node-lease                                         Active   98d
@@ -27,7 +29,9 @@ openshift-apiserver                                     Active   98d
 You can learn more about a namespace using the `describe` verb, for example:
 
 ```bash
-$ kubectl describe ns default
+kubectl describe ns default
+```
+```cat
 Name:   default
 Labels: <none>
 Status: Active
@@ -41,10 +45,15 @@ Let's now create a new [namespace](https://github.com/openshift-evangelists/kbe/
 called `test` now:
 
 ```bash
-$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/main/specs/ns/ns.yaml
+kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/main/specs/ns/ns.yaml
+```
+```cat
 namespace "test" created
-
- kubectl get ns
+```
+```bash
+kubectl get ns
+```
+```cat
 NAME                                                    STATUS   AGE
 default                                                 Active   98d
 kube-node-lease                                         Active   98d
@@ -62,7 +71,7 @@ To launch a [pod](https://github.com/openshift-evangelists/kbe/blob/main/specs/n
 the newly created namespace `test`, do:
 
 ```bash
-$ kubectl apply --namespace=test -f https://raw.githubusercontent.com/openshift-evangelists/kbe/main/specs/ns/pod.yaml
+kubectl apply --namespace=test -f https://raw.githubusercontent.com/openshift-evangelists/kbe/main/specs/ns/pod.yaml
 ```
 
 Note that using above method the namespace becomes a runtime property, that is,
@@ -70,7 +79,7 @@ you can deploy the same pod or service, etc. into multiple
 namespaces (for example: `dev` and `prod`). Hard-coding the
 namespace directly in the `metadata` section like shown in the following is possible but causes less flexibility when deploying your apps:
 
-```
+```cat
 apiVersion: v1
 kind: Pod
 metadata:
@@ -81,7 +90,9 @@ metadata:
 To list namespaced objects such as our pod `podintest`, run the following command:
 
 ```bash
-$ kubectl get pods --namespace=test
+kubectl get pods --namespace=test
+```
+```cat
 NAME        READY     STATUS    RESTARTS   AGE
 podintest   1/1       Running   0          16s
 ```
@@ -89,7 +100,7 @@ podintest   1/1       Running   0          16s
 You can remove the namespace (and everything inside) with:
 
 ```bash
-$ kubectl delete ns test
+kubectl delete ns test
 ```
 
 If you're an admin, you might want to check out the [docs](https://kubernetes.io/docs/tasks/administer-cluster/namespaces/)

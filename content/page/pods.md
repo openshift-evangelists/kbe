@@ -13,17 +13,24 @@ To launch a pod using the container [image](https://quay.io/repository/openshift
 `quay.io/openshiftlabs/simpleservice:0.5.0` and exposing a HTTP API on port `9876`, execute:
 
 ```bash
-$ kubectl run sise --image=quay.io/openshiftlabs/simpleservice:0.5.0 --port=9876
+kubectl run sise --image=quay.io/openshiftlabs/simpleservice:0.5.0 --port=9876
 ```
 
-We can now see that the pod is running:
+Check to see if the pod is running:
 
 ```bash
-$ kubectl get pods
+kubectl get pods
+```
+```cat
 NAME                      READY     STATUS    RESTARTS   AGE
 sise-3210265840-k705b     1/1       Running   0          1m
+```
 
-$ kubectl describe pod sise-3210265840-k705b | grep IP:
+```bash
+kubectl describe pod sise-3210265840-k705b | grep IP:
+```
+
+```cat
 IP:                     172.17.0.3
 ```
 
@@ -31,8 +38,17 @@ From within the cluster (e.g. via [`oc rsh`](https://docs.openshift.com/containe
 which we've learned from the `kubectl describe` command above:
 
 ```bash
-[cluster] $ curl 172.17.0.3:9876/info
+minikube ssh # or `oc rsh`
+curl 172.17.0.3:9876/info
+```
+
+```cat
 {"host": "172.17.0.3:9876", "version": "0.5.0", "from": "172.17.0.1"}
+```
+
+When you're done inspecting the cluster, `exit` to continue:
+```bash
+exit
 ```
 
 ***Tip: Deprecation Warning!***
@@ -46,9 +62,14 @@ running the already known `simpleservice` image from above along with
 a generic `CentOS` container:
 
 ```bash
-$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/main/specs/pods/pod.yaml
+kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/main/specs/pods/pod.yaml
+```
 
-$ kubectl get pods
+```bash
+kubectl get pods
+```
+
+```cat
 NAME                      READY     STATUS    RESTARTS   AGE
 twocontainers             2/2       Running   0          7s
 ```
@@ -57,19 +78,29 @@ Now we can exec into the `CentOS` container and access the `simpleservice`
 on localhost:
 
 ```bash
-$ kubectl exec twocontainers -c shell -i -t -- bash
-[root@twocontainers /]# curl -s localhost:9876/info
+kubectl exec twocontainers -c shell -i -t -- bash
+```
+
+```bash
+curl -s localhost:9876/info
+```
+
+```cat
 {"host": "localhost:9876", "version": "0.5.0", "from": "127.0.0.1"}
 ```
 
 Specify the `resources` field in the pod to influence how much CPU and/or RAM a
-container in a [pod](https://github.com/openshift-evangelists/kbe/blob/main/specs/pods/constraint-pod.yaml)
-can use (here: `64MB` of RAM and `0.5` CPUs):
+container in a [pod](https://github.com/openshift-evangelists/kbe/blob/main/specs/pods/constraint-pod.yaml) can use (here: `64MB` of RAM and `0.5` CPUs):
 
 ```bash
-$ kubectl create -f https://raw.githubusercontent.com/openshift-evangelists/kbe/main/specs/pods/constraint-pod.yaml
+kubectl create -f https://raw.githubusercontent.com/openshift-evangelists/kbe/main/specs/pods/constraint-pod.yaml
+```
 
-$ kubectl describe pod constraintpod
+```bash
+kubectl describe pod constraintpod
+```
+
+```cat
 ...
 Containers:
   sise:
@@ -86,14 +117,12 @@ Containers:
 Learn more about resource constraints in Kubernetes via the docs [here](https://kubernetes.io/docs/tasks/configure-pod-container/assign-cpu-ram-container/)
 and [here](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/).
 
-To remove all the pods created, just run:
+To clean up and remove all the running pods, try:
 
 ```bash
-$ kubectl delete pod,deployment sise
-
-$ kubectl delete pod twocontainers
-
-$ kubectl delete pod constraintpod
+kubectl delete pod,deployment sise
+kubectl delete pod twocontainers
+kubectl delete pod constraintpod
 ```
 
 To sum up, launching one or more containers (together) in Kubernetes is simple,

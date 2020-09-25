@@ -14,17 +14,23 @@ Let's create an [RC](https://github.com/openshift-evangelists/kbe/blob/main/spec
 that supervises a single replica of a pod:
 
 ```bash
-$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/main/specs/rcs/rc.yaml
+kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/main/specs/rcs/rc.yaml
 ```
 
 You can see the RC and the pod it looks after like so:
 
 ```bash
-$ kubectl get rc
+kubectl get rc
+```
+```cat
 NAME                DESIRED   CURRENT   READY     AGE
 rcex                1         1         1         3m
+```
 
-$ kubectl get pods --show-labels
+```bash
+kubectl get pods --show-labels
+```
+```cat
 NAME           READY     STATUS    RESTARTS   AGE    LABELS
 rcex-qrv8j     1/1       Running   0          4m     app=sise
 ```
@@ -38,9 +44,12 @@ Note two things here:
 To scale up, that is, to increase the number of replicas, do:
 
 ```bash
-$ kubectl scale --replicas=3 rc/rcex
-
-$ kubectl get pods -l app=sise
+kubectl scale --replicas=3 rc/rcex
+```
+```bash
+kubectl get pods -l app=sise
+```
+```cat
 NAME         READY     STATUS    RESTARTS   AGE
 rcex-1rh9r   1/1       Running   0          54s
 rcex-lv6xv   1/1       Running   0          54s
@@ -51,7 +60,9 @@ rcex-qrv8j   1/1       Running   0          10m
 Finally, to get rid of the RC and the pods it is supervising, use:
 
 ```bash
-$ kubectl delete rc rcex
+kubectl delete rc rcex
+```
+```cat
 replicationcontroller "rcex" deleted
 ```
 

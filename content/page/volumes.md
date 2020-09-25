@@ -20,9 +20,12 @@ Let's create a [pod](https://github.com/openshift-evangelists/kbe/blob/main/spec
 with two containers that use an `emptyDir` volume to exchange data:
 
 ```bash
-$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/main/specs/volumes/pod.yaml
-
-$ kubectl describe pod sharevol
+kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/main/specs/volumes/pod.yaml
+```
+```bash
+kubectl describe pod sharevol
+```
+```cat
 Name:                   sharevol
 Namespace:              default
 ...
@@ -36,10 +39,21 @@ We first exec into one of the containers in the pod, `c1`, check the volume moun
 and generate some data:
 
 ```bash
-$ kubectl exec -it sharevol -c c1 -- bash
-[root@sharevol /]# mount | grep xchange
+kubectl exec -it sharevol -c c1 -- bash
+```
+```bash
+mount | grep xchange
+```
+```cat
 /dev/vda3 on /tmp/xchange type xfs (rw,relatime,seclabel,attr2,inode64,rjquota)
-[root@sharevol /]# echo 'some data' > /tmp/xchange/data
+```
+```bash
+echo 'some data' > /tmp/xchange/data
+```
+
+return to continue
+```bash
+exit
 ```
 
 When we now exec into `c2`, the second container running in the pod, we can see
@@ -47,22 +61,40 @@ the volume mounted at `/tmp/data` and are able to read the data created in the
 previous step:
 
 ```bash
-$ kubectl exec -it sharevol -c c2 -- bash
-[root@sharevol /]# mount | grep /tmp/data
+kubectl exec -it sharevol -c c2 -- bash
+```
+```bash
+mount | grep /tmp/data
+```
+```cat
 /dev/vda3 on /tmp/data type xfs (rw,relatime,seclabel,attr2,inode64,prjquota)
-[root@sharevol /]# cat /tmp/data/data/
+```
+
+```bash
+cat /tmp/data/data/
+```
+```cat
 cat: /tmp/data/data/: Not a directory
-[root@sharevol /]# cat /tmp/data/data
+```
+```bash
+cat /tmp/data/data
+```
+```cat
 some data
 ```
 
 Note that in each container you need to decide where to mount the volume and
 that for `emptyDir` you currently can not specify resource consumption limits.
 
+return to continue
+```bash
+exit
+```
+
 You can remove the pod with:
 
 ```bash
-$ kubectl delete pod/sharevol
+kubectl delete pod/sharevol
 ```
 
 As already described, this will destroy the shared volume and all its contents.

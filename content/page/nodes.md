@@ -12,7 +12,9 @@ To list available nodes in your cluster (note that the output will depend on the
 you're using. This example is using the [OpenShift Playground](/diy/)):
 
 ```bash
-$ kubectl get nodes
+kubectl get nodes
+```
+```cat
 NAME                 STATUS   ROLES           AGE    VERSION
 crc-rk2fc-master-0   Ready    master,worker   102d   v1.14.6+888f9c630
 ```
@@ -22,7 +24,9 @@ schedule a pod on a certain node. For this, we first need to label the node
 we want to target:
 
 ```bash
-$ kubectl label nodes crc-rk2fc-master-0 shouldrun=here
+kubectl label nodes crc-rk2fc-master-0 shouldrun=here
+```
+```cat
 node/crc-rk2fc-master-0 labeled
 ```
 
@@ -30,9 +34,12 @@ Now we can create a [pod](https://github.com/openshift-evangelists/kbe/blob/main
 that gets scheduled on the node with the label `shouldrun=here`:
 
 ```bash
-$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/main/specs/nodes/pod.yaml
-
-$ kubectl get pods --output=wide
+kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/main/specs/nodes/pod.yaml
+```
+```bash
+kubectl get pods --output=wide
+```
+```cat
 NAME             READY   STATUS    RESTARTS   AGE     IP            NODE            NOMINATED NODE   READINESS GATES
 onspecificnode   1/1     Running   0          2m31s   10.128.1.11   crc-rk2fc-master-0   <none>           <none>
 ```
@@ -40,7 +47,9 @@ onspecificnode   1/1     Running   0          2m31s   10.128.1.11   crc-rk2fc-ma
 To learn more about a specific node, `crc-rk2fc-master-0` in our case, do:
 
 ```bash
-$ kubectl describe node crc-rk2fc-master-0
+kubectl describe node crc-rk2fc-master-0
+```
+```cat
 Name:               crc-rk2fc-master-0
 Roles:              master,worker
 Labels:             beta.kubernetes.io/arch=amd64

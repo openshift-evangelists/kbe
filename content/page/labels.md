@@ -16,9 +16,12 @@ Let's create a [pod](https://github.com/openshift-evangelists/kbe/blob/main/spec
 
 
 ```bash
-$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/main/specs/labels/pod.yaml
-
-$ kubectl get pods --show-labels
+kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/main/specs/labels/pod.yaml
+```
+```bash
+kubectl get pods --show-labels
+```
+```cat
 NAME       READY     STATUS    RESTARTS   AGE    LABELS
 labelex    1/1       Running   0          10m    env=development
 ```
@@ -28,9 +31,12 @@ labels of an object in an additional column.
 You can add a label to the pod as:
 
 ```bash
-$ kubectl label pods labelex owner=michael
-
-$ kubectl get pods --show-labels
+kubectl label pods labelex owner=michael
+```
+```bash
+kubectl get pods --show-labels
+```
+```cat
 NAME        READY     STATUS    RESTARTS   AGE    LABELS
 labelex     1/1       Running   0          16m    env=development,owner=michael
 ```
@@ -39,7 +45,9 @@ To use a label for filtering, for example to list only pods that have an
 `owner` that equals `michael`, use the `--selector` option:
 
 ```bash
-$ kubectl get pods --selector owner=michael
+kubectl get pods --selector owner=michael
+```
+```cat
 NAME      READY     STATUS    RESTARTS   AGE
 labelex   1/1       Running   0          27m
 ```
@@ -48,7 +56,9 @@ The `--selector` option can be abbreviated to `-l`, so to select pods that are
 labelled with `env=development`, do:
 
 ```bash
-$ kubectl get pods -l env=development
+kubectl get pods -l env=development
+```
+```cat
 NAME      READY     STATUS    RESTARTS   AGE
 labelex   1/1       Running   0          27m
 ```
@@ -58,14 +68,16 @@ Let's launch [another pod](https://github.com/openshift-evangelists/kbe/blob/mai
 that has two labels (`env=production` and `owner=michael`):
 
 ```bash
-$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/main/specs/labels/anotherpod.yaml
+kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/main/specs/labels/anotherpod.yaml
 ```
 
 Now, let's list all pods that are either labelled with `env=development` or with
 `env=production`:
 
 ```bash
-$ kubectl get pods -l 'env in (production, development)'
+kubectl get pods -l 'env in (production, development)'
+```
+```cat
 NAME           READY     STATUS    RESTARTS   AGE
 labelex        1/1       Running   0          43m
 labelexother   1/1       Running   0          3m
@@ -75,7 +87,7 @@ Other verbs also support label selection, for example, you could
 remove both of these pods with:
 
 ```bash
-$ kubectl delete pods -l 'env in (production, development)'
+kubectl delete pods -l 'env in (production, development)'
 ```
 
 Beware that this will destroy any pods with those labels.
@@ -83,9 +95,10 @@ Beware that this will destroy any pods with those labels.
 You can also delete them directly, via their names, with:
 
 ```bash
-$ kubectl delete pods labelex
-
-$ kubectl delete pods labelexother
+kubectl delete pods labelex
+```
+```bash
+kubectl delete pods labelexother
 ```
 
 Note that labels are not restricted to pods. In fact you can apply them to
