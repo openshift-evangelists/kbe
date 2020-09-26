@@ -29,6 +29,9 @@ kubectl get pods -l app=sise
 NAME           READY     STATUS    RESTARTS   AGE
 rcsise-6nq3k   1/1       Running   0          57s
 ```
+
+A new pod name should be generated each time this example is run. Make sure to include your own pod name when running the following examples:
+
 ```bash
 kubectl describe pod rcsise-6nq3k
 ```
@@ -46,24 +49,17 @@ Containers:
 ...
 ```
 
-You can, from within the cluster, access the pod directly via its
-assigned IP `172.17.0.3`:
+You can, from within the cluster, access the pod directly via its assigned IP `172.17.0.3`:
 
 ```bash
-minikube ssh # oc `oc rsh`
-```
-```bash
-curl 172.17.0.3:9876/info
+kubectl exec rcsise-6nq3k -t -- curl -s 172.17.0.3:9876/info
 ```
 ```cat
 {"host": "172.17.0.3:9876", "version": "0.5.0", "from": "172.17.0.1"}
 ```
-```bash
-exit
-```
 
 This is however, as mentioned above, not advisable since the IPs assigned
-to pods may change. Hence, enter the `simpleservice` we've created:
+to pods may change as pods are migrated or rescheduled.  Hence, enter the included `simpleservice` service endpoint example:
 
 ```bash
 kubectl get svc
@@ -88,19 +84,24 @@ Session Affinity:       None
 No events.
 ```
 
-The service keeps track of the pods it forwards traffic to through the label,
-in our case `app=sise`.
+The `service` resource uses labels to identify which pods it will forward traffic to. In our case, pods labeled with `app=sise` will receive traffic.
 
-From within the cluster we can now access `simpleservice` like so:
+From within the cluster, we can now access any affiliated pods using the IP address of the `simpleservice` svc endpoint on port `80`:
 
 ```bash
-minikube ssh # or `oc rsh`
-```
-```bash
-curl 172.30.228.255:80/info
+kubectl exec rcsise-6nq3k -t -- curl -s 172.30.228.255:80/info
 ```
 ```cat
 {"host": "172.30.228.255", "version": "0.5.0", "from": "10.0.2.15"}
+```
+
+KubeDNS even provides basic name resolution for kubernetes `services` (within the same kubernetes namespace). This allows us to connect to pods using the associated service name - No need to including IP addresses or port numbers!
+
+```bash
+kubectl exec rcsise-6nq3k -t -- curl -s simpleservice/info
+```
+```cat
+{"host": "simpleservice", "version": "0.5.0", "from": "10.0.2.15"}
 ```
 
 What makes the VIP `172.30.228.255` forward the traffic to the pod?
@@ -110,6 +111,9 @@ with a certain IP package.
 
 Looking at the rules that concern our service (executed on a cluster node) yields:
 
+```bash
+minikube ssh
+```
 ```bash
 sudo iptables-save | grep simpleservice
 ```
@@ -151,7 +155,7 @@ When we now check the relevant parts of the routing table again we notice
 the addition of a bunch of IPtables rules:
 
 ```bash
-minikube ssh # or `oc rsh`
+minikube ssh
 ```
 ```bash
 sudo iptables-save | grep simpleservice

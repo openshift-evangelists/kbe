@@ -47,20 +47,13 @@ sise-deploy-3513442901-sn74v   1/1       Running   0          25s
 Note the naming of the pods and replica set, derived from the deployment name.
 
 At this point in time the `sise` containers running in the pods are configured
-to return the version `0.9`. Let's verify that from within the cluster (using `kubectl describe`
-first to get the IP of one of the pods):
+to return the version `0.9`. Let's verify that from within the cluster (using `kubectl exec`:
 
 ```bash
-minikube ssh # or `oc rsh`
-```
-```bash
-curl 172.17.0.3:9876/info
+kubectl exec sise-deploy-3513442901-sn74v -t -- curl -s 127.0.0.1:9876/info
 ```
 ```cat
-{"host": "172.17.0.3:9876", "version": "0.9", "from": "172.17.0.1"}
-```
-```bash
-exit
+{"host": "127.0.0.1:9876", "version": "0.9", "from": "127.0.0.1"}
 ```
 
 Let's now see what happens if we change that version to `1.0` in an updated
@@ -77,8 +70,7 @@ deployment "sise-deploy" configured
 Note that you could have used `kubectl edit deploy/sise-deploy` alternatively to
 achieve the same by manually editing the deployment.
 
-What we now see is the rollout of two new pods with the updated version `1.0` as well
-as the two old pods with version `0.9` being terminated:
+What we now see is the rollout of two new pods with the updated version `1.0` as well as the two old pods with version `0.9` being terminated:
 
 ```bash
 kubectl get pods
@@ -107,16 +99,10 @@ Note that during the deployment you can check the progress using `kubectl rollou
 To verify that if the new `1.0` version is really available, we execute from within the cluster (again using `kubectl describe` get the IP of one of the pods):
 
 ```bash
-minikube ssh #or `oc rsh`
-```
-```bash
-curl 172.17.0.5:9876/info
+kubectl exec sise-deploy-2958877261-nfv28 -t -- curl -s 127.0.0.1:9876/info
 ```
 ```cat
-{"host": "172.17.0.5:9876", "version": "1.0", "from": "172.17.0.1"}
-```
-```bash
-exit
+{"host": "127.0.0.1:9876", "version": "1.0", "from": "127.0.0.1"}
 ```
 
 A history of all deployments is available via:

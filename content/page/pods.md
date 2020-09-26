@@ -15,6 +15,12 @@ To launch a pod using the container [image](https://quay.io/repository/openshift
 ```bash
 kubectl run sise --image=quay.io/openshiftlabs/simpleservice:0.5.0 --port=9876
 ```
+```cat
+pod/sise created
+```
+
+***Note: Deprecation Warning!***
+Older releases of `kubectl` will produce a [deployment](/deployments/) resource as the result of the provided `kubectl run` example, while newer releases produce a single `pod` resource.  The example commands in this section should still work (assuming you substitute your own pod name) - but you'll need to run `kubectl delete deployment sise` at the end of this section to clean up.
 
 Check to see if the pod is running:
 
@@ -22,37 +28,43 @@ Check to see if the pod is running:
 kubectl get pods
 ```
 ```cat
-NAME                      READY     STATUS    RESTARTS   AGE
-sise-3210265840-k705b     1/1       Running   0          1m
+NAME    READY     STATUS    RESTARTS   AGE
+sise    1/1       Running   0          1m
 ```
+
+If the above output returns a longer pod name, make sure to use it in the following examples (in place of `sise`)
+
+This container image happens to include a copy of `curl`, which provides an additional way to verify that the primary webservice process is responding (over the local net at least):
 
 ```bash
-kubectl describe pod sise-3210265840-k705b | grep IP:
+kubectl exec sise -t -- curl -s localhost:9876/info
+```
+```cat
+{"host": "localhost:9876", "version": "0.5.0", "from": "127.0.0.1"}
 ```
 
+From within the cluster (e.g. via `kubectl exec` or [`oc rsh`](https://docs.openshift.com/container-platform/latest/cli_reference/openshift_cli/developer-cli-commands.html#rsh)) this pod will also be directly accessible via it's associated pod IP `172.17.0.3`
+
+```bash
+kubectl describe pod sise | grep IP:
+```
 ```cat
 IP:                     172.17.0.3
 ```
 
-From within the cluster (e.g. via [`oc rsh`](https://docs.openshift.com/container-platform/latest/cli_reference/openshift_cli/developer-cli-commands.html#rsh)) this pod is accessible via the pod IP `172.17.0.3`,
-which we've learned from the `kubectl describe` command above:
-
+The kubernetes API provides an additional opportunity to connect directly to pods using `curl`:
 ```bash
-minikube ssh # or `oc rsh`
-curl 172.17.0.3:9876/info
+export OPENSHIFT_API="https://$(kubectl config get-clusters | tail -n 1)"
+export NAMESPACE="default"
+export PODNAME="sise"
+curl -s -k -H"Authorization: Bearer $(oc whoami -t)" \
+$OPENSHIFT_API/api/v1/namespaces/$NAMESPACE/pods/$PODNAME/proxy/info
 ```
 
-```cat
-{"host": "172.17.0.3:9876", "version": "0.5.0", "from": "172.17.0.1"}
-```
-
-When you're done inspecting the cluster, `exit` to continue:
+Cleanup:
 ```bash
-exit
+kubectl delete pod,deployment sise
 ```
-
-***Tip: Deprecation Warning!***
-Note that older releases of `kubectl` will produce a [deployment](/deployments/) resource as the result of the provided `kubectl run` example, while newer releases produce a single `pod` resource.  If you are using an old release of `kubectl`, you may need to run `kubectl delete deployment sise` to clean up at the end of this section.
 
 #### Using configuration file
 
@@ -64,42 +76,42 @@ a generic `CentOS` container:
 ```bash
 kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/main/specs/pods/pod.yaml
 ```
+```cat
+pod/twocontainers created
+```
 
 ```bash
 kubectl get pods
 ```
-
 ```cat
 NAME                      READY     STATUS    RESTARTS   AGE
 twocontainers             2/2       Running   0          7s
 ```
 
-Now we can exec into the `CentOS` container and access the `simpleservice`
-on localhost:
+Containers that share a pod are able to communicate using local networking. 
+
+This example demonstrates how to exec into a sidecar `shell` container to access and inspect the `sise` container via `localhost`:
 
 ```bash
-kubectl exec twocontainers -c shell -i -t -- bash
+kubectl exec twocontainers -t -- curl -s localhost:9876/info
 ```
-
-```bash
-curl -s localhost:9876/info
-```
-
 ```cat
 {"host": "localhost:9876", "version": "0.5.0", "from": "127.0.0.1"}
 ```
 
-Specify the `resources` field in the pod to influence how much CPU and/or RAM a
+Define the `resources` attribute to influence how much CPU and/or RAM a
 container in a [pod](https://github.com/openshift-evangelists/kbe/blob/main/specs/pods/constraint-pod.yaml) can use (here: `64MB` of RAM and `0.5` CPUs):
 
 ```bash
 kubectl create -f https://raw.githubusercontent.com/openshift-evangelists/kbe/main/specs/pods/constraint-pod.yaml
 ```
+```cat
+pod/constraintpod created
+```
 
 ```bash
 kubectl describe pod constraintpod
 ```
-
 ```cat
 ...
 Containers:
@@ -117,10 +129,9 @@ Containers:
 Learn more about resource constraints in Kubernetes via the docs [here](https://kubernetes.io/docs/tasks/configure-pod-container/assign-cpu-ram-container/)
 and [here](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/).
 
-To clean up and remove all the running pods, try:
+To clean up and remove all the remaining pods, try:
 
 ```bash
-kubectl delete pod,deployment sise
 kubectl delete pod twocontainers
 kubectl delete pod constraintpod
 ```
