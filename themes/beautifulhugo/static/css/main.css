@@ -1,3 +1,6 @@
+.highlight pre {
+  margin-bottom: 0px; margin-top:10px;
+}
 @import url("pygment_highlights.css");
 
 /* --- General --- */
