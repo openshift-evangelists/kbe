@@ -40,6 +40,8 @@ You can remove the `simpleservice` with
 
 ```bash
 kubectl delete service/simpleservice 
+```
+```bash
 kubectl delete deployment sise-deploy
 ```
 

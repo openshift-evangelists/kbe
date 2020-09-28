@@ -19,7 +19,6 @@ You can have a look at the deployment, as well as the the replica set and the po
 ```bash
 kubectl get deploy
 ```
-
 ```cat
 NAME          DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
 sise-deploy   2         2         2            2           10s
@@ -28,7 +27,6 @@ sise-deploy   2         2         2            2           10s
 ```bash
 kubectl get rs
 ```
-
 ```cat
 NAME                     DESIRED   CURRENT   READY     AGE
 sise-deploy-3513442901   2         2         2         19s
@@ -37,7 +35,6 @@ sise-deploy-3513442901   2         2         2         19s
 ```bash
 kubectl get pods
 ```
-
 ```cat
 NAME                           READY     STATUS    RESTARTS   AGE
 sise-deploy-3513442901-cndsx   1/1       Running   0          25s
@@ -47,7 +44,7 @@ sise-deploy-3513442901-sn74v   1/1       Running   0          25s
 Note the naming of the pods and replica set, derived from the deployment name.
 
 At this point in time the `sise` containers running in the pods are configured
-to return the version `0.9`. Let's verify that from within the cluster (using `kubectl exec`:
+to return the version `0.9`.  Let's verify this from within the cluster using `curl`:
 
 ```bash
 kubectl exec sise-deploy-3513442901-sn74v -t -- curl -s 127.0.0.1:9876/info
@@ -62,7 +59,6 @@ Let's now see what happens if we change that version to `1.0` in an updated
 ```bash
 kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/main/specs/deployments/d10.yaml
 ```
-
 ```cat
 deployment "sise-deploy" configured
 ```

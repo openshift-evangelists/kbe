@@ -133,6 +133,8 @@ To clean up and remove all the remaining pods, try:
 
 ```bash
 kubectl delete pod twocontainers
+```
+```bash
 kubectl delete pod constraintpod
 ```
 

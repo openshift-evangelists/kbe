@@ -49,6 +49,8 @@ kubectl exec -it pv-deploy-69959dccb5-jhxxw -- bash
 ```
 ```bash
 touch /tmp/persistent/data
+```
+```bash
 ls /tmp/persistent/
 ```
 ```cat
