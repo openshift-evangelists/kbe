@@ -1,0 +1,75 @@
+<!-- # custom 'script' partial -->
+<script>
+//hide code blocks labeled w/ "language-test"
+$('.language-test').parent().css('display', 'none')
+
+// Add a Copy button for each example code snippet:
+var copybtns = {
+  fallbackCopyTextToClipboard: function (text) {
+    var textArea = document.createElement("textarea");
+    textArea.value = text;
+    
+    // Avoid scrolling to bottom
+    textArea.style.top = "0";
+    textArea.style.left = "0";
+    textArea.style.position = "fixed";
+  
+    document.body.appendChild(textArea);
+    textArea.focus();
+    textArea.select();
+  
+    try {
+      var successful = document.execCommand('copy');
+      var msg = successful ? 'successful' : 'unsuccessful';
+      console.log('Fallback: Copying text command was ' + msg);
+    } catch (err) {
+      console.error('Fallback: Oops, unable to copy', err);
+    }
+  
+    document.body.removeChild(textArea);
+  },
+  copyTextToClipboard: function (text) {
+    if (!navigator.clipboard) {
+      copybtns.fallbackCopyTextToClipboard(text);
+      return;
+    }
+    navigator.clipboard.writeText(text).then(function() {
+      console.log('Async: Copying to clipboard was successful!');
+    }, function(err) {
+      console.error('Async: Could not copy text: ', err);
+    });
+  },
+  flash: function(btn, content){
+    //flash the content
+    content.fadeTo(50, 0.2, function() { $(this).fadeTo(300, 1.0); });
+    //flash the copy button
+    btn.fadeTo(50, 0.2, function() { $(this).fadeTo(300, 1.0); });
+  },
+  init : function() {
+    var examples = $('div.highlight pre');
+
+    // Add a copy button for each example command:
+    $('div.highlight').prepend('<img data-toggle="tooltip" data-placement="top" title="Copy" class="copybtn" src="/img/Icon-Red_Hat-Media_and_documents-Paper_Stack_Blank-A-Black-RGB.png" />');
+
+    // Include an onClick action that will:
+    // 1. flash the associated content elements
+    // 2. populate the copy buffer with the content
+    $('img.copybtn').bind("click", function(){
+      var img = $(this);
+      var content = img.next().first().children().first();
+      var text = content.text();
+      // flash the copybtn and content elements
+      copybtns.flash(img, content)
+      copybtns.copyTextToClipboard(text);
+    });
+    $('div.highlight pre').bind("click", function(){
+      var content = $(this);
+      var img = content.prev();
+      // flash the copybtn and content elements
+      copybtns.flash(img, content);
+      copybtns.copyTextToClipboard(content.text());
+    });
+  }
+}
+copybtns.init();
+</script>
