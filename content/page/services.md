@@ -124,7 +124,7 @@ sudo iptables-save | grep simpleservice
 -A KUBE-SVC-EZC6WLOVQADP4IAW -m comment --comment "default/simpleservice:" -j KUBE-SEP-4SQFZS32ZVMTQEZV
 ```
 
-return to continue
+exit the pod to continue
 ```bash
 exit
 ```

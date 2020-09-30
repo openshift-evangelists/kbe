@@ -51,7 +51,7 @@ mount | grep xchange
 echo 'some data' > /tmp/xchange/data
 ```
 
-return to continue
+exit the pod to continue
 ```bash
 exit
 ```

@@ -40,7 +40,7 @@ PING thesvc.default.svc.cluster.local (172.30.251.137) 56(84) bytes of data.
 ...
 ```
 
-Send a break signal to close the connection
+Send a break signal (Ctrl-C) to close the connection
 ```bash
 ^C
 ```

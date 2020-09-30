@@ -52,13 +52,13 @@ kubectl describe pod sise | grep IP:
 IP:                     172.17.0.3
 ```
 
-The kubernetes API provides an additional opportunity to connect directly to pods using `curl`:
+The kubernetes proxy API provides an additional opportunity to make external connections to pods within the cluster using `curl`:
 ```bash
-export OPENSHIFT_API="https://$(kubectl config get-clusters | tail -n 1)"
+export K8S_API="https://$(kubectl config get-clusters | tail -n 1)"
 export NAMESPACE="default"
 export PODNAME="sise"
 curl -s -k -H"Authorization: Bearer $(oc whoami -t)" \
-$OPENSHIFT_API/api/v1/namespaces/$NAMESPACE/pods/$PODNAME/proxy/info
+$K8S_API/api/v1/namespaces/$NAMESPACE/pods/$PODNAME/proxy/info
 ```
 
 Cleanup:

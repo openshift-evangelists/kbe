@@ -36,7 +36,7 @@ INIT_DONE
 INIT_DONE
 ```
 
-Send a break signal when you're ready to disconnect from the log stream:
+Send a break signal (Ctrl-C) when you're ready to disconnect from the log stream:
 ```bash
 ^C
 ```
