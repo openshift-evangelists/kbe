@@ -3,12 +3,12 @@
 .highlight pre {
   margin-bottom: 0px; margin-top:10px;
 }
-img.copybtn:hover {
+button.copybtn:hover {
   border:solid 2px #777;
   padding:2px 3px;
   background-color:rgb(128,128,128,0.4);
 }
-img.copybtn {
+button.copybtn {
   border:solid 1px #999;
   margin:3px 4px;
   padding:3px 4px;
@@ -16,10 +16,11 @@ img.copybtn {
   right:14px;
   position:absolute;
   border-radius:5px;
-  background-color:#eee;
+  weight:900;
+  background: #eee;
 }
 @media only screen and (min-width: 768px) {
-  img.copybtn {
+  button.copybtn {
     left: 98%;
   }
 }
