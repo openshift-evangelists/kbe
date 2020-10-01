@@ -15,14 +15,16 @@ Let's create a [pod](https://github.com/openshift-evangelists/kbe/blob/main/spec
 called `logme` that runs a container writing to `stdout` and `stderr`:
 
 ```bash
-$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/main/specs/logging/pod.yaml
+kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/main/specs/logging/pod.yaml
 ```
 
 To view the five most recent log lines of the `gen` container in the `logme` pod,
 execute:
 
 ```bash
-$ kubectl logs --tail=5 logme -c gen
+kubectl logs --tail=5 logme -c gen
+```
+```cat
 Thu Apr 27 11:34:40 UTC 2017
 Thu Apr 27 11:34:41 UTC 2017
 Thu Apr 27 11:34:41 UTC 2017
@@ -33,7 +35,9 @@ Thu Apr 27 11:34:42 UTC 2017
 To stream the log of the `gen` container in the `logme` pod (like `tail -f`), do:
 
 ```bash
-$ kubectl logs -f --since=10s logme -c gen
+kubectl logs -f --since=10s logme -c gen
+```
+```cat
 Thu Apr 27 11:43:11 UTC 2017
 Thu Apr 27 11:43:11 UTC 2017
 Thu Apr 27 11:43:12 UTC 2017
@@ -51,8 +55,12 @@ called `oneshot` that counts down from 9 to 1 and then exits. Using the `-p` opt
 you can print the logs for previous instances of the container in a pod:
 
 ```bash
-$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/main/specs/logging/oneshotpod.yaml
-$ kubectl logs -p oneshot -c gen
+kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/main/specs/logging/oneshotpod.yaml
+```
+```bash
+kubectl logs -p oneshot -c gen
+```
+```cat
 9
 8
 7
@@ -67,7 +75,7 @@ $ kubectl logs -p oneshot -c gen
 You can remove the created pods with:
 
 ```bash
-$ kubectl delete pod/logme pod/oneshot
+kubectl delete pod/logme pod/oneshot
 ```
 
 [Previous](/secrets) | [Next](/jobs)

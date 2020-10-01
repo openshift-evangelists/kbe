@@ -12,13 +12,15 @@ In order to see how this all plays together, we will be using an [educational Ku
 Let's start with creating the [stateful app](https://raw.githubusercontent.com/openshift-evangelists/mehdb/main/app.yaml), that is, the `StatefulSet` along with the persistent volumes and the headless service:
 
 ```bash
-$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/mehdb/main/app.yaml
+kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/mehdb/main/app.yaml
 ```
 
 After a minute or so, you can have a look at all the resources that have been created:
 
 ```bash
-$ kubectl get sts,po,pvc,svc
+kubectl get sts,po,pvc,svc
+```
+```cat
 NAME                     DESIRED   CURRENT   AGE
 statefulset.apps/mehdb   2         2         1m
 
@@ -37,8 +39,9 @@ service/mehdb   ClusterIP   None         <none>        9876/TCP   1m
 Now we can check if the stateful app is working properly. To do this, we use the `/status` endpoint of the headless service `mehdb:9876` and since we haven't put any data yet into the datastore, we'd expect that `0` keys are reported:
 
 ```bash
-$ kubectl run -it --rm jumpod --restart=Never --image=quay.io/openshiftlabs/jump:0.2 -- curl mehdb:9876/status?level=full
-If you don't see a command prompt, try pressing enter.
+kubectl run -it --rm jumpod --restart=Never --image=quay.io/openshiftlabs/jump:0.2 -- curl -s mehdb:9876/status?level=full
+```
+```cat
 0
 pod "jumpod" deleted
 ```

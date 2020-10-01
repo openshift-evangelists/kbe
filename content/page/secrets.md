@@ -18,12 +18,18 @@ to use such information in a safe and reliable way with the following properties
 Let's create a secret `apikey` that holds a (made-up) API key:
 
 ```bash
-$ echo -n "A19fh68B001j" > ./apikey.txt
-
-$ kubectl create secret generic apikey --from-file=./apikey.txt
+echo -n "A19fh68B001j" > ./apikey.txt
+```
+```bash
+kubectl create secret generic apikey --from-file=./apikey.txt
+```
+```cat
 secret "apikey" created
-
-$ kubectl describe secrets/apikey
+```
+```bash
+kubectl describe secrets/apikey
+```
+```cat
 Name:           apikey
 Namespace:      default
 Labels:         <none>
@@ -41,17 +47,29 @@ via a [volume](/volumes/):
 
 
 ```bash
-$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/main/specs/secrets/pod.yaml
+kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/main/specs/secrets/pod.yaml
 ```
 
 If we now exec into the container we see the secret mounted at `/tmp/apikey`:
 
+```bash
+kubectl exec -it consumesec -c shell -- bash
 ```
-$ kubectl exec -it consumesec -c shell -- bash
-[root@consumesec /]# mount | grep apikey
+```bash
+mount | grep apikey
+```
+```cat
 tmpfs on /tmp/apikey type tmpfs (ro,relatime)
-[root@consumesec /]# cat /tmp/apikey/apikey.txt
+```
+```bash
+cat /tmp/apikey/apikey.txt
+```
+```cat
 A19fh68B001j
+```
+return
+```bash
+exit
 ```
 
 Note that for service accounts Kubernetes automatically creates secrets containing
@@ -60,7 +78,7 @@ credentials for accessing the API and modifies your pods to use this type of sec
 You can remove both the pod and the secret with:
 
 ```bash
-$ kubectl delete pod/consumesec secret/apikey
+kubectl delete pod/consumesec secret/apikey
 ```
 
 [Previous](/volumes) | [Next](/logging)

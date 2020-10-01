@@ -10,13 +10,15 @@ In the context of developing apps on Kubernetes it is often useful to quickly ac
 Let's create an [app](https://github.com/openshift-evangelists/kbe/blob/main/specs/pf/app.yaml) consisting of a deployment and a service called `simpleservice`, serving on port `80`:
 
 ```bash
-$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/main/specs/pf/app.yaml
+kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/main/specs/pf/app.yaml
 ```
 
 Let's say we want to access the `simpleservice` service from the local environment, say, your laptop, on port `8080`. So we forward the traffic as follows:
 
 ```bash
-$ kubectl port-forward service/simpleservice 8080:80
+kubectl port-forward service/simpleservice 8080:80
+```
+```cat
 Forwarding from 127.0.0.1:8080 -> 9876
 Forwarding from [::1]:8080 -> 9876
 ```
@@ -26,7 +28,9 @@ We can see from above that the traffic gets eventually routed through the servic
 Now we can invoke the service locally like so (using a separate terminal session):
 
 ```bash
-$ curl localhost:8080/info
+curl localhost:8080/info
+```
+```cat
 {"host": "localhost:8080", "version": "0.5.0", "from": "127.0.0.1"}
 ```
 
@@ -35,8 +39,10 @@ Remember that port forwarding is not meant for production traffic but for develo
 You can remove the `simpleservice` with 
 
 ```bash
-$ kubectl delete service/simpleservice 
-$ kubectl delete deployment sise-deploy
+kubectl delete service/simpleservice 
+```
+```bash
+kubectl delete deployment sise-deploy
 ```
 
 [Previous](/sd) | [Next](/healthz)

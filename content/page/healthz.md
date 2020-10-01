@@ -19,12 +19,12 @@ Let's create a [pod](https://github.com/openshift-evangelists/kbe/blob/main/spec
 that exposes an endpoint `/health`, responding with a HTTP `200` status code:
 
 ```bash
-$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/main/specs/healthz/pod.yaml
+kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/main/specs/healthz/pod.yaml
 ```
 
 In the pod specification we've defined the following:
 
-```
+```cat
 livenessProbe:
   initialDelaySeconds: 2
   periodSeconds: 5
@@ -38,7 +38,9 @@ Above means that Kubernetes will start checking the `/health` endpoint, after in
 If we now look at the pod we can see that it is considered healthy:
 
 ```bash
-$ kubectl describe pod hc
+kubectl describe pod hc
+```
+```cat
 Name:                   hc
 Namespace:              default
 Security Policy:        anyuid
@@ -62,13 +64,15 @@ that is, a pod that has a container that randomly (in the time range 1 to 4 sec)
 does not return a 200 code:
 
 ```bash
-$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/main/specs/healthz/badpod.yaml
+kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/main/specs/healthz/badpod.yaml
 ```
 
 Looking at the events of the bad pod, we can see that the health check failed:
 
 ```bash
-$ kubectl describe pod badpod
+kubectl describe pod badpod
+```
+```cat
 ...
 Events:
   FirstSeen     LastSeen        Count   From                            SubobjectPath           Type            Reason          Message
@@ -86,7 +90,9 @@ Events:
 This can also be verified as follows:
 
 ```bash
-$ kubectl get pods
+kubectl get pods
+```
+```cat
 NAME                      READY     STATUS    RESTARTS   AGE
 badpod                    1/1       Running   4          2m
 hc                        1/1       Running   0          6m
@@ -106,14 +112,16 @@ Let's create a [pod](https://github.com/openshift-evangelists/kbe/blob/main/spec
 with a `readinessProbe` that kicks in after 10 seconds:
 
 ```bash
-$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/main/specs/healthz/ready.yaml
+kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/main/specs/healthz/ready.yaml
 ```
 
 Looking at the events of the pod, we can see that, eventually, the pod is ready
 to serve traffic:
 
 ```bash
-$ kubectl describe pod ready
+kubectl describe pod ready
+```
+```cat
 ...
 Conditions:                                                                                                                                                               [0/1888]
   Type          Status
@@ -125,7 +133,7 @@ Conditions:                                                                     
 You can remove all the created pods with:
 
 ```bash
-$ kubectl delete pod/hc pod/ready pod/badpod
+kubectl delete pod/hc pod/ready pod/badpod
 ```
 
 Learn more about configuring probes, including TCP and command probes, via the

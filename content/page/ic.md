@@ -10,25 +10,34 @@ It's sometimes necessary to prepare a container running in a pod. For example, y
 So let's create an [deployment](https://github.com/openshift-evangelists/kbe/blob/main/specs/ic/deploy.yaml) consisting of an init container that writes a message into a file at `/ic/this` and the main (long-running) container reading out this file, then:
 
 ```bash
-$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/main/specs/ic/deploy.yaml
+kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/main/specs/ic/deploy.yaml
 ```
 
 Now we can check the output of the main container:
 
 ```bash
-$ kubectl get deploy,po
+kubectl get deploy,po
+```
+```cat
 NAME                              DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
 deployment.extensions/ic-deploy   1         1         1            1           11m
 
 NAME                            READY   STATUS    RESTARTS   AGE
 pod/ic-deploy-bf75cbf87-8zmrb   1/1     Running   0          59s
+```
+```bash
+kubectl logs ic-deploy-bf75cbf87-8zmrb -f
+```
+```cat
+INIT_DONE
+INIT_DONE
+INIT_DONE
+INIT_DONE
+INIT_DONE
+```
 
-$ kubectl logs ic-deploy-bf75cbf87-8zmrb -f
-INIT_DONE
-INIT_DONE
-INIT_DONE
-INIT_DONE
-INIT_DONE
+Send a break signal (Ctrl-C) when you're ready to disconnect from the log stream:
+```bash
 ^C
 ```
 

@@ -13,17 +13,23 @@ Let's create a [job](https://github.com/openshift-evangelists/kbe/blob/main/spec
 called `countdown` that supervises a pod counting from 9 down to 1:
 
 ```bash
-$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/main/specs/jobs/job.yaml
+kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/main/specs/jobs/job.yaml
 ```
 
 You can see the job and the pod it looks after like so:
 
 ```bash
-$ kubectl get jobs
+kubectl get jobs
+```
+```cat
 NAME                      DESIRED   SUCCESSFUL   AGE
 countdown                 1         1            5s
+```
 
-$ kubectl get pods
+```bash
+kubectl get pods
+```
+```cat
 NAME              READY   STATUS      RESTARTS   AGE
 countdown-qkjx8   0/1     Completed   0          2m17s
 ```
@@ -31,7 +37,9 @@ countdown-qkjx8   0/1     Completed   0          2m17s
 To learn more about the status of the job, do:
 
 ```bash
-$ kubectl describe jobs/countdown
+kubectl describe jobs/countdown
+```
+```cat
 Name:           countdown
 Namespace:      default
 Selector:       controller-uid=4960c8be-6a3f-11ea-84fd-0242ac11002a
@@ -70,6 +78,8 @@ And to see the output of the job via the pod it supervised, execute:
 
 ```bash
 kubectl logs countdown-qkjx8
+```
+```cat
 9
 8
 7
@@ -85,7 +95,9 @@ To clean up, use the `delete` verb on the job object which will remove all the
 supervised pods:
 
 ```bash
-$ kubectl delete job countdown
+kubectl delete job countdown
+```
+```cat
 job "countdown" deleted
 ```
 

@@ -14,9 +14,11 @@ Let's create a [service](https://github.com/openshift-evangelists/kbe/blob/main/
 some pods along with it:
 
 ```bash
-$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/main/specs/sd/rc.yaml
+kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/main/specs/sd/rc.yaml
+```
 
-$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/main/specs/sd/svc.yaml
+```bash
+kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/main/specs/sd/svc.yaml
 ```
 
 Now we want to connect to the `thesvc` service from within the cluster, say, from another service.
@@ -24,23 +26,32 @@ To simulate this, we create a [jump pod](https://github.com/openshift-evangelist
 in the same namespace (`default`, since we didn't specify anything else):
 
 ```bash
-$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/main/specs/sd/jumpod.yaml
+kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/main/specs/sd/jumpod.yaml
 ```
 
 The DNS add-on will make sure that our service `thesvc` is available via the FQDN
 `thesvc.default.svc.cluster.local` from other pods in the cluster. Let's try it out:
 
 ```bash
-$ kubectl exec -it jumpod -c shell -- ping thesvc.default.svc.cluster.local
+kubectl exec -it jumpod -c shell -- ping thesvc.default.svc.cluster.local
+```
+```cat
 PING thesvc.default.svc.cluster.local (172.30.251.137) 56(84) bytes of data.
 ...
+```
+
+Send a break signal (Ctrl-C) to close the connection
+```bash
+^C
 ```
 
 The answer to the `ping` tells us that the service is available via the cluster
 IP `172.30.251.137`. We can directly connect to and consume the service (in the same namespace) like so:
 
- ```bash
- $ kubectl exec -it jumpod -c shell -- curl http://thesvc/info
+```bash
+kubectl exec -it jumpod -c shell -- curl http://thesvc/info
+```
+```cat
 {"host": "thesvc", "version": "0.5.0", "from": "172.17.0.5"}
 ```
 
@@ -59,18 +70,22 @@ Let's see how that works by creating:
 If you're not familiar with namespaces, check out the [namespace examples](/ns/) first.
 
 ```bash
-$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/main/specs/sd/other-ns.yaml
-
-$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/main/specs/sd/other-rc.yaml
-
-$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/main/specs/sd/other-svc.yaml
+kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/main/specs/sd/other-ns.yaml
+```
+```bash
+kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/main/specs/sd/other-rc.yaml
+```
+```bash
+kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/main/specs/sd/other-svc.yaml
 ```
 
 We're now in the position to consume the service `thesvc` in namespace `other` from the
 `default` namespace (again via the jump pod):
 
- ```bash
-$ kubectl exec -it jumpod -c shell -- curl http://thesvc.other/info
+```bash
+kubectl exec -it jumpod -c shell -- curl http://thesvc.other/info
+```
+```cat
 {"host": "thesvc.other", "version": "0.5.0", "from": "172.17.0.5"}
 ```
 
@@ -80,13 +95,16 @@ connect to services across the cluster.
 You can destroy all the resources created with:
 
 ```bash
-$ kubectl delete pods jumpod
-
-$ kubectl delete svc thesvc
-
-$ kubectl delete rc rcsise
-
-$ kubectl delete ns other
+kubectl delete pods jumpod
+```
+```bash
+kubectl delete svc thesvc
+```
+```bash
+kubectl delete rc rcsise
+```
+```bash
+kubectl delete ns other
 ```
 
 Keep in mind that removing a namespace will destroy every resource inside.
