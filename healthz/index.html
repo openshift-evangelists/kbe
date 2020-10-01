@@ -188,9 +188,9 @@ of the application developer to expose a URL that the kubelet can
 use to determine if the container is healthy (and potentially ready).</p>
 <p>Let&rsquo;s create a <a href="https://github.com/openshift-evangelists/kbe/blob/main/specs/healthz/pod.yaml">pod</a>
 that exposes an endpoint <code>/health</code>, responding with a HTTP <code>200</code> status code:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/main/specs/healthz/pod.yaml
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/main/specs/healthz/pod.yaml
 </code></pre></div><p>In the pod specification we&rsquo;ve defined the following:</p>
-<pre><code>livenessProbe:
+<pre><code class="language-cat" data-lang="cat">livenessProbe:
   initialDelaySeconds: 2
   periodSeconds: 5
   httpGet:
@@ -198,47 +198,47 @@ that exposes an endpoint <code>/health</code>, responding with a HTTP <code>200<
     port: 9876
 </code></pre><p>Above means that Kubernetes will start checking the <code>/health</code> endpoint, after initially waiting 2 seconds, every 5 seconds.</p>
 <p>If we now look at the pod we can see that it is considered healthy:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kubectl describe pod hc
-Name:                   hc
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">kubectl describe pod hc
+</code></pre></div><pre><code class="language-cat" data-lang="cat">Name:                   hc
 Namespace:              default
 Security Policy:        anyuid
 Node:                   192.168.99.100/192.168.99.100
-Start Time:             Tue, <span style="color:#ae81ff">25</span> Apr <span style="color:#ae81ff">2017</span> 16:21:11 +0100
+Start Time:             Tue, 25 Apr 2017 16:21:11 +0100
 Labels:                 &lt;none&gt;
 Status:                 Running
 ...
 Events:
   FirstSeen     LastSeen        Count   From                            SubobjectPath           Type            Reason          Message
   ---------     --------        -----   ----                            -------------           --------        ------          -------
-  3s            3s              <span style="color:#ae81ff">1</span>       <span style="color:#f92672">{</span>default-scheduler <span style="color:#f92672">}</span>                                    Normal          Scheduled       Successfully assigned hc to 192.168.99.100
-  3s            3s              <span style="color:#ae81ff">1</span>       <span style="color:#f92672">{</span>kubelet 192.168.99.100<span style="color:#f92672">}</span>        spec.containers<span style="color:#f92672">{</span>sise<span style="color:#f92672">}</span>   Normal          Pulled          Container image <span style="color:#e6db74">&#34;quay.io/openshiftlabs/simpleservice:0.5.0&#34;</span>
+  3s            3s              1       {default-scheduler }                                    Normal          Scheduled       Successfully assigned hc to 192.168.99.100
+  3s            3s              1       {kubelet 192.168.99.100}        spec.containers{sise}   Normal          Pulled          Container image &quot;quay.io/openshiftlabs/simpleservice:0.5.0&quot;
 already present on machine
-  3s            3s              <span style="color:#ae81ff">1</span>       <span style="color:#f92672">{</span>kubelet 192.168.99.100<span style="color:#f92672">}</span>        spec.containers<span style="color:#f92672">{</span>sise<span style="color:#f92672">}</span>   Normal          Created         Created container with docker id 8a628578d6ad; Security:<span style="color:#f92672">[</span>seccomp<span style="color:#f92672">=</span>unconfined<span style="color:#f92672">]</span>
-  2s            2s              <span style="color:#ae81ff">1</span>       <span style="color:#f92672">{</span>kubelet 192.168.99.100<span style="color:#f92672">}</span>        spec.containers<span style="color:#f92672">{</span>sise<span style="color:#f92672">}</span>   Normal          Started         Started container with docker id 8a628578d6ad
-</code></pre></div><p>Now we launch a <a href="https://github.com/openshift-evangelists/kbe/blob/main/specs/healthz/badpod.yaml">bad pod</a>,
+  3s            3s              1       {kubelet 192.168.99.100}        spec.containers{sise}   Normal          Created         Created container with docker id 8a628578d6ad; Security:[seccomp=unconfined]
+  2s            2s              1       {kubelet 192.168.99.100}        spec.containers{sise}   Normal          Started         Started container with docker id 8a628578d6ad
+</code></pre><p>Now we launch a <a href="https://github.com/openshift-evangelists/kbe/blob/main/specs/healthz/badpod.yaml">bad pod</a>,
 that is, a pod that has a container that randomly (in the time range 1 to 4 sec)
 does not return a 200 code:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/main/specs/healthz/badpod.yaml
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/main/specs/healthz/badpod.yaml
 </code></pre></div><p>Looking at the events of the bad pod, we can see that the health check failed:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kubectl describe pod badpod
-...
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">kubectl describe pod badpod
+</code></pre></div><pre><code class="language-cat" data-lang="cat">...
 Events:
   FirstSeen     LastSeen        Count   From                            SubobjectPath           Type            Reason          Message
   ---------     --------        -----   ----                            -------------           --------        ------          -------
-  1m            1m              <span style="color:#ae81ff">1</span>       <span style="color:#f92672">{</span>default-scheduler <span style="color:#f92672">}</span>                                    Normal          Scheduled       Successfully assigned badpod to 192.168.99.100
-  1m            1m              <span style="color:#ae81ff">1</span>       <span style="color:#f92672">{</span>kubelet 192.168.99.100<span style="color:#f92672">}</span>        spec.containers<span style="color:#f92672">{</span>sise<span style="color:#f92672">}</span>   Normal          Created         Created container with docker id 7dd660f04945; Security:<span style="color:#f92672">[</span>seccomp<span style="color:#f92672">=</span>unconfined<span style="color:#f92672">]</span>
-  1m            1m              <span style="color:#ae81ff">1</span>       <span style="color:#f92672">{</span>kubelet 192.168.99.100<span style="color:#f92672">}</span>        spec.containers<span style="color:#f92672">{</span>sise<span style="color:#f92672">}</span>   Normal          Started         Started container with docker id 7dd660f04945
-  1m            23s             <span style="color:#ae81ff">2</span>       <span style="color:#f92672">{</span>kubelet 192.168.99.100<span style="color:#f92672">}</span>        spec.containers<span style="color:#f92672">{</span>sise<span style="color:#f92672">}</span>   Normal          Pulled          Container image <span style="color:#e6db74">&#34;quay.io/openshiftlabs/simpleservice:0.5.0&#34;</span> already present on machine
-  23s           23s             <span style="color:#ae81ff">1</span>       <span style="color:#f92672">{</span>kubelet 192.168.99.100<span style="color:#f92672">}</span>        spec.containers<span style="color:#f92672">{</span>sise<span style="color:#f92672">}</span>   Normal          Killing         Killing container with docker id 7dd660f04945: pod <span style="color:#e6db74">&#34;badpod_default(53e5c06a-29cb-11e7-b44f-be3e8f4350ff)&#34;</span> container <span style="color:#e6db74">&#34;sise&#34;</span> is unhealthy, it will be killed and re-created.
-  23s           23s             <span style="color:#ae81ff">1</span>       <span style="color:#f92672">{</span>kubelet 192.168.99.100<span style="color:#f92672">}</span>        spec.containers<span style="color:#f92672">{</span>sise<span style="color:#f92672">}</span>   Normal          Created         Created container with docker id ec63dc3edfaa; Security:<span style="color:#f92672">[</span>seccomp<span style="color:#f92672">=</span>unconfined<span style="color:#f92672">]</span>
-  23s           23s             <span style="color:#ae81ff">1</span>       <span style="color:#f92672">{</span>kubelet 192.168.99.100<span style="color:#f92672">}</span>        spec.containers<span style="color:#f92672">{</span>sise<span style="color:#f92672">}</span>   Normal          Started         Started container with docker id ec63dc3edfaa
-  1m            18s             <span style="color:#ae81ff">4</span>       <span style="color:#f92672">{</span>kubelet 192.168.99.100<span style="color:#f92672">}</span>        spec.containers<span style="color:#f92672">{</span>sise<span style="color:#f92672">}</span>   Warning         Unhealthy       Liveness probe failed: Get http://172.17.0.4:9876/health: net/http: request canceled <span style="color:#f92672">(</span>Client.Timeout exceeded <span style="color:#66d9ef">while</span> awaiting headers<span style="color:#f92672">)</span>
-</code></pre></div><p>This can also be verified as follows:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kubectl get pods
-NAME                      READY     STATUS    RESTARTS   AGE
-badpod                    1/1       Running   <span style="color:#ae81ff">4</span>          2m
-hc                        1/1       Running   <span style="color:#ae81ff">0</span>          6m
-</code></pre></div><p>From above you can see that the <code>badpod</code> had already been re-launched 4 times,
+  1m            1m              1       {default-scheduler }                                    Normal          Scheduled       Successfully assigned badpod to 192.168.99.100
+  1m            1m              1       {kubelet 192.168.99.100}        spec.containers{sise}   Normal          Created         Created container with docker id 7dd660f04945; Security:[seccomp=unconfined]
+  1m            1m              1       {kubelet 192.168.99.100}        spec.containers{sise}   Normal          Started         Started container with docker id 7dd660f04945
+  1m            23s             2       {kubelet 192.168.99.100}        spec.containers{sise}   Normal          Pulled          Container image &quot;quay.io/openshiftlabs/simpleservice:0.5.0&quot; already present on machine
+  23s           23s             1       {kubelet 192.168.99.100}        spec.containers{sise}   Normal          Killing         Killing container with docker id 7dd660f04945: pod &quot;badpod_default(53e5c06a-29cb-11e7-b44f-be3e8f4350ff)&quot; container &quot;sise&quot; is unhealthy, it will be killed and re-created.
+  23s           23s             1       {kubelet 192.168.99.100}        spec.containers{sise}   Normal          Created         Created container with docker id ec63dc3edfaa; Security:[seccomp=unconfined]
+  23s           23s             1       {kubelet 192.168.99.100}        spec.containers{sise}   Normal          Started         Started container with docker id ec63dc3edfaa
+  1m            18s             4       {kubelet 192.168.99.100}        spec.containers{sise}   Warning         Unhealthy       Liveness probe failed: Get http://172.17.0.4:9876/health: net/http: request canceled (Client.Timeout exceeded while awaiting headers)
+</code></pre><p>This can also be verified as follows:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">kubectl get pods
+</code></pre></div><pre><code class="language-cat" data-lang="cat">NAME                      READY     STATUS    RESTARTS   AGE
+badpod                    1/1       Running   4          2m
+hc                        1/1       Running   0          6m
+</code></pre><p>From above you can see that the <code>badpod</code> had already been re-launched 4 times,
 since the health check failed.</p>
 <p>In addition to a <code>livenessProbe</code> you can also specify a <code>readinessProbe</code>, which
 can be configured in the same way but has a different use case and semantics:
@@ -248,19 +248,19 @@ to initialize some tables. In this case you want to signal when the container is
 ready to serve traffic.</p>
 <p>Let&rsquo;s create a <a href="https://github.com/openshift-evangelists/kbe/blob/main/specs/healthz/ready.yaml">pod</a>
 with a <code>readinessProbe</code> that kicks in after 10 seconds:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/main/specs/healthz/ready.yaml
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/main/specs/healthz/ready.yaml
 </code></pre></div><p>Looking at the events of the pod, we can see that, eventually, the pod is ready
 to serve traffic:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kubectl describe pod ready
-...
-Conditions:                                                                                                                                                               <span style="color:#f92672">[</span>0/1888<span style="color:#f92672">]</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">kubectl describe pod ready
+</code></pre></div><pre><code class="language-cat" data-lang="cat">...
+Conditions:                                                                                                                                                               [0/1888]
   Type          Status
   Initialized   True
   Ready         True
   PodScheduled  True
 ...
-</code></pre></div><p>You can remove all the created pods with:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kubectl delete pod/hc pod/ready pod/badpod
+</code></pre><p>You can remove all the created pods with:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">kubectl delete pod/hc pod/ready pod/badpod
 </code></pre></div><p>Learn more about configuring probes, including TCP and command probes, via the
 <a href="https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/">docs</a>.</p>
 <p><a href="/sd">Previous</a> | <a href="/envs">Next</a></p>
@@ -303,6 +303,80 @@ Conditions:                                                                     
 <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 <script src="https://kubernetesbyexample.com/js/main.js"></script>
+<script>
+
+$('.language-test').parent().css('display', 'none')
+
+
+var copybtns = {
+  fallbackCopyTextToClipboard: function (text) {
+    var txt = document.createElement("textarea");
+    txt.value = text;
+    
+    
+    txt.style.position = "fixed";
+    txt.style.top = "0";
+    txt.style.left = "0";
+  
+    document.body.appendChild(txt);
+    txt.focus();
+    txt.select();
+    txt.setSelectionRange(0, 99999);
+  
+    try {
+      var successful = document.execCommand('copy');
+      var msg = successful ? 'successful' : 'unsuccessful';
+    } catch (err) {
+      console.error('Fallback: Unable to copy', err);
+    }
+  
+    document.body.removeChild(txt);
+  },
+  copyTextToClipboard: function (text) {
+    if (!navigator.clipboard) {
+      copybtns.fallbackCopyTextToClipboard(text);
+      return;
+    }
+    navigator.clipboard.writeText(text).then(function() {
+      
+    }, function(err) {
+      
+      copybtns.fallbackCopyTextToClipboard(text);
+    });
+  },
+  flash: function(btn, content){
+    
+    content.fadeTo(50, 0.25, function() { $(this).fadeTo(300, 1.0); });
+    
+    btn.fadeTo(50, 0.0, function() { $(this).fadeTo(900, 1.0); });
+  },
+  txtClick : function(){
+    var content = $(this);
+    var btn = content.prev('button');
+    
+    copybtns.flash(btn, content);
+    
+    copybtns.copyTextToClipboard(content.text());
+  },
+  btnClick : function(){
+    var btn = $(this);
+    var content = $(btn.next().children()[0]);
+    
+    copybtns.flash(btn, content)
+    
+    copybtns.copyTextToClipboard(content.text());
+  },
+  init : function() {
+    var buttonHTML = '<button type="button" data-toggle="tooltip" data-placement="top" title="Copy" class="copybtn btn btn-outline-dark"><img src="/img/Icon-Red_Hat-Media_and_documents-Paper_Stack_Blank-A-Black-RGB.png"/></button>';
+    
+    $('div.highlight').prepend(buttonHTML);
+    
+    $('button.copybtn').bind("click", copybtns.btnClick);
+    $('div.highlight pre').bind("click", copybtns.txtClick);
+  }
+}
+copybtns.init();
+</script>
 <script src="https://kubernetesbyexample.com/js/highlight.min.js"></script>
 <script> hljs.initHighlightingOnLoad(); </script>
 <script> renderMathInElement(document.body); </script>

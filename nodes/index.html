@@ -182,34 +182,33 @@
 you might want to familiarize yourself with node <a href="https://kubernetes.io/docs/concepts/nodes/node/">operations</a>.</p>
 <p>To list available nodes in your cluster (note that the output will depend on the environment
 you&rsquo;re using. This example is using the <a href="/diy/">OpenShift Playground</a>):</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kubectl get nodes
-NAME                 STATUS   ROLES           AGE    VERSION
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">kubectl get nodes
+</code></pre></div><pre><code class="language-cat" data-lang="cat">NAME                 STATUS   ROLES           AGE    VERSION
 crc-rk2fc-master-0   Ready    master,worker   102d   v1.14.6+888f9c630
-</code></pre></div><p>One interesting task, from a developer point of view, is to make Kubernetes
+</code></pre><p>One interesting task, from a developer point of view, is to make Kubernetes
 schedule a pod on a certain node. For this, we first need to label the node
 we want to target:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kubectl label nodes crc-rk2fc-master-0 shouldrun<span style="color:#f92672">=</span>here
-node/crc-rk2fc-master-0 labeled
-</code></pre></div><p>Now we can create a <a href="https://github.com/openshift-evangelists/kbe/blob/main/specs/nodes/pod.yaml">pod</a>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">kubectl label nodes crc-rk2fc-master-0 shouldrun<span style="color:#f92672">=</span>here
+</code></pre></div><pre><code class="language-cat" data-lang="cat">node/crc-rk2fc-master-0 labeled
+</code></pre><p>Now we can create a <a href="https://github.com/openshift-evangelists/kbe/blob/main/specs/nodes/pod.yaml">pod</a>
 that gets scheduled on the node with the label <code>shouldrun=here</code>:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/main/specs/nodes/pod.yaml
-
-$ kubectl get pods --output<span style="color:#f92672">=</span>wide
-NAME             READY   STATUS    RESTARTS   AGE     IP            NODE            NOMINATED NODE   READINESS GATES
-onspecificnode   1/1     Running   <span style="color:#ae81ff">0</span>          2m31s   10.128.1.11   crc-rk2fc-master-0   &lt;none&gt;           &lt;none&gt;
-</code></pre></div><p>To learn more about a specific node, <code>crc-rk2fc-master-0</code> in our case, do:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kubectl describe node crc-rk2fc-master-0
-Name:               crc-rk2fc-master-0
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/main/specs/nodes/pod.yaml
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">kubectl get pods --output<span style="color:#f92672">=</span>wide
+</code></pre></div><pre><code class="language-cat" data-lang="cat">NAME             READY   STATUS    RESTARTS   AGE     IP            NODE            NOMINATED NODE   READINESS GATES
+onspecificnode   1/1     Running   0          2m31s   10.128.1.11   crc-rk2fc-master-0   &lt;none&gt;           &lt;none&gt;
+</code></pre><p>To learn more about a specific node, <code>crc-rk2fc-master-0</code> in our case, do:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">kubectl describe node crc-rk2fc-master-0
+</code></pre></div><pre><code class="language-cat" data-lang="cat">Name:               crc-rk2fc-master-0
 Roles:              master,worker
-Labels:             beta.kubernetes.io/arch<span style="color:#f92672">=</span>amd64
-                    beta.kubernetes.io/os<span style="color:#f92672">=</span>linux
-                    kubernetes.io/arch<span style="color:#f92672">=</span>amd64
-                    kubernetes.io/hostname<span style="color:#f92672">=</span>crc-rk2fc-master-0
-                    kubernetes.io/os<span style="color:#f92672">=</span>linux
-                    node-role.kubernetes.io/master<span style="color:#f92672">=</span>
-                    node-role.kubernetes.io/worker<span style="color:#f92672">=</span>
-                    node.openshift.io/os_id<span style="color:#f92672">=</span>rhcos
-                    shouldrun<span style="color:#f92672">=</span>here
+Labels:             beta.kubernetes.io/arch=amd64
+                    beta.kubernetes.io/os=linux
+                    kubernetes.io/arch=amd64
+                    kubernetes.io/hostname=crc-rk2fc-master-0
+                    kubernetes.io/os=linux
+                    node-role.kubernetes.io/master=
+                    node-role.kubernetes.io/worker=
+                    node.openshift.io/os_id=rhcos
+                    shouldrun=here
 Annotations:        machine.openshift.io/machine: openshift-machine-api/crc-rk2fc-master-0
                     machineconfiguration.openshift.io/currentConfig: rendered-master-757d2d73a4ba859a3508c78070169043
                     machineconfiguration.openshift.io/desiredConfig: rendered-master-757d2d73a4ba859a3508c78070169043
@@ -217,56 +216,56 @@ Annotations:        machine.openshift.io/machine: openshift-machine-api/crc-rk2f
                     machineconfiguration.openshift.io/ssh: accessed
                     machineconfiguration.openshift.io/state: Done
                     volumes.kubernetes.io/controller-managed-attach-detach: true
-CreationTimestamp:  Thu, <span style="color:#ae81ff">12</span> Dec <span style="color:#ae81ff">2019</span> 06:47:09 +0000
+CreationTimestamp:  Thu, 12 Dec 2019 06:47:09 +0000
 Taints:             &lt;none&gt;
 Unschedulable:      false
 Conditions:
   Type             Status  LastHeartbeatTime                 LastTransitionTime                Reason                       Message
   ----             ------  -----------------                 ------------------                ------                       -------
-  MemoryPressure   False   Mon, <span style="color:#ae81ff">23</span> Mar <span style="color:#ae81ff">2020</span> 18:20:39 +0000   Thu, <span style="color:#ae81ff">12</span> Dec <span style="color:#ae81ff">2019</span> 06:47:08 +0000   KubeletHasSufficientMemory   kubelet has sufficient memoryavailable
-  DiskPressure     False   Mon, <span style="color:#ae81ff">23</span> Mar <span style="color:#ae81ff">2020</span> 18:20:39 +0000   Thu, <span style="color:#ae81ff">12</span> Dec <span style="color:#ae81ff">2019</span> 06:47:08 +0000   KubeletHasNoDiskPressure     kubelet has no disk pressure
-  PIDPressure      False   Mon, <span style="color:#ae81ff">23</span> Mar <span style="color:#ae81ff">2020</span> 18:20:39 +0000   Thu, <span style="color:#ae81ff">12</span> Dec <span style="color:#ae81ff">2019</span> 06:47:08 +0000   KubeletHasSufficientPID      kubelet has sufficient PID available
-  Ready            True    Mon, <span style="color:#ae81ff">23</span> Mar <span style="color:#ae81ff">2020</span> 18:20:39 +0000   Mon, <span style="color:#ae81ff">23</span> Mar <span style="color:#ae81ff">2020</span> 17:56:48 +0000   KubeletReady                 kubelet is posting ready status
+  MemoryPressure   False   Mon, 23 Mar 2020 18:20:39 +0000   Thu, 12 Dec 2019 06:47:08 +0000   KubeletHasSufficientMemory   kubelet has sufficient memoryavailable
+  DiskPressure     False   Mon, 23 Mar 2020 18:20:39 +0000   Thu, 12 Dec 2019 06:47:08 +0000   KubeletHasNoDiskPressure     kubelet has no disk pressure
+  PIDPressure      False   Mon, 23 Mar 2020 18:20:39 +0000   Thu, 12 Dec 2019 06:47:08 +0000   KubeletHasSufficientPID      kubelet has sufficient PID available
+  Ready            True    Mon, 23 Mar 2020 18:20:39 +0000   Mon, 23 Mar 2020 17:56:48 +0000   KubeletReady                 kubelet is posting ready status
 Addresses:
   InternalIP:  172.17.0.23
   Hostname:    crc-rk2fc-master-0
 Capacity:
- cpu:            <span style="color:#ae81ff">6</span>
- hugepages-1Gi:  <span style="color:#ae81ff">0</span>
- hugepages-2Mi:  <span style="color:#ae81ff">0</span>
+ cpu:            6
+ hugepages-1Gi:  0
+ hugepages-2Mi:  0
  memory:         16033876Ki
- pods:           <span style="color:#ae81ff">250</span>
+ pods:           250
 Allocatable:
  cpu:            5500m
- hugepages-1Gi:  <span style="color:#ae81ff">0</span>
- hugepages-2Mi:  <span style="color:#ae81ff">0</span>
+ hugepages-1Gi:  0
+ hugepages-2Mi:  0
  memory:         15419476Ki
- pods:           <span style="color:#ae81ff">250</span>
+ pods:           250
 System Info:
  Machine ID:                                             33c8de1eb5364c94b5e215e58eef30ac
  System UUID:                                            33c8de1eb5364c94b5e215e58eef30ac
  Boot ID:                                                f51f55d7-7702-48bc-bbc0-d68372e0fbf1
  Kernel Version:                                         4.18.0-147.0.3.el8_1.x86_64
- OS Image:                                               Red Hat Enterprise Linux CoreOS 42.81.20191203.0 <span style="color:#f92672">(</span>Ootpa<span style="color:#f92672">)</span>
+ OS Image:                                               Red Hat Enterprise Linux CoreOS 42.81.20191203.0 (Ootpa)
  Operating System:                                       linux
  Architecture:                                           amd64
  Container Runtime Version:                              cri-o://1.14.11-0.24.dev.rhaos4.2.gitc41de67.el8
  Kubelet Version:                                        v1.14.6+888f9c630
  Kube-Proxy Version:                                     v1.14.6+888f9c630
-Non-terminated Pods:                                     <span style="color:#f92672">(</span><span style="color:#ae81ff">46</span> in total<span style="color:#f92672">)</span>
+Non-terminated Pods:                                     (46 in total)
   Namespace                                              Name                                               CPU Requests  CPU Limits  Memory Requests  Memory Limits  AGE
   ---------                                              ----                                               ------------  ----------  ---------------  -------------  ---
-  default                                                onspecificnode                                               <span style="color:#ae81ff">0</span> <span style="color:#f92672">(</span>0%<span style="color:#f92672">)</span>        <span style="color:#ae81ff">0</span> <span style="color:#f92672">(</span>0%<span style="color:#f92672">)</span>      <span style="color:#ae81ff">0</span> <span style="color:#f92672">(</span>0%<span style="color:#f92672">)</span>           <span style="color:#ae81ff">0</span> <span style="color:#f92672">(</span>0%<span style="color:#f92672">)</span>         3m2s
+  default                                                onspecificnode                                               0 (0%)        0 (0%)      0 (0%)           0 (0%)         3m2s
   openshift-apiserver                                    
 ...
 Allocated resources:
-  <span style="color:#f92672">(</span>Total limits may be over <span style="color:#ae81ff">100</span> percent, i.e., overcommitted.<span style="color:#f92672">)</span>
+  (Total limits may be over 100 percent, i.e., overcommitted.)
   Resource           Requests      Limits
   --------           --------      ------
-  cpu                3010m <span style="color:#f92672">(</span>54%<span style="color:#f92672">)</span>   700m <span style="color:#f92672">(</span>12%<span style="color:#f92672">)</span>
-  memory             8289Mi <span style="color:#f92672">(</span>55%<span style="color:#f92672">)</span>  687Mi <span style="color:#f92672">(</span>4%<span style="color:#f92672">)</span>
-  ephemeral-storage  <span style="color:#ae81ff">0</span> <span style="color:#f92672">(</span>0%<span style="color:#f92672">)</span>        <span style="color:#ae81ff">0</span> <span style="color:#f92672">(</span>0%<span style="color:#f92672">)</span>
-</code></pre></div><p>Note that there are more sophisticated methods than shown above, such as using affinity, to <a href="https://kubernetes.io/docs/concepts/configuration/assign-pod-node/">assign pods to nodes</a> and depending on your use case, you might want to check those out as well.</p>
+  cpu                3010m (54%)   700m (12%)
+  memory             8289Mi (55%)  687Mi (4%)
+  ephemeral-storage  0 (0%)        0 (0%)
+</code></pre><p>Note that there are more sophisticated methods than shown above, such as using affinity, to <a href="https://kubernetes.io/docs/concepts/configuration/assign-pod-node/">assign pods to nodes</a> and depending on your use case, you might want to check those out as well.</p>
 <p><a href="/ic">Previous</a> | <a href="/api">Next</a></p>
 
         
@@ -307,6 +306,80 @@ Allocated resources:
 <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 <script src="https://kubernetesbyexample.com/js/main.js"></script>
+<script>
+
+$('.language-test').parent().css('display', 'none')
+
+
+var copybtns = {
+  fallbackCopyTextToClipboard: function (text) {
+    var txt = document.createElement("textarea");
+    txt.value = text;
+    
+    
+    txt.style.position = "fixed";
+    txt.style.top = "0";
+    txt.style.left = "0";
+  
+    document.body.appendChild(txt);
+    txt.focus();
+    txt.select();
+    txt.setSelectionRange(0, 99999);
+  
+    try {
+      var successful = document.execCommand('copy');
+      var msg = successful ? 'successful' : 'unsuccessful';
+    } catch (err) {
+      console.error('Fallback: Unable to copy', err);
+    }
+  
+    document.body.removeChild(txt);
+  },
+  copyTextToClipboard: function (text) {
+    if (!navigator.clipboard) {
+      copybtns.fallbackCopyTextToClipboard(text);
+      return;
+    }
+    navigator.clipboard.writeText(text).then(function() {
+      
+    }, function(err) {
+      
+      copybtns.fallbackCopyTextToClipboard(text);
+    });
+  },
+  flash: function(btn, content){
+    
+    content.fadeTo(50, 0.25, function() { $(this).fadeTo(300, 1.0); });
+    
+    btn.fadeTo(50, 0.0, function() { $(this).fadeTo(900, 1.0); });
+  },
+  txtClick : function(){
+    var content = $(this);
+    var btn = content.prev('button');
+    
+    copybtns.flash(btn, content);
+    
+    copybtns.copyTextToClipboard(content.text());
+  },
+  btnClick : function(){
+    var btn = $(this);
+    var content = $(btn.next().children()[0]);
+    
+    copybtns.flash(btn, content)
+    
+    copybtns.copyTextToClipboard(content.text());
+  },
+  init : function() {
+    var buttonHTML = '<button type="button" data-toggle="tooltip" data-placement="top" title="Copy" class="copybtn btn btn-outline-dark"><img src="/img/Icon-Red_Hat-Media_and_documents-Paper_Stack_Blank-A-Black-RGB.png"/></button>';
+    
+    $('div.highlight').prepend(buttonHTML);
+    
+    $('button.copybtn').bind("click", copybtns.btnClick);
+    $('div.highlight pre').bind("click", copybtns.txtClick);
+  }
+}
+copybtns.init();
+</script>
 <script src="https://kubernetesbyexample.com/js/highlight.min.js"></script>
 <script> hljs.initHighlightingOnLoad(); </script>
 <script> renderMathInElement(document.body); </script>

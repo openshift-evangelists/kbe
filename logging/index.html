@@ -185,42 +185,42 @@ container produces available, which is a good use case for debugging. More advan
 them in a central place, either within the cluster or via a dedicated (cloud-based) service.</p>
 <p>Let&rsquo;s create a <a href="https://github.com/openshift-evangelists/kbe/blob/main/specs/logging/pod.yaml">pod</a>
 called <code>logme</code> that runs a container writing to <code>stdout</code> and <code>stderr</code>:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/main/specs/logging/pod.yaml
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/main/specs/logging/pod.yaml
 </code></pre></div><p>To view the five most recent log lines of the <code>gen</code> container in the <code>logme</code> pod,
 execute:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kubectl logs --tail<span style="color:#f92672">=</span><span style="color:#ae81ff">5</span> logme -c gen
-Thu Apr <span style="color:#ae81ff">27</span> 11:34:40 UTC <span style="color:#ae81ff">2017</span>
-Thu Apr <span style="color:#ae81ff">27</span> 11:34:41 UTC <span style="color:#ae81ff">2017</span>
-Thu Apr <span style="color:#ae81ff">27</span> 11:34:41 UTC <span style="color:#ae81ff">2017</span>
-Thu Apr <span style="color:#ae81ff">27</span> 11:34:42 UTC <span style="color:#ae81ff">2017</span>
-Thu Apr <span style="color:#ae81ff">27</span> 11:34:42 UTC <span style="color:#ae81ff">2017</span>
-</code></pre></div><p>To stream the log of the <code>gen</code> container in the <code>logme</code> pod (like <code>tail -f</code>), do:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kubectl logs -f --since<span style="color:#f92672">=</span>10s logme -c gen
-Thu Apr <span style="color:#ae81ff">27</span> 11:43:11 UTC <span style="color:#ae81ff">2017</span>
-Thu Apr <span style="color:#ae81ff">27</span> 11:43:11 UTC <span style="color:#ae81ff">2017</span>
-Thu Apr <span style="color:#ae81ff">27</span> 11:43:12 UTC <span style="color:#ae81ff">2017</span>
-Thu Apr <span style="color:#ae81ff">27</span> 11:43:12 UTC <span style="color:#ae81ff">2017</span>
-Thu Apr <span style="color:#ae81ff">27</span> 11:43:13 UTC <span style="color:#ae81ff">2017</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">kubectl logs --tail<span style="color:#f92672">=</span><span style="color:#ae81ff">5</span> logme -c gen
+</code></pre></div><pre><code class="language-cat" data-lang="cat">Thu Apr 27 11:34:40 UTC 2017
+Thu Apr 27 11:34:41 UTC 2017
+Thu Apr 27 11:34:41 UTC 2017
+Thu Apr 27 11:34:42 UTC 2017
+Thu Apr 27 11:34:42 UTC 2017
+</code></pre><p>To stream the log of the <code>gen</code> container in the <code>logme</code> pod (like <code>tail -f</code>), do:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">kubectl logs -f --since<span style="color:#f92672">=</span>10s logme -c gen
+</code></pre></div><pre><code class="language-cat" data-lang="cat">Thu Apr 27 11:43:11 UTC 2017
+Thu Apr 27 11:43:11 UTC 2017
+Thu Apr 27 11:43:12 UTC 2017
+Thu Apr 27 11:43:12 UTC 2017
+Thu Apr 27 11:43:13 UTC 2017
 ...
-</code></pre></div><p>Note that if you wouldn&rsquo;t have specified <code>--since=10s</code> in the above command, you
+</code></pre><p>Note that if you wouldn&rsquo;t have specified <code>--since=10s</code> in the above command, you
 would have gotten all log lines from the start of the container.</p>
 <p>You can also view logs of pods that have already completed their lifecycle.
 For this we create a <a href="https://github.com/openshift-evangelists/kbe/blob/main/specs/logging/oneshotpod.yaml">pod</a>
 called <code>oneshot</code> that counts down from 9 to 1 and then exits. Using the <code>-p</code> option
 you can print the logs for previous instances of the container in a pod:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/main/specs/logging/oneshotpod.yaml
-$ kubectl logs -p oneshot -c gen
-<span style="color:#ae81ff">9</span>
-<span style="color:#ae81ff">8</span>
-<span style="color:#ae81ff">7</span>
-<span style="color:#ae81ff">6</span>
-<span style="color:#ae81ff">5</span>
-<span style="color:#ae81ff">4</span>
-<span style="color:#ae81ff">3</span>
-<span style="color:#ae81ff">2</span>
-<span style="color:#ae81ff">1</span>
-</code></pre></div><p>You can remove the created pods with:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kubectl delete pod/logme pod/oneshot
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/main/specs/logging/oneshotpod.yaml
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">kubectl logs -p oneshot -c gen
+</code></pre></div><pre><code class="language-cat" data-lang="cat">9
+8
+7
+6
+5
+4
+3
+2
+1
+</code></pre><p>You can remove the created pods with:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">kubectl delete pod/logme pod/oneshot
 </code></pre></div><p><a href="/secrets">Previous</a> | <a href="/jobs">Next</a></p>
 
         
@@ -261,6 +261,80 @@ $ kubectl logs -p oneshot -c gen
 <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 <script src="https://kubernetesbyexample.com/js/main.js"></script>
+<script>
+
+$('.language-test').parent().css('display', 'none')
+
+
+var copybtns = {
+  fallbackCopyTextToClipboard: function (text) {
+    var txt = document.createElement("textarea");
+    txt.value = text;
+    
+    
+    txt.style.position = "fixed";
+    txt.style.top = "0";
+    txt.style.left = "0";
+  
+    document.body.appendChild(txt);
+    txt.focus();
+    txt.select();
+    txt.setSelectionRange(0, 99999);
+  
+    try {
+      var successful = document.execCommand('copy');
+      var msg = successful ? 'successful' : 'unsuccessful';
+    } catch (err) {
+      console.error('Fallback: Unable to copy', err);
+    }
+  
+    document.body.removeChild(txt);
+  },
+  copyTextToClipboard: function (text) {
+    if (!navigator.clipboard) {
+      copybtns.fallbackCopyTextToClipboard(text);
+      return;
+    }
+    navigator.clipboard.writeText(text).then(function() {
+      
+    }, function(err) {
+      
+      copybtns.fallbackCopyTextToClipboard(text);
+    });
+  },
+  flash: function(btn, content){
+    
+    content.fadeTo(50, 0.25, function() { $(this).fadeTo(300, 1.0); });
+    
+    btn.fadeTo(50, 0.0, function() { $(this).fadeTo(900, 1.0); });
+  },
+  txtClick : function(){
+    var content = $(this);
+    var btn = content.prev('button');
+    
+    copybtns.flash(btn, content);
+    
+    copybtns.copyTextToClipboard(content.text());
+  },
+  btnClick : function(){
+    var btn = $(this);
+    var content = $(btn.next().children()[0]);
+    
+    copybtns.flash(btn, content)
+    
+    copybtns.copyTextToClipboard(content.text());
+  },
+  init : function() {
+    var buttonHTML = '<button type="button" data-toggle="tooltip" data-placement="top" title="Copy" class="copybtn btn btn-outline-dark"><img src="/img/Icon-Red_Hat-Media_and_documents-Paper_Stack_Blank-A-Black-RGB.png"/></button>';
+    
+    $('div.highlight').prepend(buttonHTML);
+    
+    $('button.copybtn').bind("click", copybtns.btnClick);
+    $('div.highlight pre').bind("click", copybtns.txtClick);
+  }
+}
+copybtns.init();
+</script>
 <script src="https://kubernetesbyexample.com/js/highlight.min.js"></script>
 <script> hljs.initHighlightingOnLoad(); </script>
 <script> renderMathInElement(document.body); </script>

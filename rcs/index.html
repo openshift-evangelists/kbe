@@ -184,34 +184,32 @@ sure that they keep running, for example when a node fails or something
 inside of a pod, that is, in one of its containers goes wrong.</p>
 <p>Let&rsquo;s create an <a href="https://github.com/openshift-evangelists/kbe/blob/main/specs/rcs/rc.yaml">RC</a>
 that supervises a single replica of a pod:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/main/specs/rcs/rc.yaml
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/main/specs/rcs/rc.yaml
 </code></pre></div><p>You can see the RC and the pod it looks after like so:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kubectl get rc
-NAME                DESIRED   CURRENT   READY     AGE
-rcex                <span style="color:#ae81ff">1</span>         <span style="color:#ae81ff">1</span>         <span style="color:#ae81ff">1</span>         3m
-
-$ kubectl get pods --show-labels
-NAME           READY     STATUS    RESTARTS   AGE    LABELS
-rcex-qrv8j     1/1       Running   <span style="color:#ae81ff">0</span>          4m     app<span style="color:#f92672">=</span>sise
-</code></pre></div><p>Note two things here:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">kubectl get rc
+</code></pre></div><pre><code class="language-cat" data-lang="cat">NAME                DESIRED   CURRENT   READY     AGE
+rcex                1         1         1         3m
+</code></pre><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">kubectl get pods --show-labels
+</code></pre></div><pre><code class="language-cat" data-lang="cat">NAME           READY     STATUS    RESTARTS   AGE    LABELS
+rcex-qrv8j     1/1       Running   0          4m     app=sise
+</code></pre><p>Note two things here:</p>
 <ul>
 <li>the supervised pod got a random name assigned
 (<code>rcex-qrv8j</code>)</li>
 <li>the way the RC keeps track of its pods is via the label, here <code>app=sise</code></li>
 </ul>
 <p>To scale up, that is, to increase the number of replicas, do:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kubectl scale --replicas<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span> rc/rcex
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">kubectl scale --replicas<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span> rc/rcex
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">kubectl get pods -l app<span style="color:#f92672">=</span>sise
+</code></pre></div><pre><code class="language-cat" data-lang="cat">NAME         READY     STATUS    RESTARTS   AGE
+rcex-1rh9r   1/1       Running   0          54s
+rcex-lv6xv   1/1       Running   0          54s
+rcex-qrv8j   1/1       Running   0          10m
 
-$ kubectl get pods -l app<span style="color:#f92672">=</span>sise
-NAME         READY     STATUS    RESTARTS   AGE
-rcex-1rh9r   1/1       Running   <span style="color:#ae81ff">0</span>          54s
-rcex-lv6xv   1/1       Running   <span style="color:#ae81ff">0</span>          54s
-rcex-qrv8j   1/1       Running   <span style="color:#ae81ff">0</span>          10m
-
-</code></pre></div><p>Finally, to get rid of the RC and the pods it is supervising, use:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kubectl delete rc rcex
-replicationcontroller <span style="color:#e6db74">&#34;rcex&#34;</span> deleted
-</code></pre></div><p>Note that, going forward, the RCs are called <a href="https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/">replica sets</a> (RS), supporting set-based selectors. The RS are already in use in the context of <a href="/deployments/">deployments</a>.</p>
+</code></pre><p>Finally, to get rid of the RC and the pods it is supervising, use:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">kubectl delete rc rcex
+</code></pre></div><pre><code class="language-cat" data-lang="cat">replicationcontroller &quot;rcex&quot; deleted
+</code></pre><p>Note that, going forward, the RCs are called <a href="https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/">replica sets</a> (RS), supporting set-based selectors. The RS are already in use in the context of <a href="/deployments/">deployments</a>.</p>
 <p><a href="/labels">Previous</a> | <a href="/deployments">Next</a></p>
 
         
@@ -252,6 +250,80 @@ replicationcontroller <span style="color:#e6db74">&#34;rcex&#34;</span> deleted
 <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 <script src="https://kubernetesbyexample.com/js/main.js"></script>
+<script>
+
+$('.language-test').parent().css('display', 'none')
+
+
+var copybtns = {
+  fallbackCopyTextToClipboard: function (text) {
+    var txt = document.createElement("textarea");
+    txt.value = text;
+    
+    
+    txt.style.position = "fixed";
+    txt.style.top = "0";
+    txt.style.left = "0";
+  
+    document.body.appendChild(txt);
+    txt.focus();
+    txt.select();
+    txt.setSelectionRange(0, 99999);
+  
+    try {
+      var successful = document.execCommand('copy');
+      var msg = successful ? 'successful' : 'unsuccessful';
+    } catch (err) {
+      console.error('Fallback: Unable to copy', err);
+    }
+  
+    document.body.removeChild(txt);
+  },
+  copyTextToClipboard: function (text) {
+    if (!navigator.clipboard) {
+      copybtns.fallbackCopyTextToClipboard(text);
+      return;
+    }
+    navigator.clipboard.writeText(text).then(function() {
+      
+    }, function(err) {
+      
+      copybtns.fallbackCopyTextToClipboard(text);
+    });
+  },
+  flash: function(btn, content){
+    
+    content.fadeTo(50, 0.25, function() { $(this).fadeTo(300, 1.0); });
+    
+    btn.fadeTo(50, 0.0, function() { $(this).fadeTo(900, 1.0); });
+  },
+  txtClick : function(){
+    var content = $(this);
+    var btn = content.prev('button');
+    
+    copybtns.flash(btn, content);
+    
+    copybtns.copyTextToClipboard(content.text());
+  },
+  btnClick : function(){
+    var btn = $(this);
+    var content = $(btn.next().children()[0]);
+    
+    copybtns.flash(btn, content)
+    
+    copybtns.copyTextToClipboard(content.text());
+  },
+  init : function() {
+    var buttonHTML = '<button type="button" data-toggle="tooltip" data-placement="top" title="Copy" class="copybtn btn btn-outline-dark"><img src="/img/Icon-Red_Hat-Media_and_documents-Paper_Stack_Blank-A-Black-RGB.png"/></button>';
+    
+    $('div.highlight').prepend(buttonHTML);
+    
+    $('button.copybtn').bind("click", copybtns.btnClick);
+    $('div.highlight pre').bind("click", copybtns.txtClick);
+  }
+}
+copybtns.init();
+</script>
 <script src="https://kubernetesbyexample.com/js/highlight.min.js"></script>
 <script> hljs.initHighlightingOnLoad(); </script>
 <script> renderMathInElement(document.body); </script>

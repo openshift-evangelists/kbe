@@ -180,19 +180,19 @@
       <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
         <p>In the context of developing apps on Kubernetes it is often useful to quickly access a service from your local environment without exposing it using, for example, a load balancer or an ingress resource. In this case you can use <a href="https://kubernetes.io/docs/tasks/access-application-cluster/port-forward-access-application-cluster/">port forwarding</a>.</p>
 <p>Let&rsquo;s create an <a href="https://github.com/openshift-evangelists/kbe/blob/main/specs/pf/app.yaml">app</a> consisting of a deployment and a service called <code>simpleservice</code>, serving on port <code>80</code>:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/main/specs/pf/app.yaml
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/main/specs/pf/app.yaml
 </code></pre></div><p>Let&rsquo;s say we want to access the <code>simpleservice</code> service from the local environment, say, your laptop, on port <code>8080</code>. So we forward the traffic as follows:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kubectl port-forward service/simpleservice 8080:80
-Forwarding from 127.0.0.1:8080 -&gt; <span style="color:#ae81ff">9876</span>
-Forwarding from <span style="color:#f92672">[</span>::1<span style="color:#f92672">]</span>:8080 -&gt; <span style="color:#ae81ff">9876</span>
-</code></pre></div><p>We can see from above that the traffic gets eventually routed through the service to the pod serving on port <code>9876</code>.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">kubectl port-forward service/simpleservice 8080:80
+</code></pre></div><pre><code class="language-cat" data-lang="cat">Forwarding from 127.0.0.1:8080 -&gt; 9876
+Forwarding from [::1]:8080 -&gt; 9876
+</code></pre><p>We can see from above that the traffic gets eventually routed through the service to the pod serving on port <code>9876</code>.</p>
 <p>Now we can invoke the service locally like so (using a separate terminal session):</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ curl localhost:8080/info
-<span style="color:#f92672">{</span><span style="color:#e6db74">&#34;host&#34;</span>: <span style="color:#e6db74">&#34;localhost:8080&#34;</span>, <span style="color:#e6db74">&#34;version&#34;</span>: <span style="color:#e6db74">&#34;0.5.0&#34;</span>, <span style="color:#e6db74">&#34;from&#34;</span>: <span style="color:#e6db74">&#34;127.0.0.1&#34;</span><span style="color:#f92672">}</span>
-</code></pre></div><p>Remember that port forwarding is not meant for production traffic but for development and experimentation.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">curl localhost:8080/info
+</code></pre></div><pre><code class="language-cat" data-lang="cat">{&quot;host&quot;: &quot;localhost:8080&quot;, &quot;version&quot;: &quot;0.5.0&quot;, &quot;from&quot;: &quot;127.0.0.1&quot;}
+</code></pre><p>Remember that port forwarding is not meant for production traffic but for development and experimentation.</p>
 <p>You can remove the <code>simpleservice</code> with</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kubectl delete service/simpleservice 
-$ kubectl delete deployment sise-deploy
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">kubectl delete service/simpleservice 
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">kubectl delete deployment sise-deploy
 </code></pre></div><p><a href="/sd">Previous</a> | <a href="/healthz">Next</a></p>
 
         
@@ -233,6 +233,80 @@ $ kubectl delete deployment sise-deploy
 <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 <script src="https://kubernetesbyexample.com/js/main.js"></script>
+<script>
+
+$('.language-test').parent().css('display', 'none')
+
+
+var copybtns = {
+  fallbackCopyTextToClipboard: function (text) {
+    var txt = document.createElement("textarea");
+    txt.value = text;
+    
+    
+    txt.style.position = "fixed";
+    txt.style.top = "0";
+    txt.style.left = "0";
+  
+    document.body.appendChild(txt);
+    txt.focus();
+    txt.select();
+    txt.setSelectionRange(0, 99999);
+  
+    try {
+      var successful = document.execCommand('copy');
+      var msg = successful ? 'successful' : 'unsuccessful';
+    } catch (err) {
+      console.error('Fallback: Unable to copy', err);
+    }
+  
+    document.body.removeChild(txt);
+  },
+  copyTextToClipboard: function (text) {
+    if (!navigator.clipboard) {
+      copybtns.fallbackCopyTextToClipboard(text);
+      return;
+    }
+    navigator.clipboard.writeText(text).then(function() {
+      
+    }, function(err) {
+      
+      copybtns.fallbackCopyTextToClipboard(text);
+    });
+  },
+  flash: function(btn, content){
+    
+    content.fadeTo(50, 0.25, function() { $(this).fadeTo(300, 1.0); });
+    
+    btn.fadeTo(50, 0.0, function() { $(this).fadeTo(900, 1.0); });
+  },
+  txtClick : function(){
+    var content = $(this);
+    var btn = content.prev('button');
+    
+    copybtns.flash(btn, content);
+    
+    copybtns.copyTextToClipboard(content.text());
+  },
+  btnClick : function(){
+    var btn = $(this);
+    var content = $(btn.next().children()[0]);
+    
+    copybtns.flash(btn, content)
+    
+    copybtns.copyTextToClipboard(content.text());
+  },
+  init : function() {
+    var buttonHTML = '<button type="button" data-toggle="tooltip" data-placement="top" title="Copy" class="copybtn btn btn-outline-dark"><img src="/img/Icon-Red_Hat-Media_and_documents-Paper_Stack_Blank-A-Black-RGB.png"/></button>';
+    
+    $('div.highlight').prepend(buttonHTML);
+    
+    $('button.copybtn').bind("click", copybtns.btnClick);
+    $('div.highlight pre').bind("click", copybtns.txtClick);
+  }
+}
+copybtns.init();
+</script>
 <script src="https://kubernetesbyexample.com/js/highlight.min.js"></script>
 <script> hljs.initHighlightingOnLoad(); </script>
 <script> renderMathInElement(document.body); </script>

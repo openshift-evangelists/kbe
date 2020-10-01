@@ -190,36 +190,39 @@ running in a pod. In contrast to the container-local filesystem, the data in vol
 <p>A special type of volume is <code>PersistentVolume</code>, which we will cover elsewhere.</p>
 <p>Let&rsquo;s create a <a href="https://github.com/openshift-evangelists/kbe/blob/main/specs/volumes/pod.yaml">pod</a>
 with two containers that use an <code>emptyDir</code> volume to exchange data:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/main/specs/volumes/pod.yaml
-
-$ kubectl describe pod sharevol
-Name:                   sharevol
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/main/specs/volumes/pod.yaml
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">kubectl describe pod sharevol
+</code></pre></div><pre><code class="language-cat" data-lang="cat">Name:                   sharevol
 Namespace:              default
 ...
 Volumes:
   xchange:
-    Type:       EmptyDir <span style="color:#f92672">(</span>a temporary directory that shares a pod<span style="color:#960050;background-color:#1e0010">&#39;</span>s lifetime<span style="color:#f92672">)</span>
+    Type:       EmptyDir (a temporary directory that shares a pod's lifetime)
     Medium:
-</code></pre></div><p>We first exec into one of the containers in the pod, <code>c1</code>, check the volume mount
+</code></pre><p>We first exec into one of the containers in the pod, <code>c1</code>, check the volume mount
 and generate some data:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kubectl exec -it sharevol -c c1 -- bash
-<span style="color:#f92672">[</span>root@sharevol /<span style="color:#f92672">]</span><span style="color:#75715e"># mount | grep xchange</span>
-/dev/vda3 on /tmp/xchange type xfs <span style="color:#f92672">(</span>rw,relatime,seclabel,attr2,inode64,rjquota<span style="color:#f92672">)</span>
-<span style="color:#f92672">[</span>root@sharevol /<span style="color:#f92672">]</span><span style="color:#75715e"># echo &#39;some data&#39; &gt; /tmp/xchange/data</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">kubectl exec -it sharevol -c c1 -- bash
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">mount | grep xchange
+</code></pre></div><pre><code class="language-cat" data-lang="cat">/dev/vda3 on /tmp/xchange type xfs (rw,relatime,seclabel,attr2,inode64,rjquota)
+</code></pre><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">echo <span style="color:#e6db74">&#39;some data&#39;</span> &gt; /tmp/xchange/data
+</code></pre></div><p>exit the pod to continue</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">exit
 </code></pre></div><p>When we now exec into <code>c2</code>, the second container running in the pod, we can see
 the volume mounted at <code>/tmp/data</code> and are able to read the data created in the
 previous step:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kubectl exec -it sharevol -c c2 -- bash
-<span style="color:#f92672">[</span>root@sharevol /<span style="color:#f92672">]</span><span style="color:#75715e"># mount | grep /tmp/data</span>
-/dev/vda3 on /tmp/data type xfs <span style="color:#f92672">(</span>rw,relatime,seclabel,attr2,inode64,prjquota<span style="color:#f92672">)</span>
-<span style="color:#f92672">[</span>root@sharevol /<span style="color:#f92672">]</span><span style="color:#75715e"># cat /tmp/data/data/</span>
-cat: /tmp/data/data/: Not a directory
-<span style="color:#f92672">[</span>root@sharevol /<span style="color:#f92672">]</span><span style="color:#75715e"># cat /tmp/data/data</span>
-some data
-</code></pre></div><p>Note that in each container you need to decide where to mount the volume and
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">kubectl exec -it sharevol -c c2 -- bash
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">mount | grep /tmp/data
+</code></pre></div><pre><code class="language-cat" data-lang="cat">/dev/vda3 on /tmp/data type xfs (rw,relatime,seclabel,attr2,inode64,prjquota)
+</code></pre><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">cat /tmp/data/data/
+</code></pre></div><pre><code class="language-cat" data-lang="cat">cat: /tmp/data/data/: Not a directory
+</code></pre><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">cat /tmp/data/data
+</code></pre></div><pre><code class="language-cat" data-lang="cat">some data
+</code></pre><p>Note that in each container you need to decide where to mount the volume and
 that for <code>emptyDir</code> you currently can not specify resource consumption limits.</p>
-<p>You can remove the pod with:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kubectl delete pod/sharevol
+<p>return to continue</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">exit
+</code></pre></div><p>You can remove the pod with:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">kubectl delete pod/sharevol
 </code></pre></div><p>As already described, this will destroy the shared volume and all its contents.</p>
 <p><a href="/ns">Previous</a> | <a href="/pv">Next</a></p>
 
@@ -261,6 +264,80 @@ that for <code>emptyDir</code> you currently can not specify resource consumptio
 <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 <script src="https://kubernetesbyexample.com/js/main.js"></script>
+<script>
+
+$('.language-test').parent().css('display', 'none')
+
+
+var copybtns = {
+  fallbackCopyTextToClipboard: function (text) {
+    var txt = document.createElement("textarea");
+    txt.value = text;
+    
+    
+    txt.style.position = "fixed";
+    txt.style.top = "0";
+    txt.style.left = "0";
+  
+    document.body.appendChild(txt);
+    txt.focus();
+    txt.select();
+    txt.setSelectionRange(0, 99999);
+  
+    try {
+      var successful = document.execCommand('copy');
+      var msg = successful ? 'successful' : 'unsuccessful';
+    } catch (err) {
+      console.error('Fallback: Unable to copy', err);
+    }
+  
+    document.body.removeChild(txt);
+  },
+  copyTextToClipboard: function (text) {
+    if (!navigator.clipboard) {
+      copybtns.fallbackCopyTextToClipboard(text);
+      return;
+    }
+    navigator.clipboard.writeText(text).then(function() {
+      
+    }, function(err) {
+      
+      copybtns.fallbackCopyTextToClipboard(text);
+    });
+  },
+  flash: function(btn, content){
+    
+    content.fadeTo(50, 0.25, function() { $(this).fadeTo(300, 1.0); });
+    
+    btn.fadeTo(50, 0.0, function() { $(this).fadeTo(900, 1.0); });
+  },
+  txtClick : function(){
+    var content = $(this);
+    var btn = content.prev('button');
+    
+    copybtns.flash(btn, content);
+    
+    copybtns.copyTextToClipboard(content.text());
+  },
+  btnClick : function(){
+    var btn = $(this);
+    var content = $(btn.next().children()[0]);
+    
+    copybtns.flash(btn, content)
+    
+    copybtns.copyTextToClipboard(content.text());
+  },
+  init : function() {
+    var buttonHTML = '<button type="button" data-toggle="tooltip" data-placement="top" title="Copy" class="copybtn btn btn-outline-dark"><img src="/img/Icon-Red_Hat-Media_and_documents-Paper_Stack_Blank-A-Black-RGB.png"/></button>';
+    
+    $('div.highlight').prepend(buttonHTML);
+    
+    $('button.copybtn').bind("click", copybtns.btnClick);
+    $('div.highlight pre').bind("click", copybtns.txtClick);
+  }
+}
+copybtns.init();
+</script>
 <script src="https://kubernetesbyexample.com/js/highlight.min.js"></script>
 <script> hljs.initHighlightingOnLoad(); </script>
 <script> renderMathInElement(document.body); </script>

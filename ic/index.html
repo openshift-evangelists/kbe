@@ -180,22 +180,22 @@
       <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
         <p>It&rsquo;s sometimes necessary to prepare a container running in a pod. For example, you might want to wait for a service being available, want to configure things at runtime, or init some data in a database. In all of these cases, <a href="https://kubernetes.io/docs/concepts/workloads/pods/init-containers/">init containers</a> are useful. Note that Kubernetes will execute all init containers (and they must all exit successfully) before the main container(s) are executed.</p>
 <p>So let&rsquo;s create an <a href="https://github.com/openshift-evangelists/kbe/blob/main/specs/ic/deploy.yaml">deployment</a> consisting of an init container that writes a message into a file at <code>/ic/this</code> and the main (long-running) container reading out this file, then:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/main/specs/ic/deploy.yaml
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/main/specs/ic/deploy.yaml
 </code></pre></div><p>Now we can check the output of the main container:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kubectl get deploy,po
-NAME                              DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
-deployment.extensions/ic-deploy   <span style="color:#ae81ff">1</span>         <span style="color:#ae81ff">1</span>         <span style="color:#ae81ff">1</span>            <span style="color:#ae81ff">1</span>           11m
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">kubectl get deploy,po
+</code></pre></div><pre><code class="language-cat" data-lang="cat">NAME                              DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
+deployment.extensions/ic-deploy   1         1         1            1           11m
 
 NAME                            READY   STATUS    RESTARTS   AGE
-pod/ic-deploy-bf75cbf87-8zmrb   1/1     Running   <span style="color:#ae81ff">0</span>          59s
-
-$ kubectl logs ic-deploy-bf75cbf87-8zmrb -f
+pod/ic-deploy-bf75cbf87-8zmrb   1/1     Running   0          59s
+</code></pre><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">kubectl logs ic-deploy-bf75cbf87-8zmrb -f
+</code></pre></div><pre><code class="language-cat" data-lang="cat">INIT_DONE
 INIT_DONE
 INIT_DONE
 INIT_DONE
 INIT_DONE
-INIT_DONE
-^C
+</code></pre><p>Send a break signal (Ctrl-C) when you&rsquo;re ready to disconnect from the log stream:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">^C
 </code></pre></div><p>If you want to learn more about init containers and related topics, check out the blog post <a href="https://blog.openshift.com/kubernetes-pods-life/">Kubernetes: A Pod’s Life</a>.</p>
 <p><a href="/statefulset">Previous</a> | <a href="/nodes">Next</a></p>
 
@@ -237,6 +237,80 @@ INIT_DONE
 <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 <script src="https://kubernetesbyexample.com/js/main.js"></script>
+<script>
+
+$('.language-test').parent().css('display', 'none')
+
+
+var copybtns = {
+  fallbackCopyTextToClipboard: function (text) {
+    var txt = document.createElement("textarea");
+    txt.value = text;
+    
+    
+    txt.style.position = "fixed";
+    txt.style.top = "0";
+    txt.style.left = "0";
+  
+    document.body.appendChild(txt);
+    txt.focus();
+    txt.select();
+    txt.setSelectionRange(0, 99999);
+  
+    try {
+      var successful = document.execCommand('copy');
+      var msg = successful ? 'successful' : 'unsuccessful';
+    } catch (err) {
+      console.error('Fallback: Unable to copy', err);
+    }
+  
+    document.body.removeChild(txt);
+  },
+  copyTextToClipboard: function (text) {
+    if (!navigator.clipboard) {
+      copybtns.fallbackCopyTextToClipboard(text);
+      return;
+    }
+    navigator.clipboard.writeText(text).then(function() {
+      
+    }, function(err) {
+      
+      copybtns.fallbackCopyTextToClipboard(text);
+    });
+  },
+  flash: function(btn, content){
+    
+    content.fadeTo(50, 0.25, function() { $(this).fadeTo(300, 1.0); });
+    
+    btn.fadeTo(50, 0.0, function() { $(this).fadeTo(900, 1.0); });
+  },
+  txtClick : function(){
+    var content = $(this);
+    var btn = content.prev('button');
+    
+    copybtns.flash(btn, content);
+    
+    copybtns.copyTextToClipboard(content.text());
+  },
+  btnClick : function(){
+    var btn = $(this);
+    var content = $(btn.next().children()[0]);
+    
+    copybtns.flash(btn, content)
+    
+    copybtns.copyTextToClipboard(content.text());
+  },
+  init : function() {
+    var buttonHTML = '<button type="button" data-toggle="tooltip" data-placement="top" title="Copy" class="copybtn btn btn-outline-dark"><img src="/img/Icon-Red_Hat-Media_and_documents-Paper_Stack_Blank-A-Black-RGB.png"/></button>';
+    
+    $('div.highlight').prepend(buttonHTML);
+    
+    $('button.copybtn').bind("click", copybtns.btnClick);
+    $('div.highlight pre').bind("click", copybtns.txtClick);
+  }
+}
+copybtns.init();
+</script>
 <script src="https://kubernetesbyexample.com/js/highlight.min.js"></script>
 <script> hljs.initHighlightingOnLoad(); </script>
 <script> renderMathInElement(document.body); </script>

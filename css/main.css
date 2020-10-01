@@ -1,5 +1,30 @@
 @import url("pygment_highlights.css");
 
+.highlight pre {
+  margin-bottom: 0px; margin-top:10px;
+}
+button.copybtn:hover {
+  border:solid 2px #777;
+  padding:2px 3px;
+  background-color:rgb(128,128,128,0.4);
+}
+button.copybtn {
+  border:solid 1px #999;
+  margin:3px 4px;
+  padding:3px 4px;
+  width:37px;
+  right:14px;
+  position:absolute;
+  border-radius:5px;
+  weight:900;
+  background: #eee;
+}
+@media only screen and (min-width: 768px) {
+  button.copybtn {
+    left: 98%;
+  }
+}
+
 /* --- General --- */
 
 body {

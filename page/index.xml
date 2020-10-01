@@ -39,7 +39,7 @@ Click the red START SCENARIO button, and then you will have access to an OpenShi
       <guid>https://kubernetesbyexample.com/nodes/</guid>
       <description>In Kubernetes, nodes are the (virtual) machines where your workloads in shape of pods run. As a developer you typically don&amp;rsquo;t deal with nodes directly, however as an admin you might want to familiarize yourself with node operations.
 To list available nodes in your cluster (note that the output will depend on the environment you&amp;rsquo;re using. This example is using the OpenShift Playground):
-$ kubectl get nodes NAME STATUS ROLES AGE VERSION crc-rk2fc-master-0 Ready master,worker 102d v1.</description>
+kubectl get nodes NAME STATUS ROLES AGE VERSION crc-rk2fc-master-0 Ready master,worker 102d v1.</description>
     </item>
     
     <item>
@@ -59,8 +59,8 @@ $ kubectl get nodes NAME STATUS ROLES AGE VERSION crc-rk2fc-master-0 Ready maste
       <guid>https://kubernetesbyexample.com/jobs/</guid>
       <description>A job in Kubernetes is a supervisor for pods carrying out batch processes, that is, a process that runs for a certain time to completion, for example a calculation or a backup operation.
 Let&amp;rsquo;s create a job called countdown that supervises a pod counting from 9 down to 1:
-$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/main/specs/jobs/job.yaml You can see the job and the pod it looks after like so:
-$ kubectl get jobs NAME DESIRED SUCCESSFUL AGE countdown 1 1 5s $ kubectl get pods NAME READY STATUS RESTARTS AGE countdown-qkjx8 0/1 Completed 0 2m17s To learn more about the status of the job, do:</description>
+kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/main/specs/jobs/job.yaml You can see the job and the pod it looks after like so:
+kubectl get jobs NAME DESIRED SUCCESSFUL AGE countdown 1 1 5s kubectl get pods NAME READY STATUS RESTARTS AGE countdown-qkjx8 0/1 Completed 0 2m17s To learn more about the status of the job, do:</description>
     </item>
     
     <item>
@@ -81,8 +81,8 @@ $ kubectl get jobs NAME DESIRED SUCCESSFUL AGE countdown 1 1 5s $ kubectl get po
       <guid>https://kubernetesbyexample.com/api/</guid>
       <description>Sometimes it&amp;rsquo;s useful or necessary to directly access the Kubernetes API server, for exploratory or testing purposes.
 In order to do this, one option is to proxy the API to your local environment, using:
-$ kubectl proxy --port=8080 Starting to serve on 127.0.0.1:8080 Now you can query the API (in a separate terminal session) like so:
-$ curl http://localhost:8080/api/v1 { &amp;#34;kind&amp;#34;: &amp;#34;APIResourceList&amp;#34;, &amp;#34;groupVersion&amp;#34;: &amp;#34;v1&amp;#34;, &amp;#34;resources&amp;#34;: [ { ... { &amp;#34;name&amp;#34;: &amp;#34;services/status&amp;#34;, &amp;#34;singularName&amp;#34;: &amp;#34;&amp;#34;, &amp;#34;namespaced&amp;#34;: true, &amp;#34;kind&amp;#34;: &amp;#34;Service&amp;#34;, &amp;#34;verbs&amp;#34;: [ &amp;#34;get&amp;#34;, &amp;#34;patch&amp;#34;, &amp;#34;update&amp;#34; ] } ] } Alternatively, without proxying, you can use kubectl directly as follows to achieve the same:</description>
+kubectl proxy --port=8080 Starting to serve on 127.0.0.1:8080 Now you can query the API (in a separate terminal session) like so:
+curl http://localhost:8080/api/v1 { &amp;quot;kind&amp;quot;: &amp;quot;APIResourceList&amp;quot;, &amp;quot;groupVersion&amp;quot;: &amp;quot;v1&amp;quot;, &amp;quot;resources&amp;quot;: [ { ... { &amp;quot;name&amp;quot;: &amp;quot;services/status&amp;quot;, &amp;quot;singularName&amp;quot;: &amp;quot;&amp;quot;, &amp;quot;namespaced&amp;quot;: true, &amp;quot;kind&amp;quot;: &amp;quot;Service&amp;quot;, &amp;quot;verbs&amp;quot;: [ &amp;quot;get&amp;quot;, &amp;quot;patch&amp;quot;, &amp;quot;update&amp;quot; ] } ] } Alternatively, without proxying, you can use kubectl directly as follows to achieve the same:</description>
     </item>
     
     <item>
@@ -93,8 +93,7 @@ $ curl http://localhost:8080/api/v1 { &amp;#34;kind&amp;#34;: &amp;#34;APIResour
       <guid>https://kubernetesbyexample.com/pods/</guid>
       <description>A pod is a collection of containers sharing a network and mount namespace and is the basic unit of deployment in Kubernetes. All containers in a pod are scheduled on the same node.
 To launch a pod using the container image quay.io/openshiftlabs/simpleservice:0.5.0 and exposing a HTTP API on port 9876, execute:
-$ kubectl run sise --image=quay.io/openshiftlabs/simpleservice:0.5.0 --port=9876 We can now see that the pod is running:
-$ kubectl get pods NAME READY STATUS RESTARTS AGE sise-3210265840-k705b 1/1 Running 0 1m $ kubectl describe pod sise-3210265840-k705b | grep IP: IP: 172.</description>
+kubectl run sise --image=quay.io/openshiftlabs/simpleservice:0.5.0 --port=9876 pod/sise created Note: Deprecation Warning! Older releases of kubectl will produce a deployment resource as the result of the provided kubectl run example, while newer releases produce a single pod resource.</description>
     </item>
     
     <item>
@@ -125,7 +124,7 @@ Let&amp;rsquo;s create a pod called logme that runs a container writing to stdou
       <guid>https://kubernetesbyexample.com/deployments/</guid>
       <description>A deployment is a supervisor for pods, giving you fine-grained control over how and when a new pod version is rolled out as well as rolled back to a previous state.
 Let&amp;rsquo;s create a deployment called sise-deploy that supervises two replicas of a pod as well as a replica set:
-$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/main/specs/deployments/d09.yaml You can have a look at the deployment, as well as the the replica set and the pods the deployment looks after like so:</description>
+kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/main/specs/deployments/d09.yaml You can have a look at the deployment, as well as the the replica set and the pods the deployment looks after like so:</description>
     </item>
     
     <item>
@@ -136,7 +135,8 @@ $ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/m
       <guid>https://kubernetesbyexample.com/envs/</guid>
       <description>You can set environment variables for containers running in a pod and in addition, Kubernetes exposes certain runtime infos via environment variables automatically.
 Let&amp;rsquo;s launch a pod that we pass an environment variable SIMPLE_SERVICE_VERSION with the value 1.0:
-$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/main/specs/envs/pod.yaml $ kubectl describe pod envs | grep IP: IP: 172.17.0.3 Now, let&amp;rsquo;s verify from within the cluster if the application running in the pod has picked up the environment variable SIMPLE_SERVICE_VERSION:</description>
+kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/main/specs/envs/pod.yaml Now, let&amp;rsquo;s verify from within the cluster if the application running in the pod has picked up the environment variable SIMPLE_SERVICE_VERSION:
+kubectl exec envs -t -- curl -s 127.</description>
     </item>
     
     <item>
@@ -177,7 +177,7 @@ If you are using OpenShift Playground like us there already exist a few persiste
       <guid>https://kubernetesbyexample.com/rcs/</guid>
       <description>A replication controller (RC) is a supervisor for long-running pods. An RC will launch a specified number of pods called replicas and makes sure that they keep running, for example when a node fails or something inside of a pod, that is, in one of its containers goes wrong.
 Let&amp;rsquo;s create an RC that supervises a single replica of a pod:
-$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/main/specs/rcs/rc.yaml You can see the RC and the pod it looks after like so:</description>
+kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/main/specs/rcs/rc.yaml You can see the RC and the pod it looks after like so:</description>
     </item>
     
     <item>
@@ -217,7 +217,7 @@ So let&amp;rsquo;s create an deployment consisting of an init container that wri
       <guid>https://kubernetesbyexample.com/pf/</guid>
       <description>In the context of developing apps on Kubernetes it is often useful to quickly access a service from your local environment without exposing it using, for example, a load balancer or an ingress resource. In this case you can use port forwarding.
 Let&amp;rsquo;s create an app consisting of a deployment and a service called simpleservice, serving on port 80:
-$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/main/specs/pf/app.yaml Let&amp;rsquo;s say we want to access the simpleservice service from the local environment, say, your laptop, on port 8080.</description>
+kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/main/specs/pf/app.yaml Let&amp;rsquo;s say we want to access the simpleservice service from the local environment, say, your laptop, on port 8080.</description>
     </item>
     
   </channel>

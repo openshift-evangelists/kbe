@@ -183,8 +183,8 @@ as a workspace you&rsquo;re sharing with other users. Many resources such as pod
 services are namespaced, while some, for example, nodes are not namespaced (but cluster-wide). As a developer you&rsquo;d usually use an assigned namespace, however admins may wish to manage them, for example to set up access control or resource quotas.</p>
 <p>Let&rsquo;s list all namespaces (note that the output will depend on the environment
 you&rsquo;re using, we&rsquo;re using the <a href="/diy/">OpenShift Playground</a> here):</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kubectl get ns
-NAME                                                    STATUS   AGE
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">kubectl get ns
+</code></pre></div><pre><code class="language-cat" data-lang="cat">NAME                                                    STATUS   AGE
 default                                                 Active   98d
 kube-node-lease                                         Active   98d
 kube-public                                             Active   98d
@@ -192,22 +192,21 @@ kube-system                                             Active   98d
 openshift                                               Active   98d
 openshift-apiserver                                     Active   98d
 ...
-</code></pre></div><p>You can learn more about a namespace using the <code>describe</code> verb, for example:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kubectl describe ns default
-Name:   default
+</code></pre><p>You can learn more about a namespace using the <code>describe</code> verb, for example:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">kubectl describe ns default
+</code></pre></div><pre><code class="language-cat" data-lang="cat">Name:   default
 Labels: &lt;none&gt;
 Status: Active
 
 No resource quota.
 
 No resource limits.
-</code></pre></div><p>Let&rsquo;s now create a new <a href="https://github.com/openshift-evangelists/kbe/blob/main/specs/ns/ns.yaml">namespace</a>
+</code></pre><p>Let&rsquo;s now create a new <a href="https://github.com/openshift-evangelists/kbe/blob/main/specs/ns/ns.yaml">namespace</a>
 called <code>test</code> now:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/main/specs/ns/ns.yaml
-namespace <span style="color:#e6db74">&#34;test&#34;</span> created
-
- kubectl get ns
-NAME                                                    STATUS   AGE
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/main/specs/ns/ns.yaml
+</code></pre></div><pre><code class="language-cat" data-lang="cat">namespace &quot;test&quot; created
+</code></pre><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">kubectl get ns
+</code></pre></div><pre><code class="language-cat" data-lang="cat">NAME                                                    STATUS   AGE
 default                                                 Active   98d
 kube-node-lease                                         Active   98d
 kube-public                                             Active   98d
@@ -216,25 +215,25 @@ openshift                                               Active   98d
 openshift-apiserver                                     Active   98d
 ...
 test                                                    Active   16s
-</code></pre></div><p>Alternatively, we could have created the namespace using the <code>kubectl create namespace test</code> command.</p>
+</code></pre><p>Alternatively, we could have created the namespace using the <code>kubectl create namespace test</code> command.</p>
 <p>To launch a <a href="https://github.com/openshift-evangelists/kbe/blob/main/specs/ns/pod.yaml">pod</a> in
 the newly created namespace <code>test</code>, do:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kubectl apply --namespace<span style="color:#f92672">=</span>test -f https://raw.githubusercontent.com/openshift-evangelists/kbe/main/specs/ns/pod.yaml
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">kubectl apply --namespace<span style="color:#f92672">=</span>test -f https://raw.githubusercontent.com/openshift-evangelists/kbe/main/specs/ns/pod.yaml
 </code></pre></div><p>Note that using above method the namespace becomes a runtime property, that is,
 you can deploy the same pod or service, etc. into multiple
 namespaces (for example: <code>dev</code> and <code>prod</code>). Hard-coding the
 namespace directly in the <code>metadata</code> section like shown in the following is possible but causes less flexibility when deploying your apps:</p>
-<pre><code>apiVersion: v1
+<pre><code class="language-cat" data-lang="cat">apiVersion: v1
 kind: Pod
 metadata:
   name: podintest
   namespace: test
 </code></pre><p>To list namespaced objects such as our pod <code>podintest</code>, run the following command:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kubectl get pods --namespace<span style="color:#f92672">=</span>test
-NAME        READY     STATUS    RESTARTS   AGE
-podintest   1/1       Running   <span style="color:#ae81ff">0</span>          16s
-</code></pre></div><p>You can remove the namespace (and everything inside) with:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kubectl delete ns test
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">kubectl get pods --namespace<span style="color:#f92672">=</span>test
+</code></pre></div><pre><code class="language-cat" data-lang="cat">NAME        READY     STATUS    RESTARTS   AGE
+podintest   1/1       Running   0          16s
+</code></pre><p>You can remove the namespace (and everything inside) with:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">kubectl delete ns test
 </code></pre></div><p>If you&rsquo;re an admin, you might want to check out the <a href="https://kubernetes.io/docs/tasks/administer-cluster/namespaces/">docs</a>
 for more info how to handle namespaces.</p>
 <p><a href="/envs">Previous</a> | <a href="/volumes">Next</a></p>
@@ -277,6 +276,80 @@ for more info how to handle namespaces.</p>
 <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 <script src="https://kubernetesbyexample.com/js/main.js"></script>
+<script>
+
+$('.language-test').parent().css('display', 'none')
+
+
+var copybtns = {
+  fallbackCopyTextToClipboard: function (text) {
+    var txt = document.createElement("textarea");
+    txt.value = text;
+    
+    
+    txt.style.position = "fixed";
+    txt.style.top = "0";
+    txt.style.left = "0";
+  
+    document.body.appendChild(txt);
+    txt.focus();
+    txt.select();
+    txt.setSelectionRange(0, 99999);
+  
+    try {
+      var successful = document.execCommand('copy');
+      var msg = successful ? 'successful' : 'unsuccessful';
+    } catch (err) {
+      console.error('Fallback: Unable to copy', err);
+    }
+  
+    document.body.removeChild(txt);
+  },
+  copyTextToClipboard: function (text) {
+    if (!navigator.clipboard) {
+      copybtns.fallbackCopyTextToClipboard(text);
+      return;
+    }
+    navigator.clipboard.writeText(text).then(function() {
+      
+    }, function(err) {
+      
+      copybtns.fallbackCopyTextToClipboard(text);
+    });
+  },
+  flash: function(btn, content){
+    
+    content.fadeTo(50, 0.25, function() { $(this).fadeTo(300, 1.0); });
+    
+    btn.fadeTo(50, 0.0, function() { $(this).fadeTo(900, 1.0); });
+  },
+  txtClick : function(){
+    var content = $(this);
+    var btn = content.prev('button');
+    
+    copybtns.flash(btn, content);
+    
+    copybtns.copyTextToClipboard(content.text());
+  },
+  btnClick : function(){
+    var btn = $(this);
+    var content = $(btn.next().children()[0]);
+    
+    copybtns.flash(btn, content)
+    
+    copybtns.copyTextToClipboard(content.text());
+  },
+  init : function() {
+    var buttonHTML = '<button type="button" data-toggle="tooltip" data-placement="top" title="Copy" class="copybtn btn btn-outline-dark"><img src="/img/Icon-Red_Hat-Media_and_documents-Paper_Stack_Blank-A-Black-RGB.png"/></button>';
+    
+    $('div.highlight').prepend(buttonHTML);
+    
+    $('button.copybtn').bind("click", copybtns.btnClick);
+    $('div.highlight pre').bind("click", copybtns.txtClick);
+  }
+}
+copybtns.init();
+</script>
 <script src="https://kubernetesbyexample.com/js/highlight.min.js"></script>
 <script> hljs.initHighlightingOnLoad(); </script>
 <script> renderMathInElement(document.body); </script>

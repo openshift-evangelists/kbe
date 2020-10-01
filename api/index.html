@@ -180,45 +180,44 @@
       <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
         <p>Sometimes it&rsquo;s useful or necessary to directly <a href="https://kubernetes.io/docs/tasks/access-kubernetes-api/http-proxy-access-api/">access the Kubernetes API server</a>, for exploratory or testing purposes.</p>
 <p>In order to do this, one option is to proxy the API to your local environment, using:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kubectl proxy --port<span style="color:#f92672">=</span><span style="color:#ae81ff">8080</span>
-Starting to serve on 127.0.0.1:8080
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">kubectl proxy --port<span style="color:#f92672">=</span><span style="color:#ae81ff">8080</span>
+</code></pre></div><pre><code class="language-cat" data-lang="cat">Starting to serve on 127.0.0.1:8080
 
-</code></pre></div><p>Now you can query the API (in a separate terminal session) like so:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ curl http://localhost:8080/api/v1
-<span style="color:#f92672">{</span>
-  <span style="color:#e6db74">&#34;kind&#34;</span>: <span style="color:#e6db74">&#34;APIResourceList&#34;</span>,
-  <span style="color:#e6db74">&#34;groupVersion&#34;</span>: <span style="color:#e6db74">&#34;v1&#34;</span>,
-  <span style="color:#e6db74">&#34;resources&#34;</span>: <span style="color:#f92672">[</span>
-    <span style="color:#f92672">{</span>
+</code></pre><p>Now you can query the API (in a separate terminal session) like so:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">curl http://localhost:8080/api/v1
+</code></pre></div><pre><code class="language-cat" data-lang="cat">{
+  &quot;kind&quot;: &quot;APIResourceList&quot;,
+  &quot;groupVersion&quot;: &quot;v1&quot;,
+  &quot;resources&quot;: [
+    {
 ...
-    <span style="color:#f92672">{</span>
-      <span style="color:#e6db74">&#34;name&#34;</span>: <span style="color:#e6db74">&#34;services/status&#34;</span>,
-      <span style="color:#e6db74">&#34;singularName&#34;</span>: <span style="color:#e6db74">&#34;&#34;</span>,
-      <span style="color:#e6db74">&#34;namespaced&#34;</span>: true,
-      <span style="color:#e6db74">&#34;kind&#34;</span>: <span style="color:#e6db74">&#34;Service&#34;</span>,
-      <span style="color:#e6db74">&#34;verbs&#34;</span>: <span style="color:#f92672">[</span>
-        <span style="color:#e6db74">&#34;get&#34;</span>,
-        <span style="color:#e6db74">&#34;patch&#34;</span>,
-        <span style="color:#e6db74">&#34;update&#34;</span>
-      <span style="color:#f92672">]</span>
-    <span style="color:#f92672">}</span>
-  <span style="color:#f92672">]</span>
-<span style="color:#f92672">}</span>
-</code></pre></div><p>Alternatively, without proxying, you can use <code>kubectl</code> directly as follows to achieve the same:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kubectl get --raw /api/v1
+    {
+      &quot;name&quot;: &quot;services/status&quot;,
+      &quot;singularName&quot;: &quot;&quot;,
+      &quot;namespaced&quot;: true,
+      &quot;kind&quot;: &quot;Service&quot;,
+      &quot;verbs&quot;: [
+        &quot;get&quot;,
+        &quot;patch&quot;,
+        &quot;update&quot;
+      ]
+    }
+  ]
+}
+</code></pre><p>Alternatively, without proxying, you can use <code>kubectl</code> directly as follows to achieve the same:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">kubectl get --raw /api/v1
 </code></pre></div><p>Further, if you want to explore the supported API versions and/or resources, you can use the following commands:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kubectl api-versions
-admissionregistration.k8s.io/v1beta1
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">kubectl api-versions
+</code></pre></div><pre><code class="language-cat" data-lang="cat">admissionregistration.k8s.io/v1beta1
 ...
 v1
-
-$ kubectl api-resources
-NAME                                  SHORTNAMES       APIGROUP         NAMESPACED   KIND
+</code></pre><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">kubectl api-resources
+</code></pre></div><pre><code class="language-cat" data-lang="cat">NAME                                  SHORTNAMES       APIGROUP         NAMESPACED   KIND
 bindings         true         Binding
 componentstatuses                     cs         false        ComponentStatus
 configmaps                            cm         true         ConfigMap
 ...
-</code></pre></div><p><a href="/nodes">Previous</a></p>
+</code></pre><p><a href="/nodes">Previous</a></p>
 
         
       </div>
@@ -258,6 +257,80 @@ configmaps                            cm         true         ConfigMap
 <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 <script src="https://kubernetesbyexample.com/js/main.js"></script>
+<script>
+
+$('.language-test').parent().css('display', 'none')
+
+
+var copybtns = {
+  fallbackCopyTextToClipboard: function (text) {
+    var txt = document.createElement("textarea");
+    txt.value = text;
+    
+    
+    txt.style.position = "fixed";
+    txt.style.top = "0";
+    txt.style.left = "0";
+  
+    document.body.appendChild(txt);
+    txt.focus();
+    txt.select();
+    txt.setSelectionRange(0, 99999);
+  
+    try {
+      var successful = document.execCommand('copy');
+      var msg = successful ? 'successful' : 'unsuccessful';
+    } catch (err) {
+      console.error('Fallback: Unable to copy', err);
+    }
+  
+    document.body.removeChild(txt);
+  },
+  copyTextToClipboard: function (text) {
+    if (!navigator.clipboard) {
+      copybtns.fallbackCopyTextToClipboard(text);
+      return;
+    }
+    navigator.clipboard.writeText(text).then(function() {
+      
+    }, function(err) {
+      
+      copybtns.fallbackCopyTextToClipboard(text);
+    });
+  },
+  flash: function(btn, content){
+    
+    content.fadeTo(50, 0.25, function() { $(this).fadeTo(300, 1.0); });
+    
+    btn.fadeTo(50, 0.0, function() { $(this).fadeTo(900, 1.0); });
+  },
+  txtClick : function(){
+    var content = $(this);
+    var btn = content.prev('button');
+    
+    copybtns.flash(btn, content);
+    
+    copybtns.copyTextToClipboard(content.text());
+  },
+  btnClick : function(){
+    var btn = $(this);
+    var content = $(btn.next().children()[0]);
+    
+    copybtns.flash(btn, content)
+    
+    copybtns.copyTextToClipboard(content.text());
+  },
+  init : function() {
+    var buttonHTML = '<button type="button" data-toggle="tooltip" data-placement="top" title="Copy" class="copybtn btn btn-outline-dark"><img src="/img/Icon-Red_Hat-Media_and_documents-Paper_Stack_Blank-A-Black-RGB.png"/></button>';
+    
+    $('div.highlight').prepend(buttonHTML);
+    
+    $('button.copybtn').bind("click", copybtns.btnClick);
+    $('div.highlight pre').bind("click", copybtns.txtClick);
+  }
+}
+copybtns.init();
+</script>
 <script src="https://kubernetesbyexample.com/js/highlight.min.js"></script>
 <script> hljs.initHighlightingOnLoad(); </script>
 <script> renderMathInElement(document.body); </script>

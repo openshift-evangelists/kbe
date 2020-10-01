@@ -183,65 +183,64 @@ a process that runs for a certain time to completion, for example a calculation
 or a backup operation.</p>
 <p>Let&rsquo;s create a <a href="https://github.com/openshift-evangelists/kbe/blob/main/specs/jobs/job.yaml">job</a>
 called <code>countdown</code> that supervises a pod counting from 9 down to 1:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/main/specs/jobs/job.yaml
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/main/specs/jobs/job.yaml
 </code></pre></div><p>You can see the job and the pod it looks after like so:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kubectl get jobs
-NAME                      DESIRED   SUCCESSFUL   AGE
-countdown                 <span style="color:#ae81ff">1</span>         <span style="color:#ae81ff">1</span>            5s
-
-$ kubectl get pods
-NAME              READY   STATUS      RESTARTS   AGE
-countdown-qkjx8   0/1     Completed   <span style="color:#ae81ff">0</span>          2m17s
-</code></pre></div><p>To learn more about the status of the job, do:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kubectl describe jobs/countdown
-Name:           countdown
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">kubectl get jobs
+</code></pre></div><pre><code class="language-cat" data-lang="cat">NAME                      DESIRED   SUCCESSFUL   AGE
+countdown                 1         1            5s
+</code></pre><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">kubectl get pods
+</code></pre></div><pre><code class="language-cat" data-lang="cat">NAME              READY   STATUS      RESTARTS   AGE
+countdown-qkjx8   0/1     Completed   0          2m17s
+</code></pre><p>To learn more about the status of the job, do:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">kubectl describe jobs/countdown
+</code></pre></div><pre><code class="language-cat" data-lang="cat">Name:           countdown
 Namespace:      default
-Selector:       controller-uid<span style="color:#f92672">=</span>4960c8be-6a3f-11ea-84fd-0242ac11002a
-Labels:         controller-uid<span style="color:#f92672">=</span>4960c8be-6a3f-11ea-84fd-0242ac11002a
-                job-name<span style="color:#f92672">=</span>countdown
+Selector:       controller-uid=4960c8be-6a3f-11ea-84fd-0242ac11002a
+Labels:         controller-uid=4960c8be-6a3f-11ea-84fd-0242ac11002a
+                job-name=countdown
 Annotations:    kubectl.kubernetes.io/last-applied-configuration:
-                  <span style="color:#f92672">{</span><span style="color:#e6db74">&#34;apiVersion&#34;</span>:<span style="color:#e6db74">&#34;batch/v1&#34;</span>,<span style="color:#e6db74">&#34;kind&#34;</span>:<span style="color:#e6db74">&#34;Job&#34;</span>,<span style="color:#e6db74">&#34;metadata&#34;</span>:<span style="color:#f92672">{</span><span style="color:#e6db74">&#34;annotations&#34;</span>:<span style="color:#f92672">{}</span>,<span style="color:#e6db74">&#34;name&#34;</span>:<span style="color:#e6db74">&#34;countdown&#34;</span>,<span style="color:#e6db74">&#34;namespace&#34;</span>:<span style="color:#e6db74">&#34;default&#34;</span><span style="color:#f92672">}</span>,<span style="color:#e6db74">&#34;spec&#34;</span>:<span style="color:#f92672">{</span><span style="color:#e6db74">&#34;template&#34;</span>:<span style="color:#f92672">{</span><span style="color:#e6db74">&#34;metadata...
-</span><span style="color:#e6db74">Parallelism:    1
-</span><span style="color:#e6db74">Completions:    1
-</span><span style="color:#e6db74">Start Time:     Fri, 20 Mar 2020 00:11:03 +0000
-</span><span style="color:#e6db74">Completed At:   Fri, 20 Mar 2020 00:11:12 +0000
-</span><span style="color:#e6db74">Duration:       9s
-</span><span style="color:#e6db74">Pods Statuses:  0 Running / 1 Succeeded / 0 Failed
-</span><span style="color:#e6db74">Pod Template:
-</span><span style="color:#e6db74">  Labels:  controller-uid=4960c8be-6a3f-11ea-84fd-0242ac11002a
-</span><span style="color:#e6db74">           job-name=countdown
-</span><span style="color:#e6db74">  Containers:
-</span><span style="color:#e6db74">   counter:
-</span><span style="color:#e6db74">    Image:      centos:7
-</span><span style="color:#e6db74">    Port:       &lt;none&gt;
-</span><span style="color:#e6db74">    Host Port:  &lt;none&gt;
-</span><span style="color:#e6db74">    Command:
-</span><span style="color:#e6db74">      bin/bash
-</span><span style="color:#e6db74">      -c
-</span><span style="color:#e6db74">      for i in 9 8 7 6 5 4 3 2 1 ; do echo </span>$i<span style="color:#e6db74"> ; done
-</span><span style="color:#e6db74">    Environment:  &lt;none&gt;
-</span><span style="color:#e6db74">    Mounts:       &lt;none&gt;
-</span><span style="color:#e6db74">  Volumes:        &lt;none&gt;
-</span><span style="color:#e6db74">Events:
-</span><span style="color:#e6db74">  Type    Reason            Age    From            Message
-</span><span style="color:#e6db74">  ----    ------            ----   ----            -------
-</span><span style="color:#e6db74">  Normal  SuccessfulCreate  3m18s  job-controller  Created pod: countdown-qkjx8
-</span></code></pre></div><p>And to see the output of the job via the pod it supervised, execute:</p>
+                  {&quot;apiVersion&quot;:&quot;batch/v1&quot;,&quot;kind&quot;:&quot;Job&quot;,&quot;metadata&quot;:{&quot;annotations&quot;:{},&quot;name&quot;:&quot;countdown&quot;,&quot;namespace&quot;:&quot;default&quot;},&quot;spec&quot;:{&quot;template&quot;:{&quot;metadata...
+Parallelism:    1
+Completions:    1
+Start Time:     Fri, 20 Mar 2020 00:11:03 +0000
+Completed At:   Fri, 20 Mar 2020 00:11:12 +0000
+Duration:       9s
+Pods Statuses:  0 Running / 1 Succeeded / 0 Failed
+Pod Template:
+  Labels:  controller-uid=4960c8be-6a3f-11ea-84fd-0242ac11002a
+           job-name=countdown
+  Containers:
+   counter:
+    Image:      centos:7
+    Port:       &lt;none&gt;
+    Host Port:  &lt;none&gt;
+    Command:
+      bin/bash
+      -c
+      for i in 9 8 7 6 5 4 3 2 1 ; do echo $i ; done
+    Environment:  &lt;none&gt;
+    Mounts:       &lt;none&gt;
+  Volumes:        &lt;none&gt;
+Events:
+  Type    Reason            Age    From            Message
+  ----    ------            ----   ----            -------
+  Normal  SuccessfulCreate  3m18s  job-controller  Created pod: countdown-qkjx8
+</code></pre><p>And to see the output of the job via the pod it supervised, execute:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">kubectl logs countdown-qkjx8
-<span style="color:#ae81ff">9</span>
-<span style="color:#ae81ff">8</span>
-<span style="color:#ae81ff">7</span>
-<span style="color:#ae81ff">6</span>
-<span style="color:#ae81ff">5</span>
-<span style="color:#ae81ff">4</span>
-<span style="color:#ae81ff">3</span>
-<span style="color:#ae81ff">2</span>
-<span style="color:#ae81ff">1</span>
-</code></pre></div><p>To clean up, use the <code>delete</code> verb on the job object which will remove all the
+</code></pre></div><pre><code class="language-cat" data-lang="cat">9
+8
+7
+6
+5
+4
+3
+2
+1
+</code></pre><p>To clean up, use the <code>delete</code> verb on the job object which will remove all the
 supervised pods:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kubectl delete job countdown
-job <span style="color:#e6db74">&#34;countdown&#34;</span> deleted
-</code></pre></div><p>Note that there are also more advanced ways to use jobs, for example,
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">kubectl delete job countdown
+</code></pre></div><pre><code class="language-cat" data-lang="cat">job &quot;countdown&quot; deleted
+</code></pre><p>Note that there are also more advanced ways to use jobs, for example,
 by utilizing a <a href="https://kubernetes.io/docs/tasks/job/coarse-parallel-processing-work-queue/">work queue</a>
 or scheduling the execution at a certain time via <a href="https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/">cron jobs</a>.</p>
 <p><a href="/logging">Previous</a> | <a href="/statefulset">Next</a></p>
@@ -284,6 +283,80 @@ or scheduling the execution at a certain time via <a href="https://kubernetes.io
 <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 <script src="https://kubernetesbyexample.com/js/main.js"></script>
+<script>
+
+$('.language-test').parent().css('display', 'none')
+
+
+var copybtns = {
+  fallbackCopyTextToClipboard: function (text) {
+    var txt = document.createElement("textarea");
+    txt.value = text;
+    
+    
+    txt.style.position = "fixed";
+    txt.style.top = "0";
+    txt.style.left = "0";
+  
+    document.body.appendChild(txt);
+    txt.focus();
+    txt.select();
+    txt.setSelectionRange(0, 99999);
+  
+    try {
+      var successful = document.execCommand('copy');
+      var msg = successful ? 'successful' : 'unsuccessful';
+    } catch (err) {
+      console.error('Fallback: Unable to copy', err);
+    }
+  
+    document.body.removeChild(txt);
+  },
+  copyTextToClipboard: function (text) {
+    if (!navigator.clipboard) {
+      copybtns.fallbackCopyTextToClipboard(text);
+      return;
+    }
+    navigator.clipboard.writeText(text).then(function() {
+      
+    }, function(err) {
+      
+      copybtns.fallbackCopyTextToClipboard(text);
+    });
+  },
+  flash: function(btn, content){
+    
+    content.fadeTo(50, 0.25, function() { $(this).fadeTo(300, 1.0); });
+    
+    btn.fadeTo(50, 0.0, function() { $(this).fadeTo(900, 1.0); });
+  },
+  txtClick : function(){
+    var content = $(this);
+    var btn = content.prev('button');
+    
+    copybtns.flash(btn, content);
+    
+    copybtns.copyTextToClipboard(content.text());
+  },
+  btnClick : function(){
+    var btn = $(this);
+    var content = $(btn.next().children()[0]);
+    
+    copybtns.flash(btn, content)
+    
+    copybtns.copyTextToClipboard(content.text());
+  },
+  init : function() {
+    var buttonHTML = '<button type="button" data-toggle="tooltip" data-placement="top" title="Copy" class="copybtn btn btn-outline-dark"><img src="/img/Icon-Red_Hat-Media_and_documents-Paper_Stack_Blank-A-Black-RGB.png"/></button>';
+    
+    $('div.highlight').prepend(buttonHTML);
+    
+    $('button.copybtn').bind("click", copybtns.btnClick);
+    $('div.highlight pre').bind("click", copybtns.txtClick);
+  }
+}
+copybtns.init();
+</script>
 <script src="https://kubernetesbyexample.com/js/highlight.min.js"></script>
 <script> hljs.initHighlightingOnLoad(); </script>
 <script> renderMathInElement(document.body); </script>

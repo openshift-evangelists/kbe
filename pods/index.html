@@ -183,42 +183,49 @@ and is the basic unit of deployment in Kubernetes. All containers in a pod
 are scheduled on the same node.</p>
 <p>To launch a pod using the container <a href="https://quay.io/repository/openshiftlabs/simpleservice/">image</a>
 <code>quay.io/openshiftlabs/simpleservice:0.5.0</code> and exposing a HTTP API on port <code>9876</code>, execute:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kubectl run sise --image<span style="color:#f92672">=</span>quay.io/openshiftlabs/simpleservice:0.5.0 --port<span style="color:#f92672">=</span><span style="color:#ae81ff">9876</span>
-</code></pre></div><p>We can now see that the pod is running:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kubectl get pods
-NAME                      READY     STATUS    RESTARTS   AGE
-sise-3210265840-k705b     1/1       Running   <span style="color:#ae81ff">0</span>          1m
-
-$ kubectl describe pod sise-3210265840-k705b | grep IP:
-IP:                     172.17.0.3
-</code></pre></div><p>From within the cluster (e.g. via <a href="https://docs.openshift.com/container-platform/latest/cli_reference/openshift_cli/developer-cli-commands.html#rsh"><code>oc rsh</code></a>) this pod is accessible via the pod IP <code>172.17.0.3</code>,
-which we&rsquo;ve learned from the <code>kubectl describe</code> command above:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#f92672">[</span>cluster<span style="color:#f92672">]</span> $ curl 172.17.0.3:9876/info
-<span style="color:#f92672">{</span><span style="color:#e6db74">&#34;host&#34;</span>: <span style="color:#e6db74">&#34;172.17.0.3:9876&#34;</span>, <span style="color:#e6db74">&#34;version&#34;</span>: <span style="color:#e6db74">&#34;0.5.0&#34;</span>, <span style="color:#e6db74">&#34;from&#34;</span>: <span style="color:#e6db74">&#34;172.17.0.1&#34;</span><span style="color:#f92672">}</span>
-</code></pre></div><p><em><strong>Tip: Deprecation Warning!</strong></em>
-Note that older releases of <code>kubectl</code> will produce a <a href="/deployments/">deployment</a> resource as the result of the provided <code>kubectl run</code> example, while newer releases produce a single <code>pod</code> resource.  If you are using an old release of <code>kubectl</code>, you may need to run <code>kubectl delete deployment sise</code> to clean up at the end of this section.</p>
-<h4 id="using-configuration-file">Using configuration file</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">kubectl run sise --image<span style="color:#f92672">=</span>quay.io/openshiftlabs/simpleservice:0.5.0 --port<span style="color:#f92672">=</span><span style="color:#ae81ff">9876</span>
+</code></pre></div><pre><code class="language-cat" data-lang="cat">pod/sise created
+</code></pre><p><em><strong>Note: Deprecation Warning!</strong></em>
+Older releases of <code>kubectl</code> will produce a <a href="/deployments/">deployment</a> resource as the result of the provided <code>kubectl run</code> example, while newer releases produce a single <code>pod</code> resource.  The example commands in this section should still work (assuming you substitute your own pod name) - but you&rsquo;ll need to run <code>kubectl delete deployment sise</code> at the end of this section to clean up.</p>
+<p>Check to see if the pod is running:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">kubectl get pods
+</code></pre></div><pre><code class="language-cat" data-lang="cat">NAME    READY     STATUS    RESTARTS   AGE
+sise    1/1       Running   0          1m
+</code></pre><p>If the above output returns a longer pod name, make sure to use it in the following examples (in place of <code>sise</code>)</p>
+<p>This container image happens to include a copy of <code>curl</code>, which provides an additional way to verify that the primary webservice process is responding (over the local net at least):</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">kubectl exec sise -t -- curl -s localhost:9876/info
+</code></pre></div><pre><code class="language-cat" data-lang="cat">{&quot;host&quot;: &quot;localhost:9876&quot;, &quot;version&quot;: &quot;0.5.0&quot;, &quot;from&quot;: &quot;127.0.0.1&quot;}
+</code></pre><p>From within the cluster (e.g. via <code>kubectl exec</code> or <a href="https://docs.openshift.com/container-platform/latest/cli_reference/openshift_cli/developer-cli-commands.html#rsh"><code>oc rsh</code></a>) this pod will also be directly accessible via it&rsquo;s associated pod IP <code>172.17.0.3</code></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">kubectl describe pod sise | grep IP:
+</code></pre></div><pre><code class="language-cat" data-lang="cat">IP:                     172.17.0.3
+</code></pre><p>The kubernetes proxy API provides an additional opportunity to make external connections to pods within the cluster using <code>curl</code>:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">export K8S_API<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;https://</span><span style="color:#66d9ef">$(</span>kubectl config get-clusters | tail -n 1<span style="color:#66d9ef">)</span><span style="color:#e6db74">&#34;</span>
+export NAMESPACE<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;default&#34;</span>
+export PODNAME<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;sise&#34;</span>
+curl -s -k -H<span style="color:#e6db74">&#34;Authorization: Bearer </span><span style="color:#66d9ef">$(</span>oc whoami -t<span style="color:#66d9ef">)</span><span style="color:#e6db74">&#34;</span> <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>$K8S_API/api/v1/namespaces/$NAMESPACE/pods/$PODNAME/proxy/info
+</code></pre></div><p>Cleanup:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">kubectl delete pod,deployment sise
+</code></pre></div><h4 id="using-configuration-file">Using configuration file</h4>
 <p>You can also create a pod from a configuration file.
 In this case the <a href="https://github.com/openshift-evangelists/kbe/blob/main/specs/pods/pod.yaml">pod</a> is
 running the already known <code>simpleservice</code> image from above along with
 a generic <code>CentOS</code> container:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/main/specs/pods/pod.yaml
-
-$ kubectl get pods
-NAME                      READY     STATUS    RESTARTS   AGE
-twocontainers             2/2       Running   <span style="color:#ae81ff">0</span>          7s
-</code></pre></div><p>Now we can exec into the <code>CentOS</code> container and access the <code>simpleservice</code>
-on localhost:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kubectl exec twocontainers -c shell -i -t -- bash
-<span style="color:#f92672">[</span>root@twocontainers /<span style="color:#f92672">]</span><span style="color:#75715e"># curl -s localhost:9876/info</span>
-<span style="color:#f92672">{</span><span style="color:#e6db74">&#34;host&#34;</span>: <span style="color:#e6db74">&#34;localhost:9876&#34;</span>, <span style="color:#e6db74">&#34;version&#34;</span>: <span style="color:#e6db74">&#34;0.5.0&#34;</span>, <span style="color:#e6db74">&#34;from&#34;</span>: <span style="color:#e6db74">&#34;127.0.0.1&#34;</span><span style="color:#f92672">}</span>
-</code></pre></div><p>Specify the <code>resources</code> field in the pod to influence how much CPU and/or RAM a
-container in a <a href="https://github.com/openshift-evangelists/kbe/blob/main/specs/pods/constraint-pod.yaml">pod</a>
-can use (here: <code>64MB</code> of RAM and <code>0.5</code> CPUs):</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kubectl create -f https://raw.githubusercontent.com/openshift-evangelists/kbe/main/specs/pods/constraint-pod.yaml
-
-$ kubectl describe pod constraintpod
-...
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/kbe/main/specs/pods/pod.yaml
+</code></pre></div><pre><code class="language-cat" data-lang="cat">pod/twocontainers created
+</code></pre><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">kubectl get pods
+</code></pre></div><pre><code class="language-cat" data-lang="cat">NAME                      READY     STATUS    RESTARTS   AGE
+twocontainers             2/2       Running   0          7s
+</code></pre><p>Containers that share a pod are able to communicate using local networking.</p>
+<p>This example demonstrates how to exec into a sidecar <code>shell</code> container to access and inspect the <code>sise</code> container via <code>localhost</code>:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">kubectl exec twocontainers -t -- curl -s localhost:9876/info
+</code></pre></div><pre><code class="language-cat" data-lang="cat">{&quot;host&quot;: &quot;localhost:9876&quot;, &quot;version&quot;: &quot;0.5.0&quot;, &quot;from&quot;: &quot;127.0.0.1&quot;}
+</code></pre><p>Define the <code>resources</code> attribute to influence how much CPU and/or RAM a
+container in a <a href="https://github.com/openshift-evangelists/kbe/blob/main/specs/pods/constraint-pod.yaml">pod</a> can use (here: <code>64MB</code> of RAM and <code>0.5</code> CPUs):</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">kubectl create -f https://raw.githubusercontent.com/openshift-evangelists/kbe/main/specs/pods/constraint-pod.yaml
+</code></pre></div><pre><code class="language-cat" data-lang="cat">pod/constraintpod created
+</code></pre><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">kubectl describe pod constraintpod
+</code></pre></div><pre><code class="language-cat" data-lang="cat">...
 Containers:
   sise:
     ...
@@ -229,14 +236,11 @@ Containers:
       cpu:      500m
       memory:   64Mi
 ...
-</code></pre></div><p>Learn more about resource constraints in Kubernetes via the docs <a href="https://kubernetes.io/docs/tasks/configure-pod-container/assign-cpu-ram-container/">here</a>
+</code></pre><p>Learn more about resource constraints in Kubernetes via the docs <a href="https://kubernetes.io/docs/tasks/configure-pod-container/assign-cpu-ram-container/">here</a>
 and <a href="https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/">here</a>.</p>
-<p>To remove all the pods created, just run:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kubectl delete pod,deployment sise
-
-$ kubectl delete pod twocontainers
-
-$ kubectl delete pod constraintpod
+<p>To clean up and remove all the remaining pods, try:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">kubectl delete pod twocontainers
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">kubectl delete pod constraintpod
 </code></pre></div><p>To sum up, launching one or more containers (together) in Kubernetes is simple,
 however doing it directly as shown above comes with a serious limitation: you have to
 manually take care of keeping them running in case of a failure. A better way
@@ -281,6 +285,80 @@ to supervise pods is to use <a href="/deployments">deployments</a>, giving you m
 <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 <script src="https://kubernetesbyexample.com/js/main.js"></script>
+<script>
+
+$('.language-test').parent().css('display', 'none')
+
+
+var copybtns = {
+  fallbackCopyTextToClipboard: function (text) {
+    var txt = document.createElement("textarea");
+    txt.value = text;
+    
+    
+    txt.style.position = "fixed";
+    txt.style.top = "0";
+    txt.style.left = "0";
+  
+    document.body.appendChild(txt);
+    txt.focus();
+    txt.select();
+    txt.setSelectionRange(0, 99999);
+  
+    try {
+      var successful = document.execCommand('copy');
+      var msg = successful ? 'successful' : 'unsuccessful';
+    } catch (err) {
+      console.error('Fallback: Unable to copy', err);
+    }
+  
+    document.body.removeChild(txt);
+  },
+  copyTextToClipboard: function (text) {
+    if (!navigator.clipboard) {
+      copybtns.fallbackCopyTextToClipboard(text);
+      return;
+    }
+    navigator.clipboard.writeText(text).then(function() {
+      
+    }, function(err) {
+      
+      copybtns.fallbackCopyTextToClipboard(text);
+    });
+  },
+  flash: function(btn, content){
+    
+    content.fadeTo(50, 0.25, function() { $(this).fadeTo(300, 1.0); });
+    
+    btn.fadeTo(50, 0.0, function() { $(this).fadeTo(900, 1.0); });
+  },
+  txtClick : function(){
+    var content = $(this);
+    var btn = content.prev('button');
+    
+    copybtns.flash(btn, content);
+    
+    copybtns.copyTextToClipboard(content.text());
+  },
+  btnClick : function(){
+    var btn = $(this);
+    var content = $(btn.next().children()[0]);
+    
+    copybtns.flash(btn, content)
+    
+    copybtns.copyTextToClipboard(content.text());
+  },
+  init : function() {
+    var buttonHTML = '<button type="button" data-toggle="tooltip" data-placement="top" title="Copy" class="copybtn btn btn-outline-dark"><img src="/img/Icon-Red_Hat-Media_and_documents-Paper_Stack_Blank-A-Black-RGB.png"/></button>';
+    
+    $('div.highlight').prepend(buttonHTML);
+    
+    $('button.copybtn').bind("click", copybtns.btnClick);
+    $('div.highlight pre').bind("click", copybtns.txtClick);
+  }
+}
+copybtns.init();
+</script>
 <script src="https://kubernetesbyexample.com/js/highlight.min.js"></script>
 <script> hljs.initHighlightingOnLoad(); </script>
 <script> renderMathInElement(document.body); </script>

@@ -181,28 +181,27 @@
         <p>If you have a stateless app you want to use a deployment. However, for a stateful app you might want to use a <a href="https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/">StatefulSet</a>. Unlike a deployment, the <code>StatefulSet</code> provides certain guarantees about the identity of the pods it is managing (that is, predictable names) and about the startup order. Two more things that are different compared to a deployment: for network communication you need to create a <a href="https://kubernetes.io/docs/concepts/services-networking/service/#headless-services">headless services</a> and for persistency the <code>StatefulSet</code> manages a <a href="/pv">persistent volume</a> per pod.</p>
 <p>In order to see how this all plays together, we will be using an <a href="https://blog.openshift.com/kubernetes-statefulset-in-action/">educational Kubernetes-native NoSQL datastore</a>.</p>
 <p>Let&rsquo;s start with creating the <a href="https://raw.githubusercontent.com/openshift-evangelists/mehdb/main/app.yaml">stateful app</a>, that is, the <code>StatefulSet</code> along with the persistent volumes and the headless service:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/mehdb/main/app.yaml
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">kubectl apply -f https://raw.githubusercontent.com/openshift-evangelists/mehdb/main/app.yaml
 </code></pre></div><p>After a minute or so, you can have a look at all the resources that have been created:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kubectl get sts,po,pvc,svc
-NAME                     DESIRED   CURRENT   AGE
-statefulset.apps/mehdb   <span style="color:#ae81ff">2</span>         <span style="color:#ae81ff">2</span>         1m
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">kubectl get sts,po,pvc,svc
+</code></pre></div><pre><code class="language-cat" data-lang="cat">NAME                     DESIRED   CURRENT   AGE
+statefulset.apps/mehdb   2         2         1m
 
 NAME          READY   STATUS    RESTARTS   AGE
-pod/mehdb-0   1/1     Running   <span style="color:#ae81ff">0</span>          1m
-pod/mehdb-1   1/1     Running   <span style="color:#ae81ff">0</span>          56s
+pod/mehdb-0   1/1     Running   0          1m
+pod/mehdb-1   1/1     Running   0          56s
 
 NAME                                 STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   AGE
 persistentvolumeclaim/data-mehdb-0   Bound    pvc-bc2d9b3b-310d-11e9-aeff-123713f594ec   1Gi        RWO            ebs            1m
 persistentvolumeclaim/data-mehdb-1   Bound    pvc-d4b7620f-310d-11e9-aeff-123713f594ec   1Gi        RWO            ebs            56s
 
-NAME            TYPE        CLUSTER-IP   EXTERNAL-IP   PORT<span style="color:#f92672">(</span>S<span style="color:#f92672">)</span>    AGE
+NAME            TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)    AGE
 service/mehdb   ClusterIP   None         &lt;none&gt;        9876/TCP   1m
-</code></pre></div><p>Now we can check if the stateful app is working properly. To do this, we use the <code>/status</code> endpoint of the headless service <code>mehdb:9876</code> and since we haven&rsquo;t put any data yet into the datastore, we&rsquo;d expect that <code>0</code> keys are reported:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kubectl run -it --rm jumpod --restart<span style="color:#f92672">=</span>Never --image<span style="color:#f92672">=</span>quay.io/openshiftlabs/jump:0.2 -- curl mehdb:9876/status?level<span style="color:#f92672">=</span>full
-If you don<span style="color:#960050;background-color:#1e0010">&#39;</span>t see a command prompt, try pressing enter.
-<span style="color:#ae81ff">0</span>
-pod <span style="color:#e6db74">&#34;jumpod&#34;</span> deleted
-</code></pre></div><p>And indeed we see <code>0</code> keys being available, reported above.</p>
+</code></pre><p>Now we can check if the stateful app is working properly. To do this, we use the <code>/status</code> endpoint of the headless service <code>mehdb:9876</code> and since we haven&rsquo;t put any data yet into the datastore, we&rsquo;d expect that <code>0</code> keys are reported:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">kubectl run -it --rm jumpod --restart<span style="color:#f92672">=</span>Never --image<span style="color:#f92672">=</span>quay.io/openshiftlabs/jump:0.2 -- curl -s mehdb:9876/status?level<span style="color:#f92672">=</span>full
+</code></pre></div><pre><code class="language-cat" data-lang="cat">0
+pod &quot;jumpod&quot; deleted
+</code></pre><p>And indeed we see <code>0</code> keys being available, reported above.</p>
 <p>Note that sometimes a <code>StatefulSet</code> is not the best fit for your stateful app. You might be better off defining a <a href="https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/">custom resource</a> along with writing a custom controller to have finer-grained control over your workload.</p>
 <p><a href="/jobs">Previous</a> | <a href="/ic">Next</a></p>
 
@@ -244,6 +243,80 @@ pod <span style="color:#e6db74">&#34;jumpod&#34;</span> deleted
 <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 <script src="https://kubernetesbyexample.com/js/main.js"></script>
+<script>
+
+$('.language-test').parent().css('display', 'none')
+
+
+var copybtns = {
+  fallbackCopyTextToClipboard: function (text) {
+    var txt = document.createElement("textarea");
+    txt.value = text;
+    
+    
+    txt.style.position = "fixed";
+    txt.style.top = "0";
+    txt.style.left = "0";
+  
+    document.body.appendChild(txt);
+    txt.focus();
+    txt.select();
+    txt.setSelectionRange(0, 99999);
+  
+    try {
+      var successful = document.execCommand('copy');
+      var msg = successful ? 'successful' : 'unsuccessful';
+    } catch (err) {
+      console.error('Fallback: Unable to copy', err);
+    }
+  
+    document.body.removeChild(txt);
+  },
+  copyTextToClipboard: function (text) {
+    if (!navigator.clipboard) {
+      copybtns.fallbackCopyTextToClipboard(text);
+      return;
+    }
+    navigator.clipboard.writeText(text).then(function() {
+      
+    }, function(err) {
+      
+      copybtns.fallbackCopyTextToClipboard(text);
+    });
+  },
+  flash: function(btn, content){
+    
+    content.fadeTo(50, 0.25, function() { $(this).fadeTo(300, 1.0); });
+    
+    btn.fadeTo(50, 0.0, function() { $(this).fadeTo(900, 1.0); });
+  },
+  txtClick : function(){
+    var content = $(this);
+    var btn = content.prev('button');
+    
+    copybtns.flash(btn, content);
+    
+    copybtns.copyTextToClipboard(content.text());
+  },
+  btnClick : function(){
+    var btn = $(this);
+    var content = $(btn.next().children()[0]);
+    
+    copybtns.flash(btn, content)
+    
+    copybtns.copyTextToClipboard(content.text());
+  },
+  init : function() {
+    var buttonHTML = '<button type="button" data-toggle="tooltip" data-placement="top" title="Copy" class="copybtn btn btn-outline-dark"><img src="/img/Icon-Red_Hat-Media_and_documents-Paper_Stack_Blank-A-Black-RGB.png"/></button>';
+    
+    $('div.highlight').prepend(buttonHTML);
+    
+    $('button.copybtn').bind("click", copybtns.btnClick);
+    $('div.highlight pre').bind("click", copybtns.txtClick);
+  }
+}
+copybtns.init();
+</script>
 <script src="https://kubernetesbyexample.com/js/highlight.min.js"></script>
 <script> hljs.initHighlightingOnLoad(); </script>
 <script> renderMathInElement(document.body); </script>
