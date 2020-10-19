@@ -200,9 +200,10 @@ sise    1/1       Running   0          1m
 </code></pre></div><pre><code class="language-cat" data-lang="cat">IP:                     172.17.0.3
 </code></pre><p>The kubernetes proxy API provides an additional opportunity to make external connections to pods within the cluster using <code>curl</code>:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">export K8S_API<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;https://</span><span style="color:#66d9ef">$(</span>kubectl config get-clusters | tail -n 1<span style="color:#66d9ef">)</span><span style="color:#e6db74">&#34;</span>
+export API_TOKEN<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span><span style="color:#66d9ef">$(</span>kubectl config view -o jsonpath<span style="color:#f92672">={</span>.users<span style="color:#f92672">[</span>-1<span style="color:#f92672">]</span>.user.token<span style="color:#f92672">}</span><span style="color:#66d9ef">)</span><span style="color:#e6db74">&#34;</span>
 export NAMESPACE<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;default&#34;</span>
 export PODNAME<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;sise&#34;</span>
-curl -s -k -H<span style="color:#e6db74">&#34;Authorization: Bearer </span><span style="color:#66d9ef">$(</span>oc whoami -t<span style="color:#66d9ef">)</span><span style="color:#e6db74">&#34;</span> <span style="color:#ae81ff">\
+curl -s -k -H<span style="color:#e6db74">&#34;Authorization: Bearer </span>$API_TOKEN<span style="color:#e6db74">&#34;</span> <span style="color:#ae81ff">\
 </span><span style="color:#ae81ff"></span>$K8S_API/api/v1/namespaces/$NAMESPACE/pods/$PODNAME/proxy/info
 </code></pre></div><p>Cleanup:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">kubectl delete pod,deployment sise
