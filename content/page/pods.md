@@ -55,9 +55,10 @@ IP:                     172.17.0.3
 The kubernetes proxy API provides an additional opportunity to make external connections to pods within the cluster using `curl`:
 ```bash
 export K8S_API="https://$(kubectl config get-clusters | tail -n 1)"
+export API_TOKEN="$(kubectl config view -o jsonpath={.users[-1].user.token})"
 export NAMESPACE="default"
 export PODNAME="sise"
-curl -s -k -H"Authorization: Bearer $(oc whoami -t)" \
+curl -s -k -H"Authorization: Bearer $API_TOKEN" \
 $K8S_API/api/v1/namespaces/$NAMESPACE/pods/$PODNAME/proxy/info
 ```
 
