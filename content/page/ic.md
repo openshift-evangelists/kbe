@@ -5,7 +5,7 @@ date = "2019-02-26"
 url = "/ic/"
 +++
 
-It's sometimes necessary to prepare a container running in a pod. For example, you might want to wait for a service being available, want to configure things at runtime, or init some data in a database. In all of these cases, [init containers](https://kubernetes.io/docs/concepts/workloads/pods/init-containers/) are useful. Note that Kubernetes will execute all init containers (and they must all exit successfully) before the main container(s) are executed. 
+It's sometimes necessary to prepare a container running in a pod. For example, you might want to wait for a service being available, want to configure things at runtime, or init some data in a database. In all of these cases, [init containers](https://kubernetes.io/docs/concepts/workloads/pods/init-containers/) are useful. Note that Kubernetes will execute all init containers (and they must all exit successfully) before the main container(s) are executed.
 
 So let's create an [deployment](https://github.com/openshift-evangelists/kbe/blob/main/specs/ic/deploy.yaml) consisting of an init container that writes a message into a file at `/ic/this` and the main (long-running) container reading out this file, then:
 
@@ -39,6 +39,12 @@ INIT_DONE
 Send a break signal (Ctrl-C) when you're ready to disconnect from the log stream:
 ```bash
 ^C
+```
+
+Now we can cleanup after we are done as follows:
+
+```bash
+kubectl delete -f https://raw.githubusercontent.com/openshift-evangelists/kbe/main/specs/ic/deploy.yaml
 ```
 
 If you want to learn more about init containers and related topics, check out the blog post [Kubernetes: A Pod’s Life](https://blog.openshift.com/kubernetes-pods-life/).
