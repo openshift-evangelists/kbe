@@ -20,7 +20,7 @@
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Kubernetes By Example" />
 
-  <meta name="generator" content="Hugo 0.69.0" />
+  <meta name="generator" content="Hugo 0.80.0" />
   <link rel="canonical" href="https://kubernetesbyexample.com/statefulset/" />
   <link rel="alternate" href="https://kubernetesbyexample.com/index.xml" type="application/rss+xml" title="Kubernetes By Example">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css" integrity="sha384-wITovz90syo1dJWVh32uuETPVEtGigN07tkttEqPv+uR2SE/mbQcG7ATL28aI9H0" crossorigin="anonymous">
@@ -203,7 +203,10 @@ service/mehdb   ClusterIP   None         &lt;none&gt;        9876/TCP   1m
 pod &quot;jumpod&quot; deleted
 </code></pre><p>And indeed we see <code>0</code> keys being available, reported above.</p>
 <p>Note that sometimes a <code>StatefulSet</code> is not the best fit for your stateful app. You might be better off defining a <a href="https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/">custom resource</a> along with writing a custom controller to have finer-grained control over your workload.</p>
-<p><a href="/jobs">Previous</a> | <a href="/ic">Next</a></p>
+<p>We can now cleanup after we are done using:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">kubectl delete -f https://raw.githubusercontent.com/openshift-evangelists/mehdb/main/app.yaml
+kubectl delete pvc/data-mehdb-0
+</code></pre></div><p><a href="/jobs">Previous</a> | <a href="/ic">Next</a></p>
 
         
       </div>
@@ -230,7 +233,7 @@ pod &quot;jumpod&quot; deleted
         </p>
         
         <p class="credits theme-by text-muted">
-          <a href="http://gohugo.io">Hugo v0.69.0</a> powered &nbsp;&bull;&nbsp; Theme by <a href="http://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a> adapted to <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a>
+          <a href="http://gohugo.io">Hugo v0.80.0</a> powered &nbsp;&bull;&nbsp; Theme by <a href="http://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a> adapted to <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a>
           
         </p>
       </div>

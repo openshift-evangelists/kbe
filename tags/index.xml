@@ -4,10 +4,6 @@
     <title>Tags on Kubernetes By Example</title>
     <link>https://kubernetesbyexample.com/tags/</link>
     <description>Recent content in Tags on Kubernetes By Example</description>
-    <generator>Hugo -- gohugo.io</generator>
-    
-	<atom:link href="https://kubernetesbyexample.com/tags/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <generator>Hugo -- gohugo.io</generator><atom:link href="https://kubernetesbyexample.com/tags/index.xml" rel="self" type="application/rss+xml" />
   </channel>
 </rss>
