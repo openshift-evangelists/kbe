@@ -7,7 +7,7 @@ url = "/statefulset/"
 
 If you have a stateless app you want to use a deployment. However, for a stateful app you might want to use a [StatefulSet](https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/). Unlike a deployment, the `StatefulSet` provides certain guarantees about the identity of the pods it is managing (that is, predictable names) and about the startup order. Two more things that are different compared to a deployment: for network communication you need to create a [headless services](https://kubernetes.io/docs/concepts/services-networking/service/#headless-services) and for persistency the `StatefulSet` manages a [persistent volume](/pv) per pod.
 
-In order to see how this all plays together, we will be using an [educational Kubernetes-native NoSQL datastore](https://blog.openshift.com/kubernetes-statefulset-in-action/). 
+In order to see how this all plays together, we will be using an [educational Kubernetes-native NoSQL datastore](https://blog.openshift.com/kubernetes-statefulset-in-action/).
 
 Let's start with creating the [stateful app](https://raw.githubusercontent.com/openshift-evangelists/mehdb/main/app.yaml), that is, the `StatefulSet` along with the persistent volumes and the headless service:
 
@@ -49,5 +49,12 @@ pod "jumpod" deleted
 And indeed we see `0` keys being available, reported above.
 
 Note that sometimes a `StatefulSet` is not the best fit for your stateful app. You might be better off defining a [custom resource](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/) along with writing a custom controller to have finer-grained control over your workload.
+
+We can now cleanup after we are done using:
+
+```bash
+kubectl delete -f https://raw.githubusercontent.com/openshift-evangelists/mehdb/main/app.yaml
+kubectl delete pvc/data-mehdb-0
+```
 
 [Previous](/jobs) | [Next](/ic)
