@@ -5,7 +5,7 @@ date = "2019-02-27"
 url = "/sd/"
 +++
 
-Service discovery is the process of figuring out how to connect to a [service](/service/).
+Service discovery is the process of figuring out how to connect to a [service](/services/).
 While there is a service discovery option based on [environment variables](https://kubernetes.io/docs/concepts/services-networking/connect-applications-service/#environment-variables) available,
 the DNS-based service discovery is preferable. Note that [Kube DNS is a cluster add-on](https://github.com/kubernetes/kubernetes/blob/master/cluster/addons/dns/kube-dns/README.md), which means that it may need to installed, configured, or enabled in order to function correctly.
 
